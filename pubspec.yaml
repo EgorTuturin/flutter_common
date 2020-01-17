@@ -11,6 +11,13 @@ dependencies:
   archive:
   dart_chromecast: ^0.1.2
   cached_network_image: ^2.0.0-rc
+  screen: ^0.0.5
+  intl: ^0.16.0
+  flutter_material_color_picker: ^1.0.5
+  video_player:
+    git:
+      url: https://github.com/fastogt/video_player.git
+      ref: master
   flutter_mdns_plugin:
     git:
       url: https://github.com/terrabythia/flutter_mdns_plugin.git
@@ -18,6 +25,10 @@ dependencies:
   volume:
     git:
       url: https://github.com/fastogt/Volume_Flutter.git
+      ref: master
+  fastotv_dart:
+    git:
+      url: https://github.com/fastogt/fastotv_dart.git
       ref: master
   persist_theme:
     git:
