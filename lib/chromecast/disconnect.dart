@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_common/chromecast/chromecast_info.dart';
+import 'package:fastotv_flutter_common/chromecast/chromecast_info.dart';
 
 class CCDisconnectDialog extends StatefulWidget {
   final Color textColor;
