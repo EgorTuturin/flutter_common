@@ -7,6 +7,7 @@ class VodCard extends StatelessWidget {
   final int interruptTime;
   final double width;
   final double height;
+  final double borderRadius;
   final Function onPressed;
 
   VodCard(
@@ -15,8 +16,10 @@ class VodCard extends StatelessWidget {
       this.duration,
       this.height,
       this.width,
+      this.borderRadius,
       this.onPressed});
 
+  static const double BORDER_RADIUS = 2.0;
   static const CARD_WIDTH = 172.0;
   static const ASPECT_RATIO = 1.481;
 
@@ -43,13 +46,20 @@ class VodCard extends StatelessWidget {
     }
 
     final size = getSize();
-      return Container(
+    final border = BorderRadius.circular(borderRadius ?? BORDER_RADIUS);
+    return Card(
+      margin: EdgeInsets.all(0),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: border),
+      child: Container(
           width: size.width,
           height: size.height,
           child: Stack(children: <Widget>[
-            Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              Expanded(child: PreviewIcon.vod(iconLink))
-            ]),
+            Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[Expanded(child: ClipRRect(
+                  borderRadius: border,
+                  child: PreviewIcon.vod(iconLink)))]),
             Positioned(
                 bottom: 0,
                 child: Container(
@@ -59,6 +69,29 @@ class VodCard extends StatelessWidget {
             InkWell(onTap: () {
               onPressed();
             })
-          ]));
+          ])),
+    );
+  }
+}
+
+class VodFavoriteButton extends StatelessWidget {
+  final Widget child;
+
+  VodFavoriteButton({@required this.child});
+
+  static const HEIGHT = 36.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        right: 5,
+        top: 5,
+        child: Container(
+            decoration: new BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: new BorderRadius.all(Radius.circular(HEIGHT / 2))),
+            height: HEIGHT,
+            width: HEIGHT,
+            child: child));
   }
 }
