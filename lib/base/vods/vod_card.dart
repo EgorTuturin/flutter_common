@@ -73,25 +73,3 @@ class VodCard extends StatelessWidget {
     );
   }
 }
-
-class VodFavoriteButton extends StatelessWidget {
-  final Widget child;
-
-  VodFavoriteButton({@required this.child});
-
-  static const HEIGHT = 36.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-        right: 5,
-        top: 5,
-        child: Container(
-            decoration: new BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: new BorderRadius.all(Radius.circular(HEIGHT / 2))),
-            height: HEIGHT,
-            width: HEIGHT,
-            child: child));
-  }
-}
