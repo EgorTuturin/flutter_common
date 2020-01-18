@@ -18,7 +18,7 @@ class VodCard extends StatelessWidget {
       this.onPressed});
 
   static const CARD_WIDTH = 172.0;
-  static const ASPECT_RATIO = 1.81;
+  static const ASPECT_RATIO = 1.481;
 
   @override
   Widget build(BuildContext context) {
