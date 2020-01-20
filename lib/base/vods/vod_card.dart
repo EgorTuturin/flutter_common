@@ -47,29 +47,26 @@ class VodCard extends StatelessWidget {
 
     final size = getSize();
     final border = BorderRadius.circular(borderRadius ?? BORDER_RADIUS);
-    return Card(
-      margin: EdgeInsets.all(0),
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: border),
-      child: Container(
-          width: size.width,
-          height: size.height,
-          child: Stack(children: <Widget>[
-            Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[Expanded(child: ClipRRect(
-                  borderRadius: border,
-                  child: PreviewIcon.vod(iconLink)))]),
-            Positioned(
-                bottom: 0,
-                child: Container(
-                    height: 5,
-                    width: timeLine(),
-                    color: Theme.of(context).accentColor)),
-            InkWell(onTap: () {
-              onPressed();
-            })
-          ])),
-    );
+    return Container(
+        width: size.width,
+        height: size.height,
+        child: Card(
+            margin: EdgeInsets.all(0),
+            elevation: 2,
+            shape: RoundedRectangleBorder(borderRadius: border),
+            child: Stack(children: <Widget>[
+              Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                Expanded(
+                    child: ClipRRect(
+                        borderRadius: border, child: PreviewIcon.vod(iconLink)))
+              ]),
+              Positioned(
+                  bottom: 0,
+                  child: Container(
+                      height: 5,
+                      width: timeLine(),
+                      color: Theme.of(context).accentColor)),
+              InkWell(onTap: () => onPressed())
+            ])));
   }
 }
