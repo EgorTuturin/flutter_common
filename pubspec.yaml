@@ -28,7 +28,7 @@ dependencies:
       ref: master
   fastotv_dart:
     git:
-      url: https://github.com/vodemn/fastotv_dart.git
+      url: https://github.com/fastogt/fastotv_dart.git
       ref: master
   persist_theme:
     git:
