@@ -20,7 +20,14 @@ class AppLocalizations {
   }
 
   static String toUtf8(String data) {
-    return utf8.decode(data.codeUnits);
+    String _output;
+    try {
+      _output = utf8.decode(data.codeUnits);
+    } on FormatException catch (e) {
+      print('error caught: $e');
+      _output = data;
+    }
+    return _output;
   }
 
   Map<String, String> _localizedStrings;
