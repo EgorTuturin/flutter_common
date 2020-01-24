@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 
-import 'package:fastotv_flutter_common/chromecast/chromecast_info.dart';
-import 'package:fastotv_flutter_common/colors.dart';
+import 'package:fastotv_common/chromecast/chromecast_info.dart';
+import 'package:fastotv_common/colors.dart';
 
 class ChannelPageAppBar extends StatefulWidget {
   final String title;

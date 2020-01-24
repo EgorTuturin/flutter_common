@@ -3,7 +3,7 @@ import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
-import 'package:fastotv_flutter_common/colors.dart';
+import 'package:fastotv_common/colors.dart';
 
 const BUTTON_OPACITY = 0.5;
 

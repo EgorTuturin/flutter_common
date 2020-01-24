@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:fastotv_flutter_common/colors.dart';
+import 'package:fastotv_common/colors.dart';
 
 typedef RecordedCallback = void Function(bool recorded);
 

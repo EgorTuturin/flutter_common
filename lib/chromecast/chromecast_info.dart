@@ -7,8 +7,8 @@ import 'package:dart_chromecast/casting/cast.dart';
 
 import 'package:flutter_mdns_plugin/flutter_mdns_plugin.dart';
 
-import 'package:fastotv_flutter_common/chromecast/device_picker.dart';
-import 'package:fastotv_flutter_common/chromecast/disconnect.dart';
+import 'package:fastotv_common/chromecast/device_picker.dart';
+import 'package:fastotv_common/chromecast/disconnect.dart';
 
 class ChromeCastInfo {
   static const int DISCOVERY_TIME_SEC = 3;

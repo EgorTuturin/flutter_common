@@ -4,11 +4,11 @@ import 'package:screen/screen.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:fastotv_flutter_common/system_methods.dart' as system;
-import 'package:fastotv_flutter_common/screen_orientation.dart' as orientation;
-import 'package:fastotv_flutter_common/chromecast/chromecast_info.dart';
-import 'package:fastotv_flutter_common/volume_manager.dart';
-import 'package:fastotv_flutter_common/colors.dart';
+import 'package:fastotv_common/system_methods.dart' as system;
+import 'package:fastotv_common/screen_orientation.dart' as orientation;
+import 'package:fastotv_common/chromecast/chromecast_info.dart';
+import 'package:fastotv_common/volume_manager.dart';
+import 'package:fastotv_common/colors.dart';
 
 enum OverlayControl { NONE, VOLUME, BRIGHTNESS, SEEK_FORWARD, SEEK_REPLAY }
 
