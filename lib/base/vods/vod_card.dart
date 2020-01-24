@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fastotv_flutter_common/base/controls/preview_icon.dart';
+import 'package:fastotv_common/base/controls/preview_icon.dart';
 
 class VodCard extends StatelessWidget {
   final String iconLink;

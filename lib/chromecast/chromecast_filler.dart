@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fastotv_flutter_common/base/controls/preview_icon.dart';
+import 'package:fastotv_common/base/controls/preview_icon.dart';
 
 class ChromeCastFiller extends StatelessWidget {
   final String link;
