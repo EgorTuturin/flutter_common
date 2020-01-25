@@ -7,12 +7,12 @@ import 'package:fastotv_device_info/device.dart';
 import 'package:fastotv_device_info/devices.dart';
 
 class RuntimeDevice {
+  static final RuntimeDevice _instance = RuntimeDevice._internal();
   AndroidDeviceInfo _android;
   IosDeviceInfo _ios;
   bool _hasTouch = false;
   bool _registeredInOurDB = false;
   
-  static final RuntimeDevice _instance = RuntimeDevice._internal();
 
   factory RuntimeDevice() {
     return _instance;
