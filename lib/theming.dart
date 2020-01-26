@@ -113,35 +113,31 @@ class _PrimaryColorPickerState extends State<MyColorPicker> {
 
   Widget _accent() {
     return Consumer<ThemeModel>(
-      builder: (context, model, child) => ListTile(
-        leading: Icon(Icons.colorize,
-            color: CustomColor().themeBrightnessColor(context)),
-        title: Text("Accent color"),
-        subtitle: Text(Theme.of(context).accentColor.toString()),
-        onTap: () {
-          _openColorPicker(
-              context,
-              () => model.changeAccentColor(tempShadeAcColor),
-              model.primaryColor,
-              model.accentColor);
-        },
-        trailing: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: model.accentColor,
-                border: Border.all(
-                    color: CustomColor().primaryColorBrightness(model)))),
-      ),
-    );
+        builder: (context, model, child) => ListTile(
+            leading: Icon(Icons.colorize,
+                color: CustomColor().themeBrightnessColor(context)),
+            title: Text("Accent color"),
+            subtitle: Text(Theme.of(context).accentColor.toString()),
+            onTap: () {
+              _openColorPicker(
+                  context,
+                  () => model.changeAccentColor(tempShadeAcColor),
+                  model.primaryColor,
+                  model.accentColor);
+            },
+            trailing: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: model.accentColor,
+                    border: Border.all(
+                        color: CustomColor().primaryColorBrightness(model))))));
   }
 }
 
 class MyThemePicker extends StatefulWidget {
-  final ThemeModel theme;
-
-  const MyThemePicker(this.theme);
+  const MyThemePicker();
 
   _MyThemePickerState createState() => _MyThemePickerState();
 }
@@ -205,11 +201,7 @@ class _MyThemePickerState extends State<MyThemePicker> {
         ]);
 
     // show the dialog
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return dialog;
-        });
+    showDialog(context: context, builder: (BuildContext context) => dialog);
   }
 
   String themeName(ThemeModel model) {
@@ -225,26 +217,24 @@ class _MyThemePickerState extends State<MyThemePicker> {
 
   @override
   Widget build(BuildContext context) {
-    int currentTheme() {
-      return widget.theme.type == ThemeType.light
-          ? 0
-          : widget.theme.type == ThemeType.dark
-              ? 1
-              : widget.theme.type == ThemeType.custom
-                  ? 2
-                  : widget.theme.type == ThemeType.black ? 3 : 0;
-    }
-
-    themeGroupValue = currentTheme();
     return Consumer<ThemeModel>(builder: (context, model, child) {
+      int currentTheme() {
+        return model.type == ThemeType.light
+            ? 0
+            : model.type == ThemeType.dark
+                ? 1
+                : model.type == ThemeType.custom
+                    ? 2
+                    : model.type == ThemeType.black ? 3 : 0;
+      }
+
+      themeGroupValue = currentTheme();
       return ListTile(
           leading: Icon(Icons.color_lens,
               color: CustomColor().themeBrightnessColor(context)),
           title: Text("General theme"),
           subtitle: Text(themeName(model)),
-          onTap: () {
-            _showAlertDialog(context, model);
-          });
+          onTap: () => _showAlertDialog(context, model));
     });
   }
 }
