@@ -10,13 +10,22 @@ class RecordButton extends StatefulWidget {
   final Color textColor;
   final bool initRecorded;
   final RecordedCallback onRecordedChanged;
+  final int type;
 
-  RecordButton(this.initRecorded, {this.onRecordedChanged, this.selectedColor, this.unselectedColor, this.textColor});
+  RecordButton.icon(this.initRecorded,
+      {this.onRecordedChanged,
+      this.selectedColor,
+      this.unselectedColor,
+      this.textColor}) : type = 0;
+
+  RecordButton.button(this.initRecorded,
+      {this.onRecordedChanged,
+      this.selectedColor,
+      this.unselectedColor,
+      this.textColor}) : type = 1;
 
   @override
-  _RecordButtonState createState() {
-    return _RecordButtonState();
-  }
+  _RecordButtonState createState() => _RecordButtonState();
 }
 
 class _RecordButtonState extends State<RecordButton> {
@@ -37,31 +46,49 @@ class _RecordButtonState extends State<RecordButton> {
     });
   }
 
-   @override
+  @override
   void didUpdateWidget(RecordButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _recorded = widget.initRecorded;
+    /// Wait for 'device recognition' update
+    // TODO _recorded = widget.initRecorded;
   }
 
   @override
   Widget build(BuildContext context) {
     final accentColor = widget.selectedColor ?? Theme.of(context).accentColor;
-    if (_recorded) {
-      final textStyle = TextStyle(
-          color: CustomColor().backGroundColorBrightness(accentColor));
+    final textColor = widget.textColor ?? CustomColor().themeBrightnessColor(context);
+
+    Widget _iconButton() {
+      return IconButton(
+          icon: Icon(_recorded ? Icons.access_time : Icons.save),
+          color: _recorded ? accentColor : textColor.withOpacity(0.3),
+          onPressed: () => setRecorded(!_recorded));
+    }
+
+    Widget _outlineButton() {
+      return OutlineButton(
+          borderSide: BorderSide(color: accentColor),
+          color: Colors.redAccent,
+          child: Text("Record", style: TextStyle(color: textColor)),
+          onPressed: () => setRecorded(true));
+    }
+
+    Widget _flatButton() {
+      final textStyle = TextStyle(color: CustomColor().backGroundColorBrightness(accentColor));
       return FlatButton(
           color: accentColor,
           child: Text("Queued", style: textStyle),
-          onPressed: () {
-            setRecorded(false);
-          });
+          onPressed: () => setRecorded(false));
     }
 
-    return OutlineButton(
-        borderSide: BorderSide(color: accentColor),
-        child: Text("Record", style: TextStyle(color: widget.textColor ?? CustomColor().themeBrightnessColor(context))),
-        onPressed: () {
-          setRecorded(true);
-        });
+    if (widget.type == 1) {
+      if (_recorded) {
+        return _flatButton();
+      } else {
+        return _outlineButton();
+      }
+    } else {
+      return _iconButton();
+    }
   }
 }
