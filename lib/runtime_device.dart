@@ -12,7 +12,6 @@ class RuntimeDevice {
   IosDeviceInfo _ios;
   bool _hasTouch = false;
   bool _registeredInOurDB = false;
-  
 
   factory RuntimeDevice() {
     return _instance;
