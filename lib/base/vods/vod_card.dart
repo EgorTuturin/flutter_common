@@ -9,6 +9,7 @@ class VodCard extends StatelessWidget {
   final double height;
   final double borderRadius;
   final Function onPressed;
+  final Function onLongPressed;
 
   VodCard(
       {this.iconLink,
@@ -17,7 +18,8 @@ class VodCard extends StatelessWidget {
       this.height,
       this.width,
       this.borderRadius,
-      this.onPressed});
+      this.onPressed,
+      this.onLongPressed});
 
   static const double BORDER_RADIUS = 2.0;
   static const CARD_WIDTH = 172.0;
@@ -66,7 +68,15 @@ class VodCard extends StatelessWidget {
                       height: 5,
                       width: timeLine(),
                       color: Theme.of(context).accentColor)),
-              InkWell(onTap: () => onPressed())
+              InkWell(onTap: () {
+                if (onPressed != null) {
+                  onPressed();
+                }
+              }, onLongPress: () {
+                if (onLongPressed != null) {
+                  onLongPressed();
+                }
+              })
             ])));
   }
 }
