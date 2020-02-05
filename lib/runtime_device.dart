@@ -1,4 +1,5 @@
 import 'dart:io' show Platform;
+import 'dart:async';
 
 import 'package:device_info/device_info.dart';
 
@@ -6,20 +7,17 @@ import 'package:fastotv_device_info/device.dart';
 import 'package:fastotv_device_info/devices.dart';
 
 class RuntimeDevice {
-  static RuntimeDevice _instance;
+  static final RuntimeDevice _instance = RuntimeDevice._internal();
   AndroidDeviceInfo _android;
   IosDeviceInfo _ios;
-  bool _hasTouch = false;
+  bool _hasTouch;
   bool _registeredInOurDB = false;
 
-  static Future<RuntimeDevice> getInstance() async {
-    if (_instance == null) {
-      _instance = RuntimeDevice();
-      _instance._init();
-    }
-
+  factory RuntimeDevice() {
     return _instance;
   }
+
+  RuntimeDevice._internal();
 
   String arch = 'unknown';
   String cpuBrand = 'unknown';
@@ -55,8 +53,7 @@ class RuntimeDevice {
     return _currentDevice.name;
   }
 
-  // private:
-  void _init() async {
+  Future<void> init() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     if (Platform.isIOS) {
       _ios = await deviceInfoPlugin.iosInfo;
@@ -90,5 +87,6 @@ class RuntimeDevice {
       }
     }
     _hasTouch = await _currentDevice.hasTouch();
+    print('Touch initialized: [hasTouch: ' + '$_hasTouch' + ']');
   }
 }
