@@ -87,6 +87,5 @@ class RuntimeDevice {
       }
     }
     _hasTouch = await _currentDevice.hasTouch();
-    print('Touch initialized: [hasTouch: ' + '$_hasTouch' + ']');
   }
 }

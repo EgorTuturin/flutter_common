@@ -15,6 +15,7 @@ dependencies:
   intl: ^0.16.0
   flutter_material_color_picker: ^1.0.5
   device_info: ^0.4.1+4
+  package_info: ^0.4.0+13
   fastotv_device_info:
     git:
       url: https://github.com/fastogt/fastotv_device_info.git
