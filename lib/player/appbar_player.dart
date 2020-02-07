@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:core';
-import 'dart:html';
 import 'package:screen/screen.dart';
 
 import 'package:flutter/material.dart';
