@@ -80,6 +80,9 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
   @override void didChangeMetrics() {
     setState(() {
       _orientation = MediaQuery.of(context).orientation;
+      if(_orientation == Orientation.portrait){
+        isVisiblePrograms = true;
+      }
     });
   }
 
