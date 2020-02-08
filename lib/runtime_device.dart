@@ -7,17 +7,19 @@ import 'package:fastotv_device_info/device.dart';
 import 'package:fastotv_device_info/devices.dart';
 
 class RuntimeDevice {
-  static final RuntimeDevice _instance = RuntimeDevice._internal();
+  static RuntimeDevice _instance;
   AndroidDeviceInfo _android;
   IosDeviceInfo _ios;
   bool _hasTouch;
   bool _registeredInOurDB = false;
 
-  factory RuntimeDevice() {
+  static Future<RuntimeDevice> getInstance() async {
+    if (_instance == null) {
+      _instance = RuntimeDevice();
+      _instance._init();
+    }
     return _instance;
   }
-
-  RuntimeDevice._internal();
 
   String arch = 'unknown';
   String cpuBrand = 'unknown';
@@ -53,7 +55,7 @@ class RuntimeDevice {
     return _currentDevice.name;
   }
 
-  Future<void> init() async {
+  Future<void> _init() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     if (Platform.isIOS) {
       _ios = await deviceInfoPlugin.iosInfo;
