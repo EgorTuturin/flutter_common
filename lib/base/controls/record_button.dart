@@ -39,7 +39,6 @@ class _RecordButtonState extends State<RecordButton> {
 
   void setRecorded(bool recorded) {
     setState(() {
-      _recorded = recorded;
       if (widget.onRecordedChanged != null) {
         widget.onRecordedChanged(recorded);
       }
@@ -49,8 +48,7 @@ class _RecordButtonState extends State<RecordButton> {
   @override
   void didUpdateWidget(RecordButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    /// Wait for 'device recognition' update
-    // TODO _recorded = widget.initRecorded;
+    _recorded = widget.initRecorded;
   }
 
   @override

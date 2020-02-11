@@ -13,9 +13,11 @@ import 'package:fastotv_common/colors.dart';
 enum OverlayControl { NONE, VOLUME, BRIGHTNESS, SEEK_FORWARD, SEEK_REPLAY }
 
 abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   static const int APPBAR_TIMEOUT = 5;
   static const APPBAR_HEIGHT = 56.0;
+
+  Orientation _orientation;
 
   double playerOverlayOpacity = 0.0;
   OverlayControl currentPlayerControl = OverlayControl.NONE;
@@ -64,6 +66,7 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _appBarVisible = true;
     _initPlatformState();
     setTimerOverlays();
@@ -74,8 +77,18 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
     WidgetsBinding.instance.addPostFrameCallback((_) => isVisiblePrograms = orientation.isPortrait(context));
   }
 
+  @override void didChangeMetrics() {
+    setState(() {
+      _orientation = MediaQuery.of(context).orientation;
+      if(_orientation == Orientation.portrait){
+        isVisiblePrograms = true;
+      }
+    });
+  }
+
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _appbarController.dispose();
     _bottomOverlayController.dispose();
     _timer?.cancel();
@@ -88,6 +101,7 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     final double bottomHeight = bottomControlsHeight();
+    _orientation = MediaQuery.of(context).orientation;
     //Animates appBar
     Animation<Offset> offsetAnimation = new Tween<Offset>(
       begin: Offset(0.0, -(APPBAR_HEIGHT + statusBarHeight)),
@@ -151,8 +165,8 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
                         })
                   ]))
         ]));
-    final ora = OrientationBuilder(builder: (context, orientation) {
-      if (orientation == Orientation.landscape) {
+    final ora = Builder(builder: (context) {
+      if (_orientation == Orientation.landscape) {
         return Row(children: <Widget>[player, sideList()]);
       }
       return Column(children: <Widget>[
