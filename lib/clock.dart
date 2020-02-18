@@ -9,10 +9,11 @@ class Clock extends StatefulWidget {
   final double dateFontSize;
   final double timeFontSize;
   final double width;
+  final Color textColor;
 
-  Clock.date({this.dateFontSize, this.timeFontSize, this.width}) : type = 1;
-  Clock.time({this.dateFontSize, this.timeFontSize, this.width}) : type = 2;
-  Clock.full({this.dateFontSize, this.timeFontSize, this.width}) : type = 3;
+  Clock.date({this.dateFontSize, this.timeFontSize, this.width, this.textColor}) : type = 1;
+  Clock.time({this.dateFontSize, this.timeFontSize, this.width, this.textColor}) : type = 2;
+  Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor}) : type = 3;
 
   @override
   _ClockState createState() => _ClockState();
@@ -42,8 +43,8 @@ class _ClockState extends State<Clock> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(_timeString, style: TextStyle(fontSize: widget.timeFontSize ?? 24)),
-                  Text(_dateString, style: TextStyle(fontSize: widget.dateFontSize ?? 18))
+                  Text(_timeString, style: TextStyle(fontSize: widget.timeFontSize ?? 24, color: widget.textColor)),
+                  Text(_dateString, style: TextStyle(fontSize: widget.dateFontSize ?? 18, color: widget.textColor))
                 ])));
   }
 
