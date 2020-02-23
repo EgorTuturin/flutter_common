@@ -33,7 +33,8 @@ class NonAvailableBuffer extends StatelessWidget {
                   ? SizedBox()
                   : Text(message,
                       style: TextStyle(fontSize: textSize ?? 20, color: color),
-                      textAlign: TextAlign.center)
+                      textAlign: TextAlign.center,
+                      softWrap: true)
             ]));
   }
 }
