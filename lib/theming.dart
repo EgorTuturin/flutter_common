@@ -8,11 +8,14 @@ import 'package:fastotv_common/colors.dart';
 const BUTTON_OPACITY = 0.5;
 
 class MyColorPicker extends StatefulWidget {
-  const MyColorPicker.primary() : color = 0;
+  final String dialogHeader;
+  final String tileTitle;
+  final String cancel;
+  final String submit; 
 
-  const MyColorPicker.accent() : color = 1;
+  const MyColorPicker.primary({this.dialogHeader, this.tileTitle, this.submit, this.cancel}) : color = 0;
 
-  const MyColorPicker.reset() : color = 2;
+  const MyColorPicker.accent({this.dialogHeader, this.tileTitle, this.submit, this.cancel}) : color = 1;
 
   final int color;
 
@@ -26,8 +29,7 @@ class _PrimaryColorPickerState extends State<MyColorPicker> {
   Color shadeAcColor;
   Color tempShadeAcColor;
 
-  void _openDialog(
-      BuildContext context, String title, Widget content, void changeColor()) {
+  void _openDialog(BuildContext context, String title, Widget content, void changeColor()) {
     showDialog(
         context: context,
         builder: (_) {
@@ -39,13 +41,13 @@ class _PrimaryColorPickerState extends State<MyColorPicker> {
                 Opacity(
                     opacity: BUTTON_OPACITY,
                     child: FlatButton(
-                        child: Text('CANCEL'),
+                        child: Text(widget.cancel ?? 'CANCEL'),
                         textColor: CustomColor().themeBrightnessColor(context),
                         onPressed: () {
                           Navigator.of(context).pop();
                         })),
                 FlatButton(
-                    child: Text('SUBMIT'),
+                    child: Text(widget.submit ?? 'SUBMIT'),
                     textColor: Theme.of(context).accentColor,
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -55,11 +57,10 @@ class _PrimaryColorPickerState extends State<MyColorPicker> {
         });
   }
 
-  void _openColorPicker(BuildContext context, void changeColor(), Color primary,
-      Color accent) async {
+  void _openColorPicker(BuildContext context, void changeColor(), Color primary, Color accent) async {
     _openDialog(
         context,
-        "Color picker",
+        widget.dialogHeader ?? "Color picker",
         MaterialColorPicker(
             shrinkWrap: true,
             iconSelected: Icons.check,
@@ -89,50 +90,40 @@ class _PrimaryColorPickerState extends State<MyColorPicker> {
   Widget _primary() {
     return Consumer<ThemeModel>(builder: (context, model, child) {
       return ListTile(
-          leading: Icon(Icons.format_color_fill,
-              color: CustomColor().themeBrightnessColor(context)),
-          title: Text("Primary color"),
+          leading: Icon(Icons.format_color_fill, color: CustomColor().themeBrightnessColor(context)),
+          title: Text(widget.tileTitle ?? "Primary color"),
           subtitle: Text(Theme.of(context).accentColor.toString()),
-          onTap: () {
-            _openColorPicker(
-                context,
-                () => model.changePrimaryColor(tempShadePrColor),
-                model.primaryColor,
-                model.accentColor);
-          },
-          trailing: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: model.primaryColor,
-                  border: Border.all(
-                      color: CustomColor().primaryColorBrightness(model)))));
+          onTap: () => _onTap(tempShadePrColor, model),
+          trailing: _colorCircle(model.primaryColor, model));
     });
   }
 
   Widget _accent() {
     return Consumer<ThemeModel>(
         builder: (context, model, child) => ListTile(
-            leading: Icon(Icons.colorize,
-                color: CustomColor().themeBrightnessColor(context)),
-            title: Text("Accent color"),
+            leading: Icon(Icons.colorize, color: CustomColor().themeBrightnessColor(context)),
+            title: Text(widget.tileTitle ?? "Accent color"),
             subtitle: Text(Theme.of(context).accentColor.toString()),
-            onTap: () {
-              _openColorPicker(
-                  context,
-                  () => model.changeAccentColor(tempShadeAcColor),
-                  model.primaryColor,
-                  model.accentColor);
-            },
-            trailing: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: model.accentColor,
-                    border: Border.all(
-                        color: CustomColor().primaryColorBrightness(model))))));
+            onTap: () => _onTap(tempShadeAcColor, model),
+            trailing: _colorCircle(model.accentColor, model)));
+  }
+
+  Widget _colorCircle(Color color, ThemeModel model) {
+    return Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: color,
+            border: Border.all(color: CustomColor().primaryColorBrightness(model))));
+  }
+
+  void _onTap(Color color, ThemeModel model) {
+    _openColorPicker(
+      context,
+      () => model.changePrimaryColor(tempShadePrColor),
+      model.primaryColor,
+      model.accentColor);
   }
 }
 
