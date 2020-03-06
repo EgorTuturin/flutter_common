@@ -11,18 +11,22 @@ class RecordButton extends StatefulWidget {
   final bool initRecorded;
   final RecordedCallback onRecordedChanged;
   final int type;
+  final String queuedText;
+  final String recordText;
 
   RecordButton.icon(this.initRecorded,
       {this.onRecordedChanged,
       this.selectedColor,
       this.unselectedColor,
-      this.textColor}) : type = 0;
+      this.textColor}) : type = 0, queuedText = '', recordText = '';
 
   RecordButton.button(this.initRecorded,
       {this.onRecordedChanged,
       this.selectedColor,
       this.unselectedColor,
-      this.textColor}) : type = 1;
+      this.textColor,
+      this.queuedText,
+      this.recordText}) : type = 1;
 
   @override
   _RecordButtonState createState() => _RecordButtonState();
@@ -67,7 +71,7 @@ class _RecordButtonState extends State<RecordButton> {
       return OutlineButton(
           borderSide: BorderSide(color: accentColor),
           color: Colors.redAccent,
-          child: Text("Record", style: TextStyle(color: textColor)),
+          child: Text(widget.recordText ?? "Record", style: TextStyle(color: textColor)),
           onPressed: () => setRecorded(true));
     }
 
@@ -75,7 +79,7 @@ class _RecordButtonState extends State<RecordButton> {
       final textStyle = TextStyle(color: CustomColor().backGroundColorBrightness(accentColor));
       return FlatButton(
           color: accentColor,
-          child: Text("Queued", style: textStyle),
+          child: Text(widget.queuedText ?? "Queued", style: textStyle),
           onPressed: () => setRecorded(false));
     }
 

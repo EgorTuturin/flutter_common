@@ -137,13 +137,41 @@ class _PrimaryColorPickerState extends State<MyColorPicker> {
 }
 
 class MyThemePicker extends StatefulWidget {
-  const MyThemePicker();
+
+  final String tileTitle;
+  final String dialogTitle;
+  final String light;
+  final String dark;
+  final String lightColor;
+  final String darkColor;
+
+  const MyThemePicker({
+    this.tileTitle,
+    this.dialogTitle,
+    this.light,
+    this.dark,
+    this.lightColor,
+    this.darkColor
+  });
 
   _MyThemePickerState createState() => _MyThemePickerState();
 }
 
 class _MyThemePickerState extends State<MyThemePicker> {
   int themeGroupValue = 0;
+  String light;
+  String dark;
+  String lightColor;
+  String darkColor;
+
+  @override
+  void initState() {
+    super.initState();
+    light = widget.light ?? 'Light';
+    dark = widget.dark ?? 'Dark';
+    lightColor = widget.lightColor ?? 'Colored light';
+    darkColor = widget.darkColor ?? 'Colored dark';
+  }
 
   void _handleTheme(int value, ThemeModel model) {
     setState(() {
@@ -192,12 +220,12 @@ class _MyThemePickerState extends State<MyThemePicker> {
   void _showAlertDialog(BuildContext context, ThemeModel model) {
     final dialog = SimpleDialog(
         contentPadding: EdgeInsets.fromLTRB(0.0, 24.0, 0.0, 0.0),
-        title: const Text('Choose theme'),
+        title: Text(widget.dialogTitle ?? 'Choose theme'),
         children: <Widget>[
-          _dialogItem("Light", 0, model),
-          _dialogItem("Dark", 1, model),
-          _dialogItem("Colored light", 2, model),
-          _dialogItem("Colored dark", 3, model)
+          _dialogItem(light, 0, model),
+          _dialogItem(dark, 1, model),
+          _dialogItem(lightColor, 2, model),
+          _dialogItem(darkColor, 3, model)
         ]);
 
     // show the dialog
@@ -206,13 +234,13 @@ class _MyThemePickerState extends State<MyThemePicker> {
 
   String themeName(ThemeModel model) {
     if (model.type == ThemeType.dark) {
-      return 'Dark';
+      return dark;
     } else if (model.type == ThemeType.custom) {
-      return 'Colored light';
+      return lightColor;
     } else if (model.type == ThemeType.black) {
-      return 'Colored dark';
+      return darkColor;
     }
-    return 'Light';
+    return light;
   }
 
   @override
@@ -230,9 +258,8 @@ class _MyThemePickerState extends State<MyThemePicker> {
 
       themeGroupValue = currentTheme();
       return ListTile(
-          leading: Icon(Icons.color_lens,
-              color: CustomColor().themeBrightnessColor(context)),
-          title: Text("General theme"),
+          leading: Icon(Icons.color_lens, color: CustomColor().themeBrightnessColor(context)),
+          title: Text(widget.tileTitle ?? "General theme"),
           subtitle: Text(themeName(model)),
           onTap: () => _showAlertDialog(context, model));
     });
