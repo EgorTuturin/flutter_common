@@ -16,39 +16,32 @@ class CustomWrap extends StatelessWidget {
       this.verticalPadding,
       this.scrollController});
 
-  int _maxItemCount;
-  List<List<Widget>> rows = [];
-  double _vertPadding;
-  double _horPadding;
-
   @override
   Widget build(BuildContext context) {
-    _vertPadding = verticalPadding ?? 0;
-    _horPadding = horizontalPadding ?? 0;
-    _maxItemCount = width ~/ (itemWidth + _horPadding);
-    _splitRows();
-    return Padding(
-        padding: EdgeInsets.symmetric(vertical: _vertPadding),
-        child: ListView.separated(
-            separatorBuilder: (context, index) => SizedBox(height: _vertPadding),
-            itemCount: rows.length,
-            itemBuilder: (context, index) {
-              return Row(
-                  mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.max, children: rows[index]);
-            }));
-  }
+    double vertPadding = verticalPadding ?? 0;
+    double horPadding = horizontalPadding ?? 0;
 
-  void _splitRows() {
-    int i = 0;
-    for (i = 0; i < children.length; i++) {
+    final int maxItemCountPerRow = (width ~/ (itemWidth + horPadding));
+    List<List<Widget>> rows = [];
+    for (int i = 0; i < children.length; i += maxItemCountPerRow) {
       List<Widget> row = [];
-      for (int k = 0; k < _maxItemCount && i < children.length; k++) {
-        row.add(children[i]);
-        row.add(SizedBox(width: _horPadding));
-        i++;
+      for (int k = 0; k < maxItemCountPerRow; k++) {
+        row.add(children[i + k]);
+        final box = SizedBox(width: horPadding);
+        row.add(box);
       }
       row.removeLast();
       rows.add(row);
     }
+    return Padding(
+        padding: EdgeInsets.symmetric(vertical: vertPadding),
+        child: ListView.separated(
+            separatorBuilder: (context, index) => SizedBox(height: vertPadding),
+            itemCount: rows.length,
+            itemBuilder: (context, index) {
+              final row = Row(
+                  mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.max, children: rows[index]);
+              return row;
+            }));
   }
 }
