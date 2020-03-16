@@ -12,7 +12,9 @@ class Clock extends StatefulWidget {
   final Color textColor;
 
   Clock.date({this.dateFontSize, this.timeFontSize, this.width, this.textColor}) : type = 1;
+
   Clock.time({this.dateFontSize, this.timeFontSize, this.width, this.textColor}) : type = 2;
+
   Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor}) : type = 3;
 
   @override
@@ -29,8 +31,7 @@ class _ClockState extends State<Clock> {
     super.initState();
     initializeDateFormatting();
     _updateDate();
-    _timer =
-        Timer.periodic(Duration(minutes: 1), (Timer t) => _getCurrentTime());
+    _timer = Timer.periodic(Duration(minutes: 1), (Timer t) => _getCurrentTime());
   }
 
   @override
@@ -39,13 +40,11 @@ class _ClockState extends State<Clock> {
         padding: EdgeInsets.only(left: 8.0, right: 16),
         child: Container(
             width: widget.width ?? 100,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(_timeString, style: TextStyle(fontSize: widget.timeFontSize ?? 24, color: widget.textColor)),
-                  Text(_dateString, style: TextStyle(fontSize: widget.dateFontSize ?? 18, color: widget.textColor))
-                ])));
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: <Widget>[
+              Text(_timeString, style: TextStyle(fontSize: widget.timeFontSize ?? 24, color: widget.textColor)),
+              Text(_dateString, style: TextStyle(fontSize: widget.dateFontSize ?? 18, color: widget.textColor))
+            ])));
   }
 
   @override

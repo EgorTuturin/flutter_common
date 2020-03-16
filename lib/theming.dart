@@ -6,11 +6,12 @@ import 'package:flutter_material_color_picker/flutter_material_color_picker.dart
 import 'package:fastotv_common/colors.dart';
 
 const BUTTON_OPACITY = 0.5;
+
 class MyColorPicker extends StatefulWidget {
   final String dialogHeader;
   final String tileTitle;
   final String cancel;
-  final String submit; 
+  final String submit;
 
   const MyColorPicker.primary({this.dialogHeader, this.tileTitle, this.submit, this.cancel}) : color = 0;
 
@@ -43,9 +44,8 @@ class _ColorPickerState extends State<MyColorPicker> {
         shrinkWrap: true,
         iconSelected: Icons.check,
         selectedColor: widget.color == 0 ? model.primaryColor : model.accentColor,
-        onColorChange: (color) => widget.color == 0
-            ? setState(() => tempShadePrColor = color)
-            : setState(() => tempShadeAcColor = color));
+        onColorChange: (color) =>
+            widget.color == 0 ? setState(() => tempShadePrColor = color) : setState(() => tempShadeAcColor = color));
   }
 
   Widget _cancel(ThemeModel model) {
@@ -63,9 +63,7 @@ class _ColorPickerState extends State<MyColorPicker> {
         textColor: model.accentColor,
         onPressed: () {
           Navigator.of(context).pop();
-          widget.color == 0
-              ? _setPrimary(model, tempShadePrColor)
-              : _setAccent(model, tempShadeAcColor);
+          widget.color == 0 ? _setPrimary(model, tempShadePrColor) : _setAccent(model, tempShadeAcColor);
         });
   }
 
@@ -111,12 +109,11 @@ class _ColorPickerState extends State<MyColorPicker> {
   }
 
   void _setPrimary(ThemeModel model, Color color) => model.changePrimaryColor(color);
-  
+
   void _setAccent(ThemeModel model, Color color) => model.changeAccentColor(color);
 }
 
 class MyThemePicker extends StatefulWidget {
-
   final String tileTitle;
   final String dialogTitle;
   final String light;
@@ -124,14 +121,7 @@ class MyThemePicker extends StatefulWidget {
   final String lightColor;
   final String darkColor;
 
-  const MyThemePicker({
-    this.tileTitle,
-    this.dialogTitle,
-    this.light,
-    this.dark,
-    this.lightColor,
-    this.darkColor
-  });
+  const MyThemePicker({this.tileTitle, this.dialogTitle, this.light, this.dark, this.lightColor, this.darkColor});
 
   _MyThemePickerState createState() => _MyThemePickerState();
 }
@@ -230,9 +220,7 @@ class _MyThemePickerState extends State<MyThemePicker> {
             ? 0
             : model.type == ThemeType.dark
                 ? 1
-                : model.type == ThemeType.custom
-                    ? 2
-                    : model.type == ThemeType.black ? 3 : 0;
+                : model.type == ThemeType.custom ? 2 : model.type == ThemeType.black ? 3 : 0;
       }
 
       themeGroupValue = currentTheme();
@@ -253,14 +241,11 @@ class ListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(left: 16.0, right: 16.0),
-        child:
-            Row(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
+        child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
           SizedBox(height: 32),
           Align(
               alignment: Alignment.bottomRight,
-              child: Text(text,
-                  style: TextStyle(
-                      fontSize: 14, color: Theme.of(context).accentColor)))
+              child: Text(text, style: TextStyle(fontSize: 14, color: Theme.of(context).accentColor)))
         ]));
   }
 }

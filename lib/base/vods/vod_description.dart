@@ -29,13 +29,11 @@ class CircleProgress extends CustomPainter {
     Offset center = Offset(size.width / 2, size.height / 2);
     double radius = min(size.width / 2, size.height / 2) - WIDTH_CONTROL;
 
-    canvas.drawCircle(
-        center, radius, outerCircle); // this draws main outer circle
+    canvas.drawCircle(center, radius, outerCircle); // this draws main outer circle
 
     double angle = 2 * pi * (currentProgress / 100);
 
-    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2,
-        angle, false, completeArc);
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2, angle, false, completeArc);
   }
 
   @override
@@ -57,23 +55,18 @@ class UserScore extends StatelessWidget {
     Widget circleIndicator(double score) {
       return Center(
           child: CustomPaint(
-              foregroundPainter: CircleProgress(
-                  score, context), // this will add custom painter after child
+              foregroundPainter: CircleProgress(score, context), // this will add custom painter after child
               child: Container(
                   width: size * 4,
                   height: size * 4,
-                  child: Center(
-                      child: Text(score.toStringAsFixed(0),
-                          style: TextStyle(fontSize: size / 3 * 4))))));
+                  child: Center(child: Text(score.toStringAsFixed(0), style: TextStyle(fontSize: size / 3 * 4))))));
     }
 
     return Row(children: <Widget>[
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-        Text('User',
-            style: TextStyle(fontSize: size + 4, fontWeight: FontWeight.bold)),
+        Text('User', style: TextStyle(fontSize: size + 4, fontWeight: FontWeight.bold)),
         SizedBox(height: 4),
-        Text("score",
-            style: TextStyle(fontSize: size + 4, fontWeight: FontWeight.bold))
+        Text("score", style: TextStyle(fontSize: size + 4, fontWeight: FontWeight.bold))
       ]),
       SizedBox(width: 8),
       circleIndicator(score)
@@ -93,13 +86,11 @@ class VodDescriptionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return description == ''
-        ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-                Icon(Icons.warning),
-                SizedBox(height: 8),
-                Flexible(child: Text("No description provided", softWrap: true))
-              ])
+        ? Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            Icon(Icons.warning),
+            SizedBox(height: 8),
+            Flexible(child: Text("No description provided", softWrap: true))
+          ])
         : SingleChildScrollView(
             controller: scrollController ?? ScrollController(),
             child: Padding(
@@ -112,17 +103,12 @@ class VodDescriptionText extends StatelessWidget {
                       Row(children: <Widget>[
                         Text('Description',
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: (textSize ?? TEXT_SIZE) + 8,
-                                fontWeight: FontWeight.bold))
+                            style: TextStyle(fontSize: (textSize ?? TEXT_SIZE) + 8, fontWeight: FontWeight.bold))
                       ]),
                       SizedBox(height: 8),
                       Row(children: <Widget>[
                         Flexible(
-                            child: Text(description,
-                                style:
-                                    TextStyle(fontSize: textSize ?? TEXT_SIZE),
-                                softWrap: true))
+                            child: Text(description, style: TextStyle(fontSize: textSize ?? TEXT_SIZE), softWrap: true))
                       ])
                     ])));
   }
@@ -141,14 +127,10 @@ class SideInfoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(padding ?? 8),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(title,
-                  style: TextStyle(
-                      fontSize: fontSize ?? 14, fontWeight: FontWeight.bold)),
-              SizedBox(height: betweenLines ?? 4),
-              Text(data ?? 'N/A', style: TextStyle(fontSize: fontSize ?? 14))
-            ]));
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          Text(title, style: TextStyle(fontSize: fontSize ?? 14, fontWeight: FontWeight.bold)),
+          SizedBox(height: betweenLines ?? 4),
+          Text(data ?? 'N/A', style: TextStyle(fontSize: fontSize ?? 14))
+        ]));
   }
 }

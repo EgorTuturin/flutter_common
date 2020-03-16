@@ -38,8 +38,7 @@ class AppLocalizations {
 
   Future<bool> load(Locale locale) async {
     // Load the language JSON file from the "lang" folder
-    String jsonString =
-        await rootBundle.loadString('install/lang/${locale.languageCode}.json');
+    String jsonString = await rootBundle.loadString('install/lang/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map((key, value) {
@@ -55,8 +54,7 @@ class AppLocalizations {
     return _localizedStrings[key];
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   static Locale defaultLocale() {
     return SUPPORTED_LOCALES[0];
@@ -65,8 +63,7 @@ class AppLocalizations {
 
 // LocalizationsDelegate is a factory for a set of localized resources
 // In this case, the localized strings will be gotten in an AppLocalizations object
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   // This delegate instance will never change (it doesn't even have fields!)
   // It can provide a constant constructor.
   const _AppLocalizationsDelegate();

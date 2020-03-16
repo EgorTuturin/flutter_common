@@ -1,21 +1,19 @@
 name: fastotv_common
 author: Alexandr Topilski <support@fastogt.com>
-description:
+description: Common files for FastoTV project
 version: 1.0.0
 
 environment:
   sdk: '>=2.0.0 <3.0.0'
 
 dependencies:
-  crypto:
-  archive:
   dart_chromecast: ^0.1.2
   cached_network_image: ^2.0.0
   screen: ^0.0.5
   intl: ^0.16.0
   ntp: ^1.0.5
   flutter_material_color_picker: ^1.0.5
-  device_info: ^0.4.1+4
+  device_info: ^0.4.1+5
   package_info: ^0.4.0+13
   fastotv_device_info:
     git:
@@ -42,6 +40,3 @@ dependencies:
       url: git://github.com/fastogt/plugins.git
       ref: master
       path: packages/persist_theme
-
-dev_dependencies:
-  test: ^1.3.0

@@ -15,10 +15,10 @@ class RecordButton extends StatefulWidget {
   final String recordText;
 
   RecordButton.icon(this.initRecorded,
-      {this.onRecordedChanged,
-      this.selectedColor,
-      this.unselectedColor,
-      this.textColor}) : type = 0, queuedText = '', recordText = '';
+      {this.onRecordedChanged, this.selectedColor, this.unselectedColor, this.textColor})
+      : type = 0,
+        queuedText = '',
+        recordText = '';
 
   RecordButton.button(this.initRecorded,
       {this.onRecordedChanged,
@@ -26,7 +26,8 @@ class RecordButton extends StatefulWidget {
       this.unselectedColor,
       this.textColor,
       this.queuedText,
-      this.recordText}) : type = 1;
+      this.recordText})
+      : type = 1;
 
   @override
   _RecordButtonState createState() => _RecordButtonState();

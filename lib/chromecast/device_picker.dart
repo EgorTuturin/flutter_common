@@ -40,16 +40,12 @@ class _ChromeCastDevicePickerState extends State<ChromeCastDevicePicker> {
   }
 
   CastDevice _deviceByName(String name) {
-    return _devices.firstWhere((CastDevice d) => d.name == name,
-        orElse: () => null);
+    return _devices.firstWhere((CastDevice d) => d.name == name, orElse: () => null);
   }
 
   CastDevice _castDeviceFromServiceInfo(ServiceInfo serviceInfo) {
-    CastDevice castDevice = CastDevice(
-        name: serviceInfo.name,
-        type: serviceInfo.type,
-        host: serviceInfo.hostName,
-        port: serviceInfo.port);
+    CastDevice castDevice =
+        CastDevice(name: serviceInfo.name, type: serviceInfo.type, host: serviceInfo.hostName, port: serviceInfo.port);
     _streamSubscriptions.add(castDevice.changes.listen((_) => _deviceDidUpdate(castDevice)));
     return castDevice;
   }
@@ -57,18 +53,17 @@ class _ChromeCastDevicePickerState extends State<ChromeCastDevicePicker> {
   Widget _buildListViewItem(BuildContext context, int index) {
     CastDevice castDevice = _devices[index];
     return ListTile(
-      title: Text(castDevice.friendlyName),
-      onTap: () async {
-        if (null != ChromeCastInfo().onDevicePicked) {
-          setState(() {
-            isReady = false;
-          });
-          await ChromeCastInfo().onDevicePicked(castDevice);
-          // clean up steam listeners
-          _streamSubscriptions.forEach((StreamSubscription subscription) => subscription.cancel());
-        }
-      }
-    );
+        title: Text(castDevice.friendlyName),
+        onTap: () async {
+          if (null != ChromeCastInfo().onDevicePicked) {
+            setState(() {
+              isReady = false;
+            });
+            await ChromeCastInfo().onDevicePicked(castDevice);
+            // clean up steam listeners
+            _streamSubscriptions.forEach((StreamSubscription subscription) => subscription.cancel());
+          }
+        });
   }
 
   @override
@@ -80,18 +75,12 @@ class _ChromeCastDevicePickerState extends State<ChromeCastDevicePicker> {
                 //mainAxisSize: MainAxisSize.min,
                 children: isReady
                     ? new List<ListTile>.generate(_devices.length, (int index) => _buildListViewItem(context, index))
-                    : [
-                        Container(
-                            height: 56,
-                            child: Center(child: CircularProgressIndicator()))
-                      ])),
+                    : [Container(height: 56, child: Center(child: CircularProgressIndicator()))])),
         contentPadding: EdgeInsets.fromLTRB(8, 20.0, 8, 0),
         actions: <Widget>[
           isReady
               ? new FlatButton(
-                  child: new Text("Cancel",
-                      style: TextStyle(
-                          fontSize: 14, color: widget.buttonTextColor)),
+                  child: new Text("Cancel", style: TextStyle(fontSize: 14, color: widget.buttonTextColor)),
                   onPressed: () {
                     Navigator.pop(context, false);
                   })

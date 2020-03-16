@@ -70,17 +70,17 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
     _appBarVisible = true;
     _initPlatformState();
     setTimerOverlays();
-    _appbarController = AnimationController(
-        duration: const Duration(milliseconds: 100), value: 1.0, vsync: this);
-    _bottomOverlayController = AnimationController(
-        duration: const Duration(milliseconds: 100), value: 1.0, vsync: this);
+    _appbarController = AnimationController(duration: const Duration(milliseconds: 100), value: 1.0, vsync: this);
+    _bottomOverlayController =
+        AnimationController(duration: const Duration(milliseconds: 100), value: 1.0, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) => isVisiblePrograms = orientation.isPortrait(context));
   }
 
-  @override void didChangeMetrics() {
+  @override
+  void didChangeMetrics() {
     setState(() {
       _orientation = MediaQuery.of(context).orientation;
-      if(_orientation == Orientation.portrait){
+      if (_orientation == Orientation.portrait) {
         isVisiblePrograms = true;
       }
     });
@@ -125,60 +125,47 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
           Center(
               child: Opacity(
                   opacity: 0.5,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _currentPlayerControlWidget()))),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: _currentPlayerControlWidget()))),
 
           /// AppBar & bottom bar
           SingleChildScrollView(
               physics: NeverScrollableScrollPhysics(),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    //AppBar
-                    AnimatedBuilder(
-                        animation: offsetAnimation,
-                        builder: (context, child) {
-                          return Transform.translate(
-                            offset: offsetAnimation.value,
-                            child: Container(
-                                color: Colors.transparent,
-                                height: APPBAR_HEIGHT + statusBarHeight,
-                                child: appBar()),
-                          );
-                        }),
-                    //Gesture controller
-                    Container(
-                        key: _gestureControllerKey,
-                        height: MediaQuery.of(context).size.height -
-                            APPBAR_HEIGHT -
-                            statusBarHeight,
-                        child: _gestureController),
-                    //Bottom controls
-                    AnimatedBuilder(
-                        animation: bottomOffsetAnimation,
-                        builder: (context, child) {
-                          return Transform.translate(
-                            offset: bottomOffsetAnimation.value,
-                            child: bottomControls(),
-                          );
-                        })
-                  ]))
+              child: Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+                //AppBar
+                AnimatedBuilder(
+                    animation: offsetAnimation,
+                    builder: (context, child) {
+                      return Transform.translate(
+                        offset: offsetAnimation.value,
+                        child: Container(
+                            color: Colors.transparent, height: APPBAR_HEIGHT + statusBarHeight, child: appBar()),
+                      );
+                    }),
+                //Gesture controller
+                Container(
+                    key: _gestureControllerKey,
+                    height: MediaQuery.of(context).size.height - APPBAR_HEIGHT - statusBarHeight,
+                    child: _gestureController),
+                //Bottom controls
+                AnimatedBuilder(
+                    animation: bottomOffsetAnimation,
+                    builder: (context, child) {
+                      return Transform.translate(
+                        offset: bottomOffsetAnimation.value,
+                        child: bottomControls(),
+                      );
+                    })
+              ]))
         ]));
     final ora = Builder(builder: (context) {
       if (_orientation == Orientation.landscape) {
         return Row(children: <Widget>[player, sideList()]);
       }
-      return Column(children: <Widget>[
-        appBar(),
-        playerArea(),
-        bottomControls(),
-        sideList()
-      ]);
+      return Column(children: <Widget>[appBar(), playerArea(), bottomControls(), sideList()]);
     });
 
     return Scaffold(
-        backgroundColor:  backGroundColor()?.withOpacity(1),
+        backgroundColor: backGroundColor()?.withOpacity(1),
         resizeToAvoidBottomInset: false,
         body: Container(width: MediaQuery.of(context).size.width, child: ora));
   }
@@ -187,12 +174,12 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
   void setTimerOverlays() {
     _timer?.cancel();
     _timer = Timer(Duration(seconds: APPBAR_TIMEOUT), () {
-      if (orientation.isLandscape(context)){
+      if (orientation.isLandscape(context)) {
         setState(() {
           setOverlaysVisible(false);
         });
-      }else{
-      	_timer?.cancel();
+      } else {
+        _timer?.cancel();
       }
     });
   }
@@ -242,9 +229,9 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
   }
 
   void togglePlayPause() {
-    if(ChromeCastInfo().castConnected){
+    if (ChromeCastInfo().castConnected) {
       isPlaying() ? ChromeCastInfo().pause() : ChromeCastInfo().play();
-    } else{
+    } else {
       isPlaying() ? pause() : play();
     }
     if (orientation.isLandscape(context)) {
@@ -295,9 +282,7 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
         },
         onVerticalDragUpdate: (DragUpdateDetails details) {
           final isLeftPart = details.localPosition.dx < _getSizes().width / 2;
-          isLeftPart
-              ? _onVerticalDragUpdateVolume(details)
-              : _onVerticalDragUpdateBrightness(details);
+          isLeftPart ? _onVerticalDragUpdateVolume(details) : _onVerticalDragUpdateBrightness(details);
         },
         onVerticalDragStart: (DragStartDetails details) {
           _handleVerticalDragStart(details);
@@ -313,16 +298,14 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
           togglePlayPause();
         },
         child: Container(
-          foregroundDecoration:
-              new BoxDecoration(color: Color.fromRGBO(155, 85, 250, 0.0)),
+          foregroundDecoration: new BoxDecoration(color: Color.fromRGBO(155, 85, 250, 0.0)),
         ),
       ),
     );
   }
 
   Size _getSizes() {
-    final RenderBox renderBoxRed =
-        _gestureControllerKey.currentContext.findRenderObject();
+    final RenderBox renderBoxRed = _gestureControllerKey.currentContext.findRenderObject();
     return renderBoxRed.size;
   }
 
@@ -390,8 +373,7 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
     setState(() {
       playerOverlayOpacity = 0.5;
       final isLeftPart = details.localPosition.dx < _getSizes().width / 2;
-      currentPlayerControl =
-          isLeftPart ? OverlayControl.VOLUME : OverlayControl.BRIGHTNESS;
+      currentPlayerControl = isLeftPart ? OverlayControl.VOLUME : OverlayControl.BRIGHTNESS;
     });
   }
 
@@ -401,14 +383,12 @@ abstract class AppBarPlayer<T extends StatefulWidget> extends State<T>
       final currentVol = _volumeManager.currentVolume();
       return [
         Icon(Icons.volume_up, color: Colors.white, size: 84),
-        Text((currentVol / maxVol * 100).toStringAsFixed(0) + "%",
-            style: TextStyle(fontSize: 84, color: Colors.white))
+        Text((currentVol / maxVol * 100).toStringAsFixed(0) + "%", style: TextStyle(fontSize: 84, color: Colors.white))
       ];
     } else if (currentPlayerControl == OverlayControl.BRIGHTNESS) {
       return [
         Icon(Icons.brightness_high, color: Colors.white, size: 84),
-        Text((brightness * 100).toStringAsFixed(0) + "%",
-            style: TextStyle(fontSize: 84, color: Colors.white))
+        Text((brightness * 100).toStringAsFixed(0) + "%", style: TextStyle(fontSize: 84, color: Colors.white))
       ];
     } else if (currentPlayerControl == OverlayControl.SEEK_REPLAY) {
       return [Icon(Icons.replay_5, color: Colors.white, size: 84)];

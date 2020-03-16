@@ -15,15 +15,12 @@ class _CCDisconnectDialogState extends State<CCDisconnectDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
         title: new Text("Disconnect"),
-        content: new Text(
-            "Are you sure you want to disconnect and stop casting?",
-            softWrap: true),
+        content: new Text("Are you sure you want to disconnect and stop casting?", softWrap: true),
         contentPadding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0.0),
         actions: <Widget>[
           // usually buttons at the bottom of the dialog
           new FlatButton(
-              child: new Text("Cancel",
-                  style: TextStyle(fontSize: 14, color: widget.textColor)),
+              child: new Text("Cancel", style: TextStyle(fontSize: 14, color: widget.textColor)),
               onPressed: () {
                 Navigator.pop(context, false);
               }),

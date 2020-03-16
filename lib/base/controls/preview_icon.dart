@@ -8,6 +8,7 @@ class PreviewIcon extends StatelessWidget {
   final int type;
 
   PreviewIcon.live(this.link, {this.height, this.width}) : this.type = 0;
+
   PreviewIcon.vod(this.link, {this.height, this.width}) : this.type = 1;
 
   String assetsLink() {

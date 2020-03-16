@@ -68,7 +68,7 @@ abstract class LitePlayer<T extends StatefulWidget> extends State<T> {
   }
 
   Duration position() {
-    if(_controller == null){
+    if (_controller == null) {
       return Duration(milliseconds: 0);
     }
     return _controller.value.position;
@@ -106,13 +106,9 @@ abstract class LitePlayer<T extends StatefulWidget> extends State<T> {
                 future: _initializeVideoPlayerFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller));
+                    return AspectRatio(aspectRatio: _controller.value.aspectRatio, child: VideoPlayer(_controller));
                   }
-                  return AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Center(child: CircularProgressIndicator()));
+                  return AspectRatio(aspectRatio: 16 / 9, child: Center(child: CircularProgressIndicator()));
                 })));
   }
 
@@ -123,8 +119,7 @@ abstract class LitePlayer<T extends StatefulWidget> extends State<T> {
 
     VideoPlayerController old = _controller;
     _controller = VideoPlayerController.network(url);
-    _initializeVideoPlayerFuture =
-        _controller.initialize().whenComplete(() => seekToInterrupt());
+    _initializeVideoPlayerFuture = _controller.initialize().whenComplete(() => seekToInterrupt());
     if (old != null) {
       //old.pause();
       Future.delayed(Duration(milliseconds: 100)).then((_) {

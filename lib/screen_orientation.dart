@@ -24,10 +24,10 @@ void allowAll() {
   ]);
 }
 
-bool isLandscape(BuildContext context){
+bool isLandscape(BuildContext context) {
   return MediaQuery.of(context).orientation == Orientation.landscape;
 }
 
-bool isPortrait(BuildContext context){
+bool isPortrait(BuildContext context) {
   return MediaQuery.of(context).orientation == Orientation.portrait;
 }

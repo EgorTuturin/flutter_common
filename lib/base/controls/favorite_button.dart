@@ -8,8 +8,7 @@ class FavoriteStarButton extends StatefulWidget {
   final FavoriteCallback onFavoriteChanged;
   final bool initFavorite;
 
-  FavoriteStarButton(this.initFavorite,
-      {this.selectedColor, this.unselectedColor, this.onFavoriteChanged});
+  FavoriteStarButton(this.initFavorite, {this.selectedColor, this.unselectedColor, this.onFavoriteChanged});
 
   @override
   _FavoriteStarButtonState createState() {
@@ -44,8 +43,7 @@ class _FavoriteStarButtonState extends State<FavoriteStarButton> {
   @override
   Widget build(BuildContext context) {
     final selectedColor = widget.selectedColor ?? Theme.of(context).accentColor;
-    final unselectedColor =
-        widget.unselectedColor ?? Theme.of(context).unselectedWidgetColor;
+    final unselectedColor = widget.unselectedColor ?? Theme.of(context).unselectedWidgetColor;
     return IconButton(
         padding: EdgeInsets.all(0.0),
         onPressed: () {

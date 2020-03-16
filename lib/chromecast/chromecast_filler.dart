@@ -5,7 +5,9 @@ class ChromeCastFiller extends StatelessWidget {
   final String link;
   final Size size;
   final int type;
+
   ChromeCastFiller.live(this.link, {this.size}) : type = 0;
+
   ChromeCastFiller.vod(this.link, {this.size}) : type = 1;
 
   @override

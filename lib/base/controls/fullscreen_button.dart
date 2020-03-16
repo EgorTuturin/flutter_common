@@ -5,7 +5,9 @@ class FullscreenButton extends StatelessWidget {
   final bool opened;
   final Color color;
   final void Function() onTap;
+
   FullscreenButton.close({this.color, this.onTap}) : opened = true;
+
   FullscreenButton.open({this.color, this.onTap}) : opened = false;
 
   @override
@@ -13,9 +15,11 @@ class FullscreenButton extends StatelessWidget {
     return IconButton(
         icon: Icon(opened ? Icons.fullscreen_exit : Icons.fullscreen),
         color: color,
-        onPressed: (){
+        onPressed: () {
           opened ? orientation.onlyPortrait() : orientation.onlyLandscape();
-          if(onTap != null){onTap();}
+          if (onTap != null) {
+            onTap();
+          }
         });
   }
 }

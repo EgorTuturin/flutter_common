@@ -58,9 +58,7 @@ class ChromeCastInfo {
 
   void disconnectDialog(BuildContext context, {void Function() onDisconnected}) async {
     if (ChromeCastInfo().castConnected) {
-      bool disconnected = await showDialog(
-          context: context,
-          builder: (BuildContext context) => CCDisconnectDialog());
+      bool disconnected = await showDialog(context: context, builder: (BuildContext context) => CCDisconnectDialog());
       if (disconnected ?? false) {
         onDisconnected();
       }
@@ -84,8 +82,7 @@ class ChromeCastInfo {
 
   Future _connectToDevice(CastDevice device) async {
     _castSender = CastSender(device);
-    StreamSubscription subscription = _castSender.castSessionController.stream
-        .listen((CastSession castSession) {
+    StreamSubscription subscription = _castSender.castSessionController.stream.listen((CastSession castSession) {
       if (castSession.isConnected) {
         _castSessionIsConnected(castSession);
       }
@@ -147,12 +144,10 @@ class ChromeCastInfo {
   }
 
   bool isPlaying() {
-    if (_castSender == null ||
-        _castSender.castSession == null ||
-        _castSender.castSession.castMediaStatus == null) {
+    if (_castSender == null || _castSender.castSession == null || _castSender.castSession.castMediaStatus == null) {
       return false;
     }
-    	
+
     return _castSender.castSession.castMediaStatus.isPlaying;
   }
 }

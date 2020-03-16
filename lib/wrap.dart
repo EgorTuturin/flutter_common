@@ -28,17 +28,14 @@ class CustomWrap extends StatelessWidget {
     _maxItemCount = width ~/ (itemWidth + _horPadding);
     _splitRows();
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: _vertPadding),
-      child: ListView.separated(
-          separatorBuilder: (context, index) => SizedBox(height: _vertPadding),
-          itemCount: rows.length,
-          itemBuilder: (context, index) {
-            return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: rows[index]);
-          })
-    );
+        padding: EdgeInsets.symmetric(vertical: _vertPadding),
+        child: ListView.separated(
+            separatorBuilder: (context, index) => SizedBox(height: _vertPadding),
+            itemCount: rows.length,
+            itemBuilder: (context, index) {
+              return Row(
+                  mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.max, children: rows[index]);
+            }));
   }
 
   void _splitRows() {

@@ -11,13 +11,7 @@ class VodCard extends StatelessWidget {
   final Function onPressed;
 
   VodCard(
-      {this.iconLink,
-      this.interruptTime,
-      this.duration,
-      this.height,
-      this.width,
-      this.borderRadius,
-      this.onPressed});
+      {this.iconLink, this.interruptTime, this.duration, this.height, this.width, this.borderRadius, this.onPressed});
 
   static const double BORDER_RADIUS = 2.0;
   static const CARD_WIDTH = 172.0;
@@ -56,16 +50,10 @@ class VodCard extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: border),
             child: Stack(children: <Widget>[
               Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                Expanded(
-                    child: ClipRRect(
-                        borderRadius: border, child: PreviewIcon.vod(iconLink)))
+                Expanded(child: ClipRRect(borderRadius: border, child: PreviewIcon.vod(iconLink)))
               ]),
               Positioned(
-                  bottom: 0,
-                  child: Container(
-                      height: 5,
-                      width: timeLine(),
-                      color: Theme.of(context).accentColor)),
+                  bottom: 0, child: Container(height: 5, width: timeLine(), color: Theme.of(context).accentColor)),
               InkWell(onTap: () => onPressed())
             ])));
   }
