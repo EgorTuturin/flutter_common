@@ -23,21 +23,25 @@ class CustomWrap extends StatelessWidget {
 
     final int maxItemCountPerRow = (width ~/ (itemWidth + horPadding));
     List<List<Widget>> rows = [];
-    for (int i = 0; i < children.length; i += maxItemCountPerRow) {
-      int len = maxItemCountPerRow;
-      int last = maxItemCountPerRow + i;
-      if (last > children.length) {
-        len = last - children.length;
-      }
+    if (maxItemCountPerRow == 0) {
+      rows.add(children);
+    } else {
+      for (int i = 0; i < children.length; i += maxItemCountPerRow) {
+        int len = maxItemCountPerRow;
+        int last = maxItemCountPerRow + i;
+        if (last > children.length) {
+          len = last - children.length;
+        }
 
-      List<Widget> row = [];
-      for (int k = 0; k < len; k++) {
-        row.add(children[i + k]);
-        final box = SizedBox(width: horPadding);
-        row.add(box);
+        List<Widget> row = [];
+        for (int k = 0; k < len; k++) {
+          row.add(children[i + k]);
+          final box = SizedBox(width: horPadding);
+          row.add(box);
+        }
+        row.removeLast();
+        rows.add(row);
       }
-      row.removeLast();
-      rows.add(row);
     }
     return Padding(
         padding: EdgeInsets.symmetric(vertical: vertPadding),
