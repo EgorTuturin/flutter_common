@@ -25,8 +25,9 @@ class CustomWrap extends StatelessWidget {
     List<List<Widget>> rows = [];
     for (int i = 0; i < children.length; i += maxItemCountPerRow) {
       int len = maxItemCountPerRow;
-      if (maxItemCountPerRow + i > children.length) {
-        len = maxItemCountPerRow + i - children.length;
+      int last = maxItemCountPerRow + i;
+      if (last > children.length) {
+        len = last - children.length;
       }
 
       List<Widget> row = [];
