@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
+
+enum PreviewType { LIVE, VOD }
 
 class PreviewIcon extends StatelessWidget {
   final String link;
   final double height;
   final double width;
-  final int type;
+  final PreviewType type;
 
-  PreviewIcon.live(this.link, {this.height, this.width}) : this.type = 0;
+  PreviewIcon.live(this.link, {this.height, this.width}) : this.type = PreviewType.LIVE;
 
-  PreviewIcon.vod(this.link, {this.height, this.width}) : this.type = 1;
+  PreviewIcon.vod(this.link, {this.height, this.width}) : this.type = PreviewType.VOD;
 
   String assetsLink() {
-    switch (type) {
-      case 0:
-        return 'install/assets/unknown_channel.png';
-        break;
-      case 1:
-        return 'install/assets/unknown_preview.png';
-        break;
-      default:
-        return 'install/assets/unknown_channel.png';
+    if (type == PreviewType.LIVE) {
+      return 'install/assets/unknown_channel.png';
+    } else if (type == PreviewType.VOD) {
+      return 'install/assets/unknown_preview.png';
+    } else {
+      return 'install/assets/unknown_channel.png';
     }
   }
 

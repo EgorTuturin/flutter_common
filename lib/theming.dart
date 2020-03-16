@@ -7,17 +7,19 @@ import 'package:fastotv_common/colors.dart';
 
 const BUTTON_OPACITY = 0.5;
 
+enum ColorType { Primary, Accent }
+
 class MyColorPicker extends StatefulWidget {
   final String dialogHeader;
   final String tileTitle;
   final String cancel;
   final String submit;
+  final ColorType color;
 
-  const MyColorPicker.primary({this.dialogHeader, this.tileTitle, this.submit, this.cancel}) : color = 0;
+  const MyColorPicker.primary({this.dialogHeader, this.tileTitle, this.submit, this.cancel})
+      : color = ColorType.Primary;
 
-  const MyColorPicker.accent({this.dialogHeader, this.tileTitle, this.submit, this.cancel}) : color = 1;
-
-  final int color;
+  const MyColorPicker.accent({this.dialogHeader, this.tileTitle, this.submit, this.cancel}) : color = ColorType.Accent;
 
   _ColorPickerState createState() => _ColorPickerState();
 }
@@ -43,9 +45,10 @@ class _ColorPickerState extends State<MyColorPicker> {
     return MaterialColorPicker(
         shrinkWrap: true,
         iconSelected: Icons.check,
-        selectedColor: widget.color == 0 ? model.primaryColor : model.accentColor,
-        onColorChange: (color) =>
-            widget.color == 0 ? setState(() => tempShadePrColor = color) : setState(() => tempShadeAcColor = color));
+        selectedColor: widget.color == ColorType.Primary ? model.primaryColor : model.accentColor,
+        onColorChange: (color) => widget.color == ColorType.Primary
+            ? setState(() => tempShadePrColor = color)
+            : setState(() => tempShadeAcColor = color));
   }
 
   Widget _cancel(ThemeModel model) {
@@ -63,15 +66,17 @@ class _ColorPickerState extends State<MyColorPicker> {
         textColor: model.accentColor,
         onPressed: () {
           Navigator.of(context).pop();
-          widget.color == 0 ? _setPrimary(model, tempShadePrColor) : _setAccent(model, tempShadeAcColor);
+          widget.color == ColorType.Primary
+              ? _setPrimary(model, tempShadePrColor)
+              : _setAccent(model, tempShadeAcColor);
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.color == 0) {
+    if (widget.color == ColorType.Primary) {
       return _primary();
-    } else if (widget.color == 1) {
+    } else if (widget.color == ColorType.Accent) {
       return _accent();
     }
     return SizedBox();
