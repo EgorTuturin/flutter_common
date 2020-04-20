@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class CheckBox extends StatefulWidget {
+class StateCheckBox extends StatefulWidget {
   final String title;
   final bool _init;
-  final void Function(bool) onChangedState;
+  final void Function(bool) onChanged;
 
-  CheckBox({@required this.title, bool init, this.onChangedState}) : _init = init;
+  StateCheckBox({@required this.title, bool init, this.onChanged}) : _init = init;
 
   @override
   _CheckBoxState createState() => _CheckBoxState();
 }
 
-class _CheckBoxState extends State<CheckBox> {
+class _CheckBoxState extends State<StateCheckBox> {
   bool _value;
 
   @override
@@ -28,8 +28,8 @@ class _CheckBoxState extends State<CheckBox> {
         onChanged: (value) {
           setState(() {
             _value = value;
-            if (widget.onChangedState != null) {
-              widget.onChangedState(value);
+            if (widget.onChanged != null) {
+              widget.onChanged(value);
             }
           });
         });
