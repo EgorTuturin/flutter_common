@@ -4,34 +4,23 @@ import 'package:fastotv_common/colors.dart';
 class PlayerButtons extends StatelessWidget {
   final void Function() onPressed;
   final Color color;
-  final int type;
+  final IconData icon;
 
-  PlayerButtons.previous({@required this.onPressed, this.color}) : type = 0;
+  PlayerButtons.play({@required this.onPressed, this.color}) : icon = Icons.play_arrow;
 
-  PlayerButtons.next({@required this.onPressed, this.color}) : type = 1;
+  PlayerButtons.pause({@required this.onPressed, this.color}) : icon = Icons.pause;
 
-  PlayerButtons.seekBackward({@required this.onPressed, this.color}) : type = 2;
+  PlayerButtons.previous({@required this.onPressed, this.color}) : icon = Icons.skip_previous;
 
-  PlayerButtons.seekForward({@required this.onPressed, this.color}) : type = 3;
+  PlayerButtons.next({@required this.onPressed, this.color}) : icon = Icons.skip_next;
 
-  IconData icon() {
-    switch (type) {
-      case 0:
-        return Icons.skip_previous;
-      case 1:
-        return Icons.skip_next;
-      case 2:
-        return Icons.replay_5;
-      case 3:
-        return Icons.forward_5;
-      default:
-        return Icons.all_inclusive;
-    }
-  }
+  PlayerButtons.seekBackward({@required this.onPressed, this.color}) : icon = Icons.replay_5;
+
+  PlayerButtons.seekForward({@required this.onPressed, this.color}) : icon = Icons.forward_5;
 
   @override
   Widget build(BuildContext context) {
     final _color = color ?? CustomColor().backGroundColorBrightness(Theme.of(context).primaryColor);
-    return IconButton(icon: Icon(icon()), color: _color, onPressed: () => onPressed());
+    return IconButton(icon: Icon(icon), color: _color, onPressed: () => onPressed());
   }
 }
