@@ -89,7 +89,7 @@ class _ColorPickerState extends State<MyColorPicker> {
           title: Text(widget.tileTitle ?? "Primary color"),
           subtitle: Text(Theme.of(context).accentColor.toString()),
           onTap: () => _openColorPicker(model),
-          trailing: _colorCircle(model.primaryColor, model));
+          trailing: _colorCircle(Theme.of(context).primaryColor, model));
     });
   }
 
