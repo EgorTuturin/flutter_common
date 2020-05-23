@@ -10,12 +10,13 @@ class Clock extends StatefulWidget {
   final double timeFontSize;
   final double width;
   final Color textColor;
+  final bool hour24;
 
-  Clock.date({this.dateFontSize, this.timeFontSize, this.width, this.textColor}) : type = 1;
+  Clock.date({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true}) : type = 1;
 
-  Clock.time({this.dateFontSize, this.timeFontSize, this.width, this.textColor}) : type = 2;
+  Clock.time({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true}) : type = 2;
 
-  Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor}) : type = 3;
+  Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true}) : type = 3;
 
   @override
   _ClockState createState() => _ClockState();
@@ -32,6 +33,14 @@ class _ClockState extends State<Clock> {
     initializeDateFormatting();
     _updateDate();
     _timer = Timer.periodic(Duration(minutes: 1), (Timer t) => _getCurrentTime());
+  }
+
+  @override
+  void didUpdateWidget(Clock oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.hour24 != widget.hour24) {
+      _updateDate();
+    }
   }
 
   @override
@@ -62,7 +71,8 @@ class _ClockState extends State<Clock> {
 
   void _updateDate() {
     final dateTime = DateTime.now();
-    _timeString = DateFormat('Hm').format(dateTime);
+    final timeFormat = widget.hour24 ? DateFormat.HOUR24_MINUTE : DateFormat.HOUR_MINUTE;
+    _timeString = DateFormat(timeFormat).format(dateTime);
     _dateString = DateFormat('E, MMM d').format(dateTime);
   }
 }
