@@ -86,12 +86,12 @@ class _ColorPickerState extends State<MyColorPicker> {
     return Consumer<ThemeModel>(builder: (context, model, child) {
       final canChange = model.type != ThemeType.light && model.type != ThemeType.dark;
       return Opacity(
-          opacity: canChange ? 0.5 : 1.0,
+          opacity: !canChange ? 0.5 : 1.0,
           child: ListTile(
               leading: Icon(Icons.format_color_fill, color: CustomColor().themeBrightnessColor(context)),
               title: Text(widget.tileTitle ?? "Primary color"),
               subtitle: Text(Theme.of(context).accentColor.toString()),
-              onTap: canChange ? null : () => _openColorPicker(model),
+              onTap: !canChange ? null : () => _openColorPicker(model),
               trailing: _colorCircle(Theme.of(context).primaryColor, model)));
     });
   }
