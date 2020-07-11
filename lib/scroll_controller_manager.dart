@@ -15,6 +15,8 @@ class CustomScrollController {
 
   ScrollController get controller => _scrollController;
 
+  double get itemHeight => _itemHeight;
+
   void _scrollTo(double offset) {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(offset, curve: Curves.linear, duration: Duration(milliseconds: _scrollDurationMs));
