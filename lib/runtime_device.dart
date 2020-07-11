@@ -1,8 +1,7 @@
-import 'dart:io' show Platform;
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:device_info/device_info.dart';
-
 import 'package:fastotv_device_info/device.dart';
 import 'package:fastotv_device_info/devices.dart';
 

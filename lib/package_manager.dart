@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:package_info/package_info.dart';
 
 // https://medium.com/@ralphbergmann/versioning-with-flutter-299869e68af4

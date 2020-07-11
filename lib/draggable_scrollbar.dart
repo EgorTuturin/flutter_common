@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 /// Build the Scroll Thumb and label using the current configuration
 typedef Widget ScrollThumbBuilder(
@@ -83,8 +83,7 @@ class DraggableScrollbar extends StatefulWidget {
     this.scrollbarTimeToFade = const Duration(milliseconds: 600),
     this.labelTextBuilder,
     this.labelConstraints,
-  })  : scrollThumbBuilder =
-            _thumbRRectBuilder(scrollThumbKey, alwaysVisibleScrollThumb),
+  })  : scrollThumbBuilder = _thumbRRectBuilder(scrollThumbKey, alwaysVisibleScrollThumb),
         super(key: key);
 
   DraggableScrollbar.arrows({
@@ -100,8 +99,7 @@ class DraggableScrollbar extends StatefulWidget {
     this.scrollbarTimeToFade = const Duration(milliseconds: 600),
     this.labelTextBuilder,
     this.labelConstraints,
-  })  : scrollThumbBuilder =
-            _thumbArrowBuilder(scrollThumbKey, alwaysVisibleScrollThumb),
+  })  : scrollThumbBuilder = _thumbArrowBuilder(scrollThumbKey, alwaysVisibleScrollThumb),
         super(key: key);
 
   DraggableScrollbar.semicircle({
@@ -117,8 +115,7 @@ class DraggableScrollbar extends StatefulWidget {
     this.scrollbarTimeToFade = const Duration(milliseconds: 600),
     this.labelTextBuilder,
     this.labelConstraints,
-  })  : scrollThumbBuilder = _thumbSemicircleBuilder(
-            heightScrollThumb * 0.6, scrollThumbKey, alwaysVisibleScrollThumb),
+  })  : scrollThumbBuilder = _thumbSemicircleBuilder(heightScrollThumb * 0.6, scrollThumbKey, alwaysVisibleScrollThumb),
         super(key: key);
 
   @override
@@ -157,8 +154,7 @@ class DraggableScrollbar extends StatefulWidget {
     );
   }
 
-  static ScrollThumbBuilder _thumbSemicircleBuilder(
-      double width, Key scrollThumbKey, bool alwaysVisibleScrollThumb) {
+  static ScrollThumbBuilder _thumbSemicircleBuilder(double width, Key scrollThumbKey, bool alwaysVisibleScrollThumb) {
     return (
       Color backgroundColor,
       Animation<double> thumbAnimation,
@@ -197,8 +193,7 @@ class DraggableScrollbar extends StatefulWidget {
     };
   }
 
-  static ScrollThumbBuilder _thumbArrowBuilder(
-      Key scrollThumbKey, bool alwaysVisibleScrollThumb) {
+  static ScrollThumbBuilder _thumbArrowBuilder(Key scrollThumbKey, bool alwaysVisibleScrollThumb) {
     return (
       Color backgroundColor,
       Animation<double> thumbAnimation,
@@ -233,8 +228,7 @@ class DraggableScrollbar extends StatefulWidget {
     };
   }
 
-  static ScrollThumbBuilder _thumbRRectBuilder(
-      Key scrollThumbKey, bool alwaysVisibleScrollThumb) {
+  static ScrollThumbBuilder _thumbRRectBuilder(Key scrollThumbKey, bool alwaysVisibleScrollThumb) {
     return (
       Color backgroundColor,
       Animation<double> thumbAnimation,
@@ -273,8 +267,7 @@ class ScrollLabel extends StatelessWidget {
   final Text child;
 
   final BoxConstraints constraints;
-  static const BoxConstraints _defaultConstraints =
-      BoxConstraints.tightFor(width: 72.0, height: 28.0);
+  static const BoxConstraints _defaultConstraints = BoxConstraints.tightFor(width: 72.0, height: 28.0);
 
   const ScrollLabel({
     Key key,
@@ -305,8 +298,7 @@ class ScrollLabel extends StatelessWidget {
   }
 }
 
-class _DraggableScrollbarState extends State<DraggableScrollbar>
-    with TickerProviderStateMixin {
+class _DraggableScrollbarState extends State<DraggableScrollbar> with TickerProviderStateMixin {
   double _barOffset;
   double _viewOffset;
   bool _isDragInProcess;
@@ -352,8 +344,7 @@ class _DraggableScrollbarState extends State<DraggableScrollbar>
     super.dispose();
   }
 
-  double get barMaxScrollExtent =>
-      context.size.height - widget.heightScrollThumb;
+  double get barMaxScrollExtent => context.size.height - widget.heightScrollThumb;
 
   double get barMinScrollExtent => 0.0;
 
@@ -370,14 +361,13 @@ class _DraggableScrollbarState extends State<DraggableScrollbar>
       );
     }
 
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
+    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
       //print("LayoutBuilder constraints=$constraints");
 
       return NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
-          if (notification.metrics.axisDirection == AxisDirection.up || notification.metrics.axisDirection == AxisDirection.down)
-          changePosition(notification);
+          if (notification.metrics.axisDirection == AxisDirection.up ||
+              notification.metrics.axisDirection == AxisDirection.down) changePosition(notification);
         },
         child: Stack(
           children: <Widget>[
@@ -391,7 +381,7 @@ class _DraggableScrollbarState extends State<DraggableScrollbar>
               onVerticalDragEnd: _onVerticalDragEnd,
               child: Container(
                 alignment: Alignment.topRight,
-                margin: EdgeInsets.only(top: max(_barOffset,0)),
+                margin: EdgeInsets.only(top: max(_barOffset, 0)),
                 padding: widget.padding,
                 child: widget.scrollThumbBuilder(
                   widget.backgroundColor,
@@ -441,8 +431,7 @@ class _DraggableScrollbarState extends State<DraggableScrollbar>
         }
       }
 
-      if (notification is ScrollUpdateNotification ||
-          notification is OverscrollNotification) {
+      if (notification is ScrollUpdateNotification || notification is OverscrollNotification) {
         if (_thumbAnimationController.status != AnimationStatus.forward) {
           _thumbAnimationController.forward();
         }
@@ -496,8 +485,7 @@ class _DraggableScrollbarState extends State<DraggableScrollbar>
           _barOffset = barMaxScrollExtent;
         }
 
-        double viewDelta = getScrollViewDelta(
-            details.delta.dy, barMaxScrollExtent, viewMaxScrollExtent);
+        double viewDelta = getScrollViewDelta(details.delta.dy, barMaxScrollExtent, viewMaxScrollExtent);
 
         _viewOffset = widget.controller.position.pixels + viewDelta;
         if (_viewOffset < widget.controller.position.minScrollExtent) {
@@ -577,8 +565,7 @@ class ArrowClipper extends CustomClipper<Path> {
     path.lineTo(startPointX + arrowWidth / 2, startPointY - arrowWidth / 2);
     path.lineTo(startPointX + arrowWidth, startPointY);
     path.lineTo(startPointX + arrowWidth, startPointY + 1.0);
-    path.lineTo(
-        startPointX + arrowWidth / 2, startPointY - arrowWidth / 2 + 1.0);
+    path.lineTo(startPointX + arrowWidth / 2, startPointY - arrowWidth / 2 + 1.0);
     path.lineTo(startPointX, startPointY + 1.0);
     path.close();
 
@@ -587,8 +574,7 @@ class ArrowClipper extends CustomClipper<Path> {
     path.lineTo(startPointX + arrowWidth / 2, startPointY + arrowWidth / 2);
     path.lineTo(startPointX, startPointY);
     path.lineTo(startPointX, startPointY - 1.0);
-    path.lineTo(
-        startPointX + arrowWidth / 2, startPointY + arrowWidth / 2 - 1.0);
+    path.lineTo(startPointX + arrowWidth / 2, startPointY + arrowWidth / 2 - 1.0);
     path.lineTo(startPointX + arrowWidth, startPointY - 1.0);
     path.close();
 

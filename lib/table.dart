@@ -4,10 +4,10 @@
 
 import 'dart:math' as math;
 
-import 'package:flutter/widgets.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
 ///  * [DataTable], which is not paginated.
 ///  * <https://material.io/go/design-data-tables#data-tables-tables-within-cards>
@@ -33,7 +33,10 @@ class PaginatedDataTableEx extends StatefulWidget {
       defaultRowsPerPage,
       defaultRowsPerPage * 2,
       defaultRowsPerPage * 5,
-      defaultRowsPerPage * 10
+      defaultRowsPerPage * 10,
+      defaultRowsPerPage * 20,
+      defaultRowsPerPage * 50,
+      defaultRowsPerPage * 100
     ],
     this.onRowsPerPageChanged,
     this.dragStartBehavior = DragStartBehavior.start,
@@ -131,14 +134,12 @@ class PaginatedDataTableExState extends State<PaginatedDataTableEx> {
       final int rowsPerPage = widget.rowsPerPage;
       _firstRowIndex = (rowIndex ~/ rowsPerPage) * rowsPerPage;
     });
-    if ((widget.onPageChanged != null) && (oldFirstRowIndex != _firstRowIndex))
-      widget.onPageChanged(_firstRowIndex);
+    if ((widget.onPageChanged != null) && (oldFirstRowIndex != _firstRowIndex)) widget.onPageChanged(_firstRowIndex);
   }
 
   DataRow _getBlankRowFor(int index) {
     return DataRow.byIndex(
-      index: index,
-      cells: widget.columns.map<DataCell>((DataColumn column) => DataCell.empty).toList());
+        index: index, cells: widget.columns.map<DataCell>((DataColumn column) => DataCell.empty).toList());
   }
 
   DataRow _getProgressIndicatorRowFor(int index) {
@@ -219,9 +220,7 @@ class PaginatedDataTableExState extends State<PaginatedDataTableEx> {
                     color: _selectedRowCount > 0 ? themeData.secondaryHeaderColor : null,
                     child: Padding(
                         padding: EdgeInsetsDirectional.only(start: startPadding, end: 14.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: _headerWidgets()))))));
+                        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: _headerWidgets()))))));
   }
 
   List<Widget> _headerWidgets() {
@@ -237,9 +236,7 @@ class PaginatedDataTableExState extends State<PaginatedDataTableEx> {
     }
     if (widget.actions != null) {
       headerWidgets.addAll(widget.actions.map<Widget>((Widget action) {
-        return Padding(
-          padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0),
-          child: action);
+        return Padding(padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0), child: action);
       }).toList());
     }
     return headerWidgets;
@@ -310,10 +307,7 @@ class PaginatedDataTableExState extends State<PaginatedDataTableEx> {
     footerWidgets.addAll(<Widget>[
       Container(width: 32.0),
       Text(localizations.pageRowsInfoTitle(
-          _firstRowIndex + 1,
-          _firstRowIndex + widget.rowsPerPage,
-          _rowCount,
-          _rowCountApproximate)),
+          _firstRowIndex + 1, _firstRowIndex + widget.rowsPerPage, _rowCount, _rowCountApproximate)),
       Container(width: 32.0),
       IconButton(
           icon: const Icon(Icons.chevron_left),
@@ -325,7 +319,8 @@ class PaginatedDataTableExState extends State<PaginatedDataTableEx> {
           icon: const Icon(Icons.chevron_right),
           padding: EdgeInsets.zero,
           tooltip: localizations.nextPageTooltip,
-          onPressed: (!_rowCountApproximate && (_firstRowIndex + widget.rowsPerPage >= _rowCount)) ? null : _handleNext),
+          onPressed:
+              (!_rowCountApproximate && (_firstRowIndex + widget.rowsPerPage >= _rowCount)) ? null : _handleNext),
       Container(width: 14.0)
     ]);
     return footerWidgets;

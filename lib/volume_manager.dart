@@ -1,5 +1,6 @@
-import 'package:volume/volume.dart';
 import 'dart:async';
+
+import 'package:volume/volume.dart';
 
 class VolumeManager {
   static VolumeManager _instance;
