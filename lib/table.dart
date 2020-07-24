@@ -17,6 +17,7 @@ class PaginatedDataTableEx extends StatefulWidget {
     @required this.header,
     this.emptyList,
     this.actions,
+    this.actionsHeader,
     @required this.columns,
     this.sortColumnIndex,
     this.sortAscending = true,
@@ -48,6 +49,7 @@ class PaginatedDataTableEx extends StatefulWidget {
         assert(sortColumnIndex == null || (sortColumnIndex >= 0 && sortColumnIndex < columns.length)),
         assert(sortAscending != null),
         assert(dataRowHeight != null),
+        assert(actions == null || actionsHeader == null),
         assert(headingRowHeight != null),
         assert(horizontalMargin != null),
         assert(columnSpacing != null),
@@ -65,6 +67,7 @@ class PaginatedDataTableEx extends StatefulWidget {
   final Widget header;
   final Widget emptyList;
   final List<Widget> actions;
+  final Widget actionsHeader;
   final List<DataColumn> columns;
   final int sortColumnIndex;
   final bool sortAscending;
@@ -228,15 +231,18 @@ class PaginatedDataTableExState extends State<PaginatedDataTableEx> {
     final List<Widget> headerWidgets = <Widget>[];
     if (_selectedRowCount == 0) {
       headerWidgets.add(Expanded(child: widget.header));
-      if (widget.header is ButtonBar) {
-        startPadding = 12.0;
-      }
     } else {
       headerWidgets.add(Expanded(child: Text(localizations.selectedRowCountTitle(_selectedRowCount))));
     }
-    if (widget.actions != null) {
+    if (widget.actionsHeader != null) {
+      headerWidgets.add(widget.actionsHeader);
+    } else if (widget.actions != null) {
       headerWidgets.addAll(widget.actions.map<Widget>((Widget action) {
-        return Padding(padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0), child: action);
+        if (action is SizedBox) {
+          return action;
+        } else {
+          return TableActionIcon(action);
+        }
       }).toList());
     }
     return headerWidgets;
@@ -324,5 +330,16 @@ class PaginatedDataTableExState extends State<PaginatedDataTableEx> {
       Container(width: 14.0)
     ]);
     return footerWidgets;
+  }
+}
+
+class TableActionIcon extends StatelessWidget {
+  final Widget action;
+
+  TableActionIcon(this.action);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0), child: action);
   }
 }
