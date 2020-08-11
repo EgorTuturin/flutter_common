@@ -50,6 +50,10 @@ class RuntimeDevice {
     return _hasTouch;
   }
 
+  Future<bool> get futureTouch {
+    return _currentDevice.hasTouch();
+  }
+
   String get name {
     return _currentDevice.name;
   }

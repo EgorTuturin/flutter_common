@@ -256,3 +256,60 @@ class ListHeader extends StatelessWidget {
         ]));
   }
 }
+
+
+class ColorPickerDialog extends StatefulWidget {
+  final String title;
+  final Color initColor;
+  final String submit;
+  final String cancel;
+
+  ColorPickerDialog({this.title, @required this.initColor, this.submit, this.cancel});
+
+  _ColorPickerDialogState createState() => _ColorPickerDialogState();
+}
+
+class _ColorPickerDialogState extends State<ColorPickerDialog> {
+  static const BUTTON_OPACITY = 0.5;
+
+  Color tempShadeColor;
+
+  @override
+  void initState() {
+    super.initState();
+    tempShadeColor = widget.initColor;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        contentPadding: const EdgeInsets.all(6.0),
+        title: Text(widget.title ?? "Color picker"),
+        content: _content(),
+        actions: [_cancel(), _submit()]);
+  }
+
+  Widget _content() {
+    return MaterialColorPicker(
+        shrinkWrap: true,
+        iconSelected: Icons.check,
+        selectedColor: tempShadeColor,
+        onColorChange: (color) => tempShadeColor = color);
+  }
+
+  Widget _cancel() {
+    return Opacity(
+        opacity: BUTTON_OPACITY,
+        child: FlatButton(
+            child: Text(widget.cancel ?? 'Cancel'),
+            onPressed: () => Navigator.of(context).pop()));
+  }
+
+  Widget _submit() {
+    return FlatButton(
+        child: Text(widget.submit ?? 'Submit'),
+        textColor: Theme.of(context).accentColor,
+        onPressed: () => Navigator.of(context).pop(tempShadeColor));
+  }
+}
+
