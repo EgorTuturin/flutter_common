@@ -22,8 +22,3 @@ dependencies:
     git:
       url: https://github.com/fastogt/Volume_Flutter.git
       ref: master
-  persist_theme:
-    git:
-      url: git://github.com/fastogt/plugins.git
-      ref: master
-      path: packages/persist_theme
