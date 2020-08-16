@@ -9,7 +9,6 @@ environment:
 dependencies:
   screen: ^0.0.5
   ntp: ^1.0.6
-  xml: ^3.5.0
   intl: ^0.16.0
   flutter_material_color_picker: ^1.0.5
   device_info: ^0.4.2+3
