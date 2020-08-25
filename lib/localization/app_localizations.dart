@@ -1,92 +1,82 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:fastotv_common/localization/delegate.dart';
+import 'package:fastotv_common/localization/localization.dart';
 
-// https://resocoder.com/2019/06/01/flutter-localization-the-easy-way-internationalization-with-json/
+String translate(BuildContext context, String key) => AppLocalizations.of(context).translate(key);
 
-const SUPPORTED_LOCALES = [const Locale('en', 'US'), const Locale('ru', 'RU')];
+class AppLocalizations extends StatefulWidget {
+  final Widget child;
+  final Locale init;
+  final Map<Locale, String> locales;
+  final String pathToAssets;
 
-class AppLocalizations {
-  Locale _locale = defaultLocale();
+  const AppLocalizations(
+      {Key key,
+      @required this.child,
+      @required this.locales,
+      this.pathToAssets = "install/lang/",
+      this.init})
+      : super(key: key);
 
-  AppLocalizations();
+  @override
+  _AppLocalizationsState createState() => _AppLocalizationsState();
 
-  // Helper method to keep the code in the widgets concise
-  // Localizations are accessed using an InheritedWidget "of" syntax
-  static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
-  }
+  static String toUtf8(String text) => Localization.toUtf8(text);
 
-  static String toUtf8(String data) {
-    String _output;
-    try {
-      _output = utf8.decode(data.codeUnits);
-    } on FormatException catch (e) {
-      print('error caught: $e');
-      _output = data;
-    }
-    return _output;
-  }
-
-  Map<String, String> _localizedStrings;
-
-  Locale currentLocale() {
-    return _locale;
-  }
-
-  Future<bool> load(Locale locale) async {
-    // Load the language JSON file from the "lang" folder
-    String jsonString = await rootBundle.loadString('install/lang/${locale.languageCode}.json');
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
-
-    _localizedStrings = jsonMap.map((key, value) {
-      return MapEntry(key, value.toString());
-    });
-
-    _locale = locale;
-    return true;
-  }
-
-  // This method will be called from every widget which needs a localized text
-  String translate(String key) {
-    return _localizedStrings[key];
-  }
-
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
-
-  static Locale defaultLocale() {
-    return SUPPORTED_LOCALES[0];
+  static _AppLocalizationsState of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<_InheritedLocaleProvider>().data;
   }
 }
 
-// LocalizationsDelegate is a factory for a set of localized resources
-// In this case, the localized strings will be gotten in an AppLocalizations object
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
-  // This delegate instance will never change (it doesn't even have fields!)
-  // It can provide a constant constructor.
-  const _AppLocalizationsDelegate();
+class _AppLocalizationsState extends State<AppLocalizations> {
+  Localization _localizations;
 
   @override
-  bool isSupported(Locale locale) {
-    // Include all of your supported language codes here
-    for (var sup in SUPPORTED_LOCALES) {
-      if (sup.languageCode == locale.languageCode) {
-        return true;
-      }
-    }
-    return false;
+  void initState() {
+    super.initState();
+    _localizations = Localization(supportedLocales, widget.pathToAssets);
+    load(widget.init);
   }
 
   @override
-  Future<AppLocalizations> load(Locale locale) async {
-    // AppLocalizations class is where the JSON loading actually runs
-    AppLocalizations localizations = new AppLocalizations();
-    await localizations.load(locale);
-    return localizations;
+  Widget build(BuildContext context) {
+    return _InheritedLocaleProvider(data: this, child: _localizations.currentDictionary == null ? CircularProgressIndicator() : widget.child);
   }
 
+  void load(Locale locale) async {
+    await _localizations.load(locale);
+    _update();
+  }
+
+  String translate(String key) => _localizations.translate(key);
+
+  String get currentLanguage => widget.locales[currentLocale];
+
+  Locale get currentLocale => _localizations.currentLocale;
+
+  List<Locale> get supportedLocales => widget.locales.keys.toList();
+
+  List<String> get supportedLanguages => widget.locales.values.toList();
+
+  LocalizationDelegate get delegate => _localizations.delegate;
+
+  // private
+  void _update() {
+    if (mounted) setState(() {});
+  }
+}
+
+class _InheritedLocaleProvider extends InheritedWidget {
+  final _AppLocalizationsState data;
+
+  _InheritedLocaleProvider({
+    this.data,
+    Key key,
+    @required Widget child,
+  }) : super(key: key, child: child);
+
   @override
-  bool shouldReload(_AppLocalizationsDelegate old) => false;
+  bool updateShouldNotify(_InheritedLocaleProvider oldWidget) {
+    return true;
+  }
 }
