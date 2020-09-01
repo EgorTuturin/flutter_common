@@ -1,18 +1,18 @@
 name: fastotv_common
 author: Alexandr Topilski <support@fastogt.com>
 description: Flutter FastoGT common files
-version: 1.0.0
+version: 1.1.0
 
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: '>=2.1.0 <3.0.0'
 
 dependencies:
   screen: ^0.0.5
-  ntp: ^1.0.6
-  intl: ^0.16.0
+  ntp: ^1.0.7
+  intl: ^0.16.1
   flutter_material_color_picker: ^1.0.5
-  device_info: ^0.4.2+3
-  package_info: ^0.4.0+17
+  device_info: ^0.4.2
+  package_info: ^0.4.3
   fastotv_device_info:
     git:
       url: https://github.com/fastogt/fastotv_device_info.git
