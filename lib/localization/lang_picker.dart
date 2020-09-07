@@ -1,3 +1,4 @@
+import 'package:fastotv_common/base/controls/tv_controls.dart';
 import 'package:fastotv_common/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +16,12 @@ class LanguagePicker extends StatefulWidget {
       {this.languageKey, this.languageNameKey, this.chooseLangKey}) : type = 1;
 
   @override
-  _LanguagePickerState createState() => _LanguagePickerState();
+  _LanguagePickerState createState() {
+    return _LanguagePickerState();
+  }
 }
 
-class _LanguagePickerState extends State<LanguagePicker> {
+class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls{
   @override
   Widget build(BuildContext context) {
     if (widget.type == 0) {
@@ -27,6 +30,10 @@ class _LanguagePickerState extends State<LanguagePicker> {
       return _login();
     }
     return SizedBox();
+  }
+
+  void onEnter(FocusNode node) {
+    _showAlertDialog();
   }
 
   void _showAlertDialog() async {
@@ -69,23 +76,32 @@ class _LanguagePickerState extends State<LanguagePicker> {
   }
 
   Widget _login() {
-    return FlatButton(
-        onPressed: _showAlertDialog,
-        child: Opacity(
-            opacity: 0.5,
-            child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.language),
-                  SizedBox(width: 16),
-                  Text(_languageName)
-                ])));
+    return Focus(
+        focusNode: FocusNode(),
+        onKey: (node, event) {
+          return nodeAction(FocusScope.of(context), node, event);
+        },
+        child: FlatButton(
+            onPressed: _showAlertDialog,
+            child: Opacity(
+                opacity: 0.5,
+                child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.language),
+                      SizedBox(width: 16),
+                      Text(_languageName)
+                    ]))));
   }
 
-  List<Locale> get supportedLocales => AppLocalizations.of(context).supportedLocales;
+  List<Locale> get supportedLocales {
+    return AppLocalizations.of(context).supportedLocales;
+  }
 
-  List<String> get supportedLanguages => AppLocalizations.of(context).supportedLanguages;
+  List<String> get supportedLanguages {
+    return AppLocalizations.of(context).supportedLanguages;
+  }
 
   int currentLanguageIndex() {
     return supportedLocales.indexOf(AppLocalizations.of(context).currentLocale) ?? 0;
