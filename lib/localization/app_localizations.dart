@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:fastotv_common/localization/delegate.dart';
 import 'package:fastotv_common/localization/localization.dart';
+import 'package:flutter/material.dart';
 
 String translate(BuildContext context, String key) => AppLocalizations.of(context).translate(key);
 
@@ -11,17 +11,17 @@ class AppLocalizations extends StatefulWidget {
   final String pathToAssets;
 
   const AppLocalizations(
-      {Key key,
-      @required this.child,
-      @required this.locales,
-      this.pathToAssets = "install/lang/",
-      this.init})
+      {Key key, @required this.child, @required this.locales, this.pathToAssets = "install/lang/", this.init})
       : super(key: key);
 
   @override
-  _AppLocalizationsState createState() => _AppLocalizationsState();
+  _AppLocalizationsState createState() {
+    return _AppLocalizationsState();
+  }
 
-  static String toUtf8(String text) => Localization.toUtf8(text);
+  static String toUtf8(String text) {
+    return Localization.toUtf8(text);
+  }
 
   static _AppLocalizationsState of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<_InheritedLocaleProvider>().data;
@@ -40,7 +40,8 @@ class _AppLocalizationsState extends State<AppLocalizations> {
 
   @override
   Widget build(BuildContext context) {
-    return _InheritedLocaleProvider(data: this, child: _localizations.currentDictionary == null ? CircularProgressIndicator() : widget.child);
+    return _InheritedLocaleProvider(
+        data: this, child: _localizations.currentDictionary == null ? CircularProgressIndicator() : widget.child);
   }
 
   void load(Locale locale) async {
@@ -48,7 +49,9 @@ class _AppLocalizationsState extends State<AppLocalizations> {
     _update();
   }
 
-  String translate(String key) => _localizations.translate(key);
+  String translate(String key) {
+    return _localizations.translate(key);
+  }
 
   String get currentLanguage => widget.locales[currentLocale];
 
@@ -62,7 +65,9 @@ class _AppLocalizationsState extends State<AppLocalizations> {
 
   // private
   void _update() {
-    if (mounted) setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 }
 

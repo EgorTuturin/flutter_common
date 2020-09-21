@@ -12,19 +12,16 @@ class NonAvailableBuffer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final content = message == null
+        ? SizedBox()
+        : Text(message,
+            style: TextStyle(fontSize: textSize ?? 20, color: color), textAlign: TextAlign.center, softWrap: true);
     return Opacity(
         opacity: opacity ?? 0.5,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          Icon(
-            icon,
-            size: iconSize ?? 96,
-            color: color,
-          ),
+          Icon(icon, size: iconSize ?? 96, color: color),
           SizedBox(height: (iconSize ?? 96) / 4),
-          message == null
-              ? SizedBox()
-              : Text(message,
-                  style: TextStyle(fontSize: textSize ?? 20, color: color), textAlign: TextAlign.center, softWrap: true)
+          content
         ]));
   }
 }

@@ -19,7 +19,9 @@ class Clock extends StatefulWidget {
   Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true}) : type = 3;
 
   @override
-  _ClockState createState() => _ClockState();
+  _ClockState createState() {
+    return _ClockState();
+  }
 }
 
 class _ClockState extends State<Clock> {

@@ -8,7 +8,9 @@ class StateCheckBox extends StatefulWidget {
   StateCheckBox({@required this.title, bool init, this.onChanged}) : _init = init;
 
   @override
-  _CheckBoxState createState() => _CheckBoxState();
+  _CheckBoxState createState() {
+    return _CheckBoxState();
+  }
 }
 
 class _CheckBoxState extends State<StateCheckBox> {

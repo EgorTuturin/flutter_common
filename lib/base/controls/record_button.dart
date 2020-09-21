@@ -29,7 +29,9 @@ class RecordButton extends StatefulWidget {
       : type = 1;
 
   @override
-  _RecordButtonState createState() => _RecordButtonState();
+  _RecordButtonState createState() {
+    return _RecordButtonState();
+  }
 }
 
 class _RecordButtonState extends State<RecordButton> {
@@ -72,7 +74,9 @@ class _RecordButtonState extends State<RecordButton> {
           borderSide: BorderSide(color: accentColor),
           color: Colors.redAccent,
           child: Text(widget.recordText ?? "Record", style: TextStyle(color: textColor)),
-          onPressed: () => setRecorded(true));
+          onPressed: () {
+            setRecorded(true);
+          });
     }
 
     Widget _flatButton() {
@@ -80,17 +84,17 @@ class _RecordButtonState extends State<RecordButton> {
       return FlatButton(
           color: accentColor,
           child: Text(widget.queuedText ?? "Queued", style: textStyle),
-          onPressed: () => setRecorded(false));
+          onPressed: () {
+            setRecorded(false);
+          });
     }
 
     if (widget.type == 1) {
       if (_recorded) {
         return _flatButton();
-      } else {
-        return _outlineButton();
       }
-    } else {
-      return _iconButton();
+      return _outlineButton();
     }
+    return _iconButton();
   }
 }

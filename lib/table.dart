@@ -214,8 +214,8 @@ class PaginatedDataTableExState extends State<PaginatedDataTableEx> {
         child: DefaultTextStyle(
             // See https://material.io/design/components/data-tables.html#tables-within-cards
             style: _selectedRowCount > 0
-                ? themeData.textTheme.subtitle.copyWith(color: themeData.accentColor)
-                : themeData.textTheme.headline.copyWith(fontWeight: FontWeight.w400),
+                ? themeData.textTheme.subtitle2.copyWith(color: themeData.accentColor)
+                : themeData.textTheme.headline5.copyWith(fontWeight: FontWeight.w400),
             child: IconTheme.merge(
                 data: const IconThemeData(opacity: 0.54),
                 child: Ink(

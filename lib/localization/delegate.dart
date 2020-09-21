@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:fastotv_common/localization/localization.dart';
+import 'package:flutter/material.dart';
 
 class LocalizationDelegate extends LocalizationsDelegate<Localization> {
   final List<Locale> locales;
@@ -30,5 +30,7 @@ class LocalizationDelegate extends LocalizationsDelegate<Localization> {
   }
 
   @override
-  bool shouldReload(LocalizationDelegate old) => false;
+  bool shouldReload(LocalizationDelegate old) {
+    return false;
+  }
 }

@@ -365,37 +365,28 @@ class _DraggableScrollbarState extends State<DraggableScrollbar> with TickerProv
       //print("LayoutBuilder constraints=$constraints");
 
       return NotificationListener<ScrollNotification>(
-        onNotification: (ScrollNotification notification) {
-          if (notification.metrics.axisDirection == AxisDirection.up ||
-              notification.metrics.axisDirection == AxisDirection.down) changePosition(notification);
-        },
-        child: Stack(
-          children: <Widget>[
-            RepaintBoundary(
-              child: widget.child,
-            ),
+          onNotification: (ScrollNotification notification) {
+            if (notification.metrics.axisDirection == AxisDirection.up ||
+                notification.metrics.axisDirection == AxisDirection.down) {
+              changePosition(notification);
+            }
+            return true;
+          },
+          child: Stack(children: <Widget>[
+            RepaintBoundary(child: widget.child),
             RepaintBoundary(
                 child: GestureDetector(
-              onVerticalDragStart: _onVerticalDragStart,
-              onVerticalDragUpdate: _onVerticalDragUpdate,
-              onVerticalDragEnd: _onVerticalDragEnd,
-              child: Container(
-                alignment: Alignment.topRight,
-                margin: EdgeInsets.only(top: max(_barOffset, 0)),
-                padding: widget.padding,
-                child: widget.scrollThumbBuilder(
-                  widget.backgroundColor,
-                  _thumbAnimation,
-                  _labelAnimation,
-                  widget.heightScrollThumb,
-                  labelText: labelText,
-                  labelConstraints: widget.labelConstraints,
-                ),
-              ),
-            )),
-          ],
-        ),
-      );
+                    onVerticalDragStart: _onVerticalDragStart,
+                    onVerticalDragUpdate: _onVerticalDragUpdate,
+                    onVerticalDragEnd: _onVerticalDragEnd,
+                    child: Container(
+                        alignment: Alignment.topRight,
+                        margin: EdgeInsets.only(top: max(_barOffset, 0)),
+                        padding: widget.padding,
+                        child: widget.scrollThumbBuilder(
+                            widget.backgroundColor, _thumbAnimation, _labelAnimation, widget.heightScrollThumb,
+                            labelText: labelText, labelConstraints: widget.labelConstraints))))
+          ]));
     });
   }
 
@@ -446,19 +437,11 @@ class _DraggableScrollbarState extends State<DraggableScrollbar> with TickerProv
     });
   }
 
-  double getBarDelta(
-    double scrollViewDelta,
-    double barMaxScrollExtent,
-    double viewMaxScrollExtent,
-  ) {
+  double getBarDelta(double scrollViewDelta, double barMaxScrollExtent, double viewMaxScrollExtent) {
     return scrollViewDelta * barMaxScrollExtent / viewMaxScrollExtent;
   }
 
-  double getScrollViewDelta(
-    double barDelta,
-    double barMaxScrollExtent,
-    double viewMaxScrollExtent,
-  ) {
+  double getScrollViewDelta(double barDelta, double barMaxScrollExtent, double viewMaxScrollExtent) {
     return barDelta * viewMaxScrollExtent / barMaxScrollExtent;
   }
 
@@ -518,7 +501,9 @@ class ArrowCustomPainter extends CustomPainter {
   ArrowCustomPainter(this.color);
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -582,7 +567,9 @@ class ArrowClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
+  }
 }
 
 class SlideFadeTransition extends StatelessWidget {
@@ -598,18 +585,12 @@ class SlideFadeTransition extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animation,
-      builder: (context, child) => animation.value == 0.0 ? Container() : child,
-      child: SlideTransition(
-        position: Tween(
-          begin: Offset(0.3, 0.0),
-          end: Offset(0.0, 0.0),
-        ).animate(animation),
-        child: FadeTransition(
-          opacity: animation,
-          child: child,
-        ),
-      ),
-    );
+        animation: animation,
+        builder: (context, child) {
+          return animation.value == 0.0 ? Container() : child;
+        },
+        child: SlideTransition(
+            position: Tween(begin: Offset(0.3, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+            child: FadeTransition(opacity: animation, child: child)));
   }
 }

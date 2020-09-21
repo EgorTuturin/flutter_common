@@ -22,7 +22,6 @@ class ListHeader extends StatelessWidget {
   }
 }
 
-
 class ColorPickerDialog extends StatefulWidget {
   final String title;
   final Color initColor;
@@ -31,7 +30,9 @@ class ColorPickerDialog extends StatefulWidget {
 
   ColorPickerDialog({this.title, @required this.initColor, this.submit, this.cancel});
 
-  _ColorPickerDialogState createState() => _ColorPickerDialogState();
+  _ColorPickerDialogState createState() {
+    return _ColorPickerDialogState();
+  }
 }
 
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
@@ -65,9 +66,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   Widget _cancel() {
     return Opacity(
         opacity: BUTTON_OPACITY,
-        child: FlatButton(
-            child: Text(widget.cancel ?? 'Cancel'),
-            onPressed: () => Navigator.of(context).pop()));
+        child: FlatButton(child: Text(widget.cancel ?? 'Cancel'), onPressed: () => Navigator.of(context).pop()));
   }
 
   Widget _submit() {

@@ -9,11 +9,10 @@ class LanguagePicker extends StatefulWidget {
   final String languageNameKey;
   final int type;
 
-  const LanguagePicker.settings(this.onChanged,
-      {this.languageKey, this.languageNameKey, this.chooseLangKey}) : type = 0;
+  const LanguagePicker.settings(this.onChanged, {this.languageKey, this.languageNameKey, this.chooseLangKey})
+      : type = 0;
 
-  const LanguagePicker.login(this.onChanged,
-      {this.languageKey, this.languageNameKey, this.chooseLangKey}) : type = 1;
+  const LanguagePicker.login(this.onChanged, {this.languageKey, this.languageNameKey, this.chooseLangKey}) : type = 1;
 
   @override
   _LanguagePickerState createState() {
@@ -21,7 +20,7 @@ class LanguagePicker extends StatefulWidget {
   }
 }
 
-class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls{
+class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
   @override
   Widget build(BuildContext context) {
     if (widget.type == 0) {
@@ -69,10 +68,7 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls{
 
   Widget _settings() {
     return ListTile(
-        leading: Icon(Icons.language),
-        title: Text(_language),
-        subtitle: Text(_languageName),
-        onTap: _showAlertDialog);
+        leading: Icon(Icons.language), title: Text(_language), subtitle: Text(_languageName), onTap: _showAlertDialog);
   }
 
   Widget _login() {
@@ -88,11 +84,7 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls{
                 child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.language),
-                      SizedBox(width: 16),
-                      Text(_languageName)
-                    ]))));
+                    children: <Widget>[Icon(Icons.language), SizedBox(width: 16), Text(_languageName)]))));
   }
 
   List<Locale> get supportedLocales {
@@ -110,24 +102,21 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls{
   String get _language {
     if (widget.languageKey == null) {
       return "Language";
-    } else {
-      return AppLocalizations.of(context).translate(widget.languageKey);
     }
+    return AppLocalizations.of(context).translate(widget.languageKey);
   }
 
   String get _languageName {
     if (widget.languageNameKey == null) {
       return AppLocalizations.of(context).currentLanguage;
-    } else {
-      return AppLocalizations.of(context).translate(widget.languageNameKey);
     }
+    return AppLocalizations.of(context).translate(widget.languageNameKey);
   }
 
   String get _chooseLanguage {
     if (widget.chooseLangKey == null) {
       return "Choose language";
-    } else {
-      return AppLocalizations.of(context).translate(widget.chooseLangKey);
     }
+    return AppLocalizations.of(context).translate(widget.chooseLangKey);
   }
 }
