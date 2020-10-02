@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:fastotv_common/localization/delegate.dart';
+import 'package:flutter_common/localization/delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

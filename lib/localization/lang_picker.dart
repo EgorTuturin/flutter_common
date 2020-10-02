@@ -1,5 +1,5 @@
-import 'package:fastotv_common/base/controls/tv_controls.dart';
-import 'package:fastotv_common/localization/app_localizations.dart';
+import 'package:flutter_common/base/controls/tv_controls.dart';
+import 'package:flutter_common/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class LanguagePicker extends StatefulWidget {

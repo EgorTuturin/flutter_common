@@ -1,4 +1,4 @@
-import 'package:fastotv_common/colors.dart';
+import 'package:flutter_common/colors.dart';
 import 'package:flutter/material.dart';
 
 class PlayerButtons extends StatelessWidget {

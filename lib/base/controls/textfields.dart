@@ -1,4 +1,4 @@
-import 'package:fastotv_common/base/controls/buttons.dart';
+import 'package:flutter_common/base/controls/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
