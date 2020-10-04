@@ -45,7 +45,11 @@ class _AppLocalizationsState extends State<AppLocalizations> {
   }
 
   void load(Locale locale) async {
-    await _localizations.load(locale);
+    if (supportedLocales.contains(locale)) {
+      await _localizations.load(locale);
+    } else { 
+      await _localizations.load(supportedLocales.first);
+    }
     _update();
   }
 
