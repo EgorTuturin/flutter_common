@@ -47,15 +47,13 @@ class _ClockState extends State<Clock> {
 
   @override
   Widget build(BuildContext context) {
+    final child =
+        Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: <Widget>[
+      Text(_timeString, style: TextStyle(fontSize: widget.timeFontSize ?? 24, color: widget.textColor)),
+      Text(_dateString, style: TextStyle(fontSize: widget.dateFontSize ?? 18, color: widget.textColor))
+    ]);
     return Padding(
-        padding: EdgeInsets.only(left: 8.0, right: 16),
-        child: Container(
-            width: widget.width ?? 100,
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: <Widget>[
-              Text(_timeString, style: TextStyle(fontSize: widget.timeFontSize ?? 24, color: widget.textColor)),
-              Text(_dateString, style: TextStyle(fontSize: widget.dateFontSize ?? 18, color: widget.textColor))
-            ])));
+        padding: EdgeInsets.only(left: 8.0, right: 16), child: Container(width: widget.width ?? 100, child: child));
   }
 
   @override

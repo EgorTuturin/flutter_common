@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_common/localization/delegate.dart';
 import 'package:flutter_common/localization/localization.dart';
-import 'package:flutter/material.dart';
 
 String translate(BuildContext context, String key) => AppLocalizations.of(context).translate(key);
 

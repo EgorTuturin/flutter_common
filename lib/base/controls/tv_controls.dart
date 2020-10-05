@@ -1,6 +1,6 @@
-import 'package:flutter_common/tv/key_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_common/tv/key_code.dart';
 
 mixin BaseTVControls {
   void onEnter(FocusNode node);

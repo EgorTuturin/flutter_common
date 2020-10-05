@@ -1,5 +1,5 @@
-import 'package:flutter_common/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_common/colors.dart';
 
 class PlayerButtons extends StatelessWidget {
   final void Function() onPressed;

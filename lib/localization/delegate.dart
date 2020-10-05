@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter_common/localization/localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_common/localization/localization.dart';
 
 class LocalizationDelegate extends LocalizationsDelegate<Localization> {
   final List<Locale> locales;
