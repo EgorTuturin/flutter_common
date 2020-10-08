@@ -340,5 +340,5 @@ class TextFieldFilter {
 
   static TextInputFormatter get license => FilteringTextInputFormatter.allow(RegExp("[a-f0-9]"));
 
-  static TextInputFormatter get root => FilteringTextInputFormatter.allow(RegExp("[A-Za-z/~._]"));
+  static TextInputFormatter get root => FilteringTextInputFormatter.allow(RegExp("[A-Za-z/~._0-9]"));
 }
