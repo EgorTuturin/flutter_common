@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 // https://medium.com/@ralphbergmann/versioning-with-flutter-299869e68af4
 
