@@ -1,5 +1,5 @@
-import 'package:flutter_common/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_common/colors.dart';
 
 typedef RecordedCallback = void Function(bool recorded);
 

@@ -1,6 +1,6 @@
-import 'package:flutter_common/tv/tv_controls.dart';
-import 'package:flutter_common/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_common/localization/app_localizations.dart';
+import 'package:flutter_common/tv/tv_controls.dart';
 
 class LanguagePicker extends StatefulWidget {
   final Function(Locale) onChanged;
@@ -92,11 +92,7 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
             child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.language),
-                  SizedBox(width: 16),
-                  Text(_languageName)
-                ])));
+                children: <Widget>[Icon(Icons.language), SizedBox(width: 16), Text(_languageName)])));
   }
 
   void _setLocale(Locale locale) {
