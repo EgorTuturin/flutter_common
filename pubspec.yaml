@@ -12,7 +12,7 @@ dependencies:
   ntp: ^1.0.7
   intl: ^0.16.1
   flutter_material_color_picker: ^1.0.5
-  device_info: ^0.4.2
+  device_info: ^1.0.0
   package_info_plus: ^0.5.0
   fastotv_device_info:
     git:
