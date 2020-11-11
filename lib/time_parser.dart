@@ -1,14 +1,9 @@
-import 'package:fastotv_dart/commands_info/programme_info.dart';
 import 'package:intl/intl.dart';
 
 class TimeParser {
   static const FORMAT_HOUR_MINUTE = 'HH:mm';
   static const FORMAT_HOUR_MINUTE_SEC = 'HH:mm:ss';
   static const FORMAT_DAY_MONTH = 'dd.MM';
-
-  static String formatProgram(ProgrammeInfo program) {
-    return date(program.start) + ' / ' + hm(program.start) + ' - ' + hm(program.stop) + ' / ' + program.getDuration();
-  }
 
   static String date(int time) {
     final ts = DateTime.fromMillisecondsSinceEpoch(time);
