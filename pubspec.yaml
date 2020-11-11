@@ -10,7 +10,7 @@ environment:
 dependencies:
   screen: ^0.0.5
   ntp: ^1.0.7
-  intl: ^0.16.1
+  intl: ^0.17.0-nullsafety.2
   flutter_material_color_picker: ^1.0.5
   device_info: ^1.0.0
   package_info_plus: ^0.5.0
