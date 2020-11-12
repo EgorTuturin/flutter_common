@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_common/tv/tv_controls.dart';
 
 typedef FavoriteCallback = void Function(bool favorite);
 
@@ -7,8 +8,9 @@ class FavoriteStarButton extends StatefulWidget {
   final Color unselectedColor;
   final FavoriteCallback onFavoriteChanged;
   final bool initFavorite;
+  final FocusNode focusNode;
 
-  FavoriteStarButton(this.initFavorite, {this.selectedColor, this.unselectedColor, this.onFavoriteChanged});
+  FavoriteStarButton(this.initFavorite, {this.selectedColor, this.unselectedColor, this.onFavoriteChanged, this.focusNode});
 
   @override
   _FavoriteStarButtonState createState() {
@@ -16,7 +18,7 @@ class FavoriteStarButton extends StatefulWidget {
   }
 }
 
-class _FavoriteStarButtonState extends State<FavoriteStarButton> {
+class _FavoriteStarButtonState extends State<FavoriteStarButton> with BaseTVControls {
   bool _isFavorite;
 
   @override
@@ -43,8 +45,13 @@ class _FavoriteStarButtonState extends State<FavoriteStarButton> {
   @override
   Widget build(BuildContext context) {
     final selectedColor = widget.selectedColor ?? Theme.of(context).accentColor;
-    final unselectedColor = widget.unselectedColor ?? Theme.of(context).unselectedWidgetColor;
+    final unselectedColor = widget.unselectedColor ?? Theme.of(context).primaryIconTheme.color;
     return IconButton(
+        focusNode: FocusNode(onKey: (node, event) {
+          return nodeAction(FocusScope.of(context), node, event, () {
+            setFavorite(!_isFavorite);
+          });
+        }),
         padding: EdgeInsets.all(0.0),
         onPressed: () {
           setFavorite(!_isFavorite);

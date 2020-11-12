@@ -17,8 +17,10 @@ class TextFieldEx extends StatefulWidget {
   final int maxSymbols;
   final TextEditingController controller;
   final bool clearable;
+  final EdgeInsets padding;
+  final InputDecoration decoration;
 
-  const TextFieldEx(
+  TextFieldEx(
       {this.onFieldChanged,
       this.onFieldSubmit,
       this.init,
@@ -31,9 +33,12 @@ class TextFieldEx extends StatefulWidget {
       this.formatters,
       this.minSymbols,
       this.maxSymbols,
+      EdgeInsets padding,
+      this.decoration,
       this.autofocus = false})
       : this.errorText = errorText ?? '',
-        this.clearable = clearable ?? false;
+        this.clearable = clearable ?? false,
+        this.padding = padding ?? const EdgeInsets.all(8.0);
 
   TextFieldEx copyWith(
       {Function(String term) onFieldChanged,
@@ -47,7 +52,9 @@ class TextFieldEx extends StatefulWidget {
       List<TextInputFormatter> formatters,
       int minSymbols,
       int maxSymbols,
+      EdgeInsets padding,
       TextEditingController controller,
+      InputDecoration decoration,
       bool clearable}) {
     return TextFieldEx(
         onFieldChanged: onFieldChanged ?? this.onFieldChanged,
@@ -62,6 +69,8 @@ class TextFieldEx extends StatefulWidget {
         formatters: formatters ?? this.formatters,
         minSymbols: minSymbols ?? this.minSymbols,
         maxSymbols: maxSymbols ?? this.maxSymbols,
+        padding: padding ?? this.padding,
+        decoration: decoration ?? this.decoration,
         autofocus: autofocus ?? this.autofocus);
   }
 
@@ -89,16 +98,16 @@ class _TextFieldExState extends State<TextFieldEx> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: widget.padding,
         child: TextFormField(
-            validator: (value) => _validate(value),
+            validator: _validate,
             inputFormatters: _formatters(),
             controller: _controller,
             autofocus: widget.autofocus,
             obscureText: _hidePassword,
             keyboardType: widget.keyboardType,
-            onFieldSubmitted: (term) => widget.onFieldSubmit != null ? widget.onFieldSubmit(term) : _onField(term),
-            onChanged: (term) => _onField(term),
+            onFieldSubmitted: widget.onFieldSubmit?.call,
+            onChanged: _onField,
             decoration: _decoration()));
   }
 
@@ -112,13 +121,13 @@ class _TextFieldExState extends State<TextFieldEx> {
 
   InputDecoration _decoration() {
     if (widget.clearable) {
-      return _TextFieldDecoration(hintText: widget.hintText).copyWith(suffixIcon: _clearButton());
+      return (widget.decoration ?? TextFieldExDecoration(hintText: widget.hintText)).copyWith(suffixIcon: clearButton());
     }
-    return _TextFieldDecoration(hintText: widget.hintText);
+    return (widget.decoration ?? TextFieldExDecoration(hintText: widget.hintText));
   }
 
-  Widget _clearButton() {
-    return IconButton(tooltip: 'Clear', icon: Icon(Icons.clear), onPressed: () => _clear());
+  Widget clearButton() {
+    return IconButton(tooltip: 'Clear', icon: Icon(Icons.clear), onPressed: _clear);
   }
 
   void _clear() {
@@ -131,9 +140,7 @@ class _TextFieldExState extends State<TextFieldEx> {
       setState(() => _validator = term.isNotEmpty);
     }
 
-    if (widget.onFieldChanged != null) {
-      widget.onFieldChanged(term);
-    }
+    widget.onFieldChanged?.call(term);
   }
 
   String _validate(String term) {
@@ -167,13 +174,15 @@ class _TextFieldExState extends State<TextFieldEx> {
 }
 
 class PassWordTextField extends TextFieldEx {
-  const PassWordTextField({Function(String term) onFieldChanged, String hintText, String init, String errorText = ''})
+  PassWordTextField({Function(String term) onFieldChanged, String hintText, String init, String errorText = '', EdgeInsets padding, InputDecoration decoration})
       : super(
             keyboardType: TextInputType.visiblePassword,
             onFieldChanged: onFieldChanged,
             init: init,
             hintText: hintText,
-            errorText: errorText);
+            errorText: errorText,
+            padding: padding, 
+            decoration: decoration);
 
   @override
   _PassWordTextFieldState createState() => _PassWordTextFieldState();
@@ -183,15 +192,23 @@ class _PassWordTextFieldState extends _TextFieldExState {
   @override
   bool _hidePassword = true;
 
-  Widget _suffixButton() {
+  Widget _setObscureButton() {
     return IconButton(
         icon: Icon(_hidePassword ? Icons.visibility : Icons.visibility_off, color: Colors.black),
         onPressed: () => setState(() => _hidePassword = !_hidePassword));
   }
 
+  Widget _suffixButton() {
+    if (widget.clearable) {
+      return Row(mainAxisSize: MainAxisSize.min, children: [_setObscureButton(), clearButton()]);
+    } else {
+      return _setObscureButton();
+    }
+  }
+
   @override
   InputDecoration _decoration() {
-    return _TextFieldDecoration(hintText: widget.hintText).copyWith(suffixIcon: _suffixButton());
+    return (widget.decoration ?? TextFieldExDecoration(hintText: widget.hintText)).copyWith(suffixIcon: _suffixButton());
   }
 }
 
@@ -212,6 +229,7 @@ class NumberTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final bool autofocus;
   final List<TextInputFormatter> formatters;
+  final InputDecoration decoration;
 
   final bool decimal;
 
@@ -225,7 +243,8 @@ class NumberTextField extends StatelessWidget {
       this.textEditingController,
       this.formatters,
       this.canBeEmpty = true,
-      this.autofocus = false})
+      this.autofocus = false,
+      this.decoration})
       : decimal = false,
         this.minInt = minInt ?? 0,
         this.maxInt = maxInt,
@@ -244,7 +263,8 @@ class NumberTextField extends StatelessWidget {
       this.textEditingController,
       this.formatters,
       this.canBeEmpty = true,
-      this.autofocus = false})
+      this.autofocus = false,
+      this.decoration})
       : decimal = true,
         this.minDouble = minDouble ?? 0.0,
         this.maxDouble = maxDouble,
@@ -256,6 +276,7 @@ class NumberTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFieldEx(
+        decoration: decoration,
         formatters: <TextInputFormatter>[decimal ? TextFieldFilter.digitsDecimal : TextFieldFilter.digits],
         validator: (term) => _validate(term),
         hintText: hintText,
@@ -314,19 +335,19 @@ class NumberTextField extends StatelessWidget {
   }
 }
 
-class _TextFieldDecoration extends InputDecoration {
+class TextFieldExDecoration extends InputDecoration {
   final String errorText;
   final String hintText;
 
-  _TextFieldDecoration({this.errorText, this.hintText})
+  TextFieldExDecoration({this.errorText, this.hintText})
       : super(
             errorText: errorText,
             labelText: hintText,
-            errorBorder: _border(Colors.redAccent),
-            border: _border(Colors.black54),
-            focusedBorder: _border(ACTIVE_COLOR));
+            errorBorder: outlineBorder(Colors.redAccent),
+            border: outlineBorder(Colors.black54),
+            focusedBorder: outlineBorder(ACTIVE_COLOR));
 
-  static OutlineInputBorder _border(Color color) {
+  static OutlineInputBorder outlineBorder(Color color) {
     return OutlineInputBorder(borderSide: BorderSide(color: color, width: 1));
   }
 }
