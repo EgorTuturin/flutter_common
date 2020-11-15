@@ -14,7 +14,7 @@ class ErrorExHttp extends ErrorEx {
   ErrorExHttp(this.statusCode, this.reason, this.errorDescription) : super(errorDescription);
 }
 
-void showError(BuildContext context, ErrorEx error) {
+Future showError(BuildContext context, ErrorEx error) {
   String title;
   if (error is ErrorExHttp) {
     title = '${error.statusCode} ${error.reason}';
@@ -22,6 +22,6 @@ void showError(BuildContext context, ErrorEx error) {
     title = 'Error';
   }
 
-  showDialog(
+  return showDialog(
       context: context, child: AlertDialog(title: Text(title), content: Text(error.errorDescription, softWrap: true)));
 }
