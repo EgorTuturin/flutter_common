@@ -1,11 +1,10 @@
-import 'package:flutter_common/base/controls/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 class TextFieldEx extends StatefulWidget {
-  final Function(String term) onFieldChanged;
-  final Function(String term) onFieldSubmit;
+  final void Function(String term) onFieldChanged;
+  final void Function(String term) onFieldSubmit;
   final String init;
   final String hintText;
   final String Function(String term) validator;
@@ -28,16 +27,16 @@ class TextFieldEx extends StatefulWidget {
       this.hintText,
       this.validator,
       this.keyboardType,
-      String errorText,
+      this.errorText,
       this.controller,
       this.formatters,
       this.minSymbols,
       this.maxSymbols,
       EdgeInsets padding,
       this.decoration,
-      this.autofocus = false})
-      : this.errorText = errorText ?? '',
-        this.clearable = clearable ?? false,
+      bool autofocus})
+      : this.clearable = clearable ?? false,
+        this.autofocus = autofocus ?? false,
         this.padding = padding ?? const EdgeInsets.all(8.0);
 
   TextFieldEx copyWith(
@@ -75,7 +74,9 @@ class TextFieldEx extends StatefulWidget {
   }
 
   @override
-  _TextFieldExState createState() => _TextFieldExState();
+  _TextFieldExState createState() {
+    return _TextFieldExState();
+  }
 }
 
 class _TextFieldExState extends State<TextFieldEx> {
@@ -84,15 +85,18 @@ class _TextFieldExState extends State<TextFieldEx> {
 
   TextEditingController _controller;
 
+  InputDecoration _decoration;
+
   @override
   void initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController(text: widget.init ?? '');
-  }
-
-  @override
-  void didUpdateWidget(TextFieldEx oldWidget) {
-    super.didUpdateWidget(oldWidget);
+    _decoration = widget.decoration ?? InputDecoration();
+    _decoration = _decoration.copyWith(
+      hintText: widget.hintText,
+      labelText: widget.hintText,
+      suffixIcon: widget.clearable ? makeSuffix(_clearButton()) : null
+    );
   }
 
   @override
@@ -103,12 +107,13 @@ class _TextFieldExState extends State<TextFieldEx> {
             validator: _validate,
             inputFormatters: _formatters(),
             controller: _controller,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             autofocus: widget.autofocus,
             obscureText: _hidePassword,
             keyboardType: widget.keyboardType,
             onFieldSubmitted: widget.onFieldSubmit?.call,
             onChanged: _onField,
-            decoration: _decoration()));
+            decoration: _decoration));
   }
 
   List<TextInputFormatter> _formatters() {
@@ -119,14 +124,17 @@ class _TextFieldExState extends State<TextFieldEx> {
     return _list;
   }
 
-  InputDecoration _decoration() {
-    if (widget.clearable) {
-      return (widget.decoration ?? TextFieldExDecoration(hintText: widget.hintText)).copyWith(suffixIcon: clearButton());
-    }
-    return (widget.decoration ?? TextFieldExDecoration(hintText: widget.hintText));
+  InputDecoration decoration() {
+    return _decoration;
   }
 
-  Widget clearButton() {
+  Widget makeSuffix(Widget newSuffix) {
+    return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [newSuffix] + (_decoration.suffixIcon != null ? [_decoration.suffixIcon] : []));
+  }
+
+  Widget _clearButton() {
     return IconButton(tooltip: 'Clear', icon: Icon(Icons.clear), onPressed: _clear);
   }
 
@@ -152,7 +160,7 @@ class _TextFieldExState extends State<TextFieldEx> {
     }
 
     if (term.isEmpty) {
-      if (widget.errorText.isNotEmpty) {
+      if (widget.errorText?.isNotEmpty ?? false) {
         return widget.errorText;
       }
     } else {
@@ -174,18 +182,42 @@ class _TextFieldExState extends State<TextFieldEx> {
 }
 
 class PassWordTextField extends TextFieldEx {
-  PassWordTextField({Function(String term) onFieldChanged, String hintText, String init, String errorText = '', EdgeInsets padding, InputDecoration decoration})
+  PassWordTextField(
+      {Function(String term) onFieldChanged,
+      Function(String term) onFieldSubmit,
+      String init,
+      String hintText,
+      String Function(String term) validator,
+      String errorText,
+      bool autofocus,
+      List<TextInputFormatter> formatters,
+      int minSymbols,
+      int maxSymbols,
+      EdgeInsets padding,
+      TextEditingController controller,
+      InputDecoration decoration,
+      bool clearable})
       : super(
-            keyboardType: TextInputType.visiblePassword,
             onFieldChanged: onFieldChanged,
+            onFieldSubmit: onFieldSubmit,
             init: init,
+            clearable: clearable,
             hintText: hintText,
+            validator: validator,
+            keyboardType: TextInputType.visiblePassword,
             errorText: errorText,
-            padding: padding, 
-            decoration: decoration);
+            controller: controller,
+            formatters: formatters,
+            minSymbols: minSymbols,
+            maxSymbols: maxSymbols,
+            padding: padding,
+            decoration: decoration,
+            autofocus: autofocus);
 
   @override
-  _PassWordTextFieldState createState() => _PassWordTextFieldState();
+  _PassWordTextFieldState createState() {
+    return _PassWordTextFieldState();
+  }
 }
 
 class _PassWordTextFieldState extends _TextFieldExState {
@@ -194,21 +226,13 @@ class _PassWordTextFieldState extends _TextFieldExState {
 
   Widget _setObscureButton() {
     return IconButton(
-        icon: Icon(_hidePassword ? Icons.visibility : Icons.visibility_off, color: Colors.black),
+        icon: Icon(_hidePassword ? Icons.visibility : Icons.visibility_off),
         onPressed: () => setState(() => _hidePassword = !_hidePassword));
   }
 
-  Widget _suffixButton() {
-    if (widget.clearable) {
-      return Row(mainAxisSize: MainAxisSize.min, children: [_setObscureButton(), clearButton()]);
-    } else {
-      return _setObscureButton();
-    }
-  }
-
   @override
-  InputDecoration _decoration() {
-    return (widget.decoration ?? TextFieldExDecoration(hintText: widget.hintText)).copyWith(suffixIcon: _suffixButton());
+  InputDecoration decoration() {
+    return _decoration.copyWith(suffixIcon: makeSuffix(_setObscureButton()));
   }
 }
 
@@ -332,23 +356,6 @@ class NumberTextField extends StatelessWidget {
     }
 
     return null;
-  }
-}
-
-class TextFieldExDecoration extends InputDecoration {
-  final String errorText;
-  final String hintText;
-
-  TextFieldExDecoration({this.errorText, this.hintText})
-      : super(
-            errorText: errorText,
-            labelText: hintText,
-            errorBorder: outlineBorder(Colors.redAccent),
-            border: outlineBorder(Colors.black54),
-            focusedBorder: outlineBorder(ACTIVE_COLOR));
-
-  static OutlineInputBorder outlineBorder(Color color) {
-    return OutlineInputBorder(borderSide: BorderSide(color: color, width: 1));
   }
 }
 

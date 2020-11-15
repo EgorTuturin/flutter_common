@@ -19,4 +19,8 @@ class TimeParser {
     final ts = DateTime.fromMillisecondsSinceEpoch(time);
     return DateFormat(FORMAT_HOUR_MINUTE_SEC).format(ts);
   }
+
+  static String msecHumanReadableFormat(int milliseconds) {
+    return DateTime.fromMillisecondsSinceEpoch(milliseconds).toString();
+  }
 }
