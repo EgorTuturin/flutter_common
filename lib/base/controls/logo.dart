@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class CircleAssetLogo extends StatelessWidget {
   final String logoPath;
-  final double radius;
+  final double size;
 
-  CircleAssetLogo(this.logoPath, {this.radius = 48.0});
+  CircleAssetLogo(this.logoPath, {this.size});
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(backgroundColor: Colors.transparent, radius: radius, child: Image.asset(logoPath));
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(double.maxFinite),
+        child: Image.asset(logoPath, width: size, height: size));
   }
 }
 
