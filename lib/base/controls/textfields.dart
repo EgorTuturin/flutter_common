@@ -113,7 +113,7 @@ class _TextFieldExState extends State<TextFieldEx> {
             keyboardType: widget.keyboardType,
             onFieldSubmitted: widget.onFieldSubmit?.call,
             onChanged: _onField,
-            decoration: _decoration));
+            decoration: decoration()));
   }
 
   List<TextInputFormatter> _formatters() {
