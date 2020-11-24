@@ -58,15 +58,14 @@ class ResponseParser {
   static Future<T> handleBaseResponse<T extends BaseResponse>(Future<T> future, List<int> statusCodes, [void Function(ErrorExHttp) on401]) {
     final completer = Completer<T>();
     future.then((resp) {
-      if (resp.statusCode == 401) {
-        ErrorExHttp errorHttp = _makeError(resp);
-        on401?.call(errorHttp);
+      bool _checkCode = _checkStatusCode(resp.statusCode, statusCodes);
+      if (_checkCode) {
+        return completer.complete(resp);
       } else {
-        bool _checkCode = _checkStatusCode(resp.statusCode, statusCodes);
-        if (_checkCode) {
-          return completer.complete(resp);
-        }
         ErrorExHttp errorHttp = _makeError(resp);
+        if (resp.statusCode == 401) {
+          on401?.call(errorHttp);
+        }
         return completer.completeError(errorHttp);
       }
     }, onError: (e) {
