@@ -46,10 +46,11 @@ abstract class IFetcher {
     final Map<String, String> headers = _getJsonHeaders();
     final body = json.encode(data);
     final response = http.post(getBackendEndpoint(path), headers: headers, body: body);
-    return _handleError(response, [200], (value) {
+    final result = _handleError(response, [200], (value) {
       final data = json.decode(value.body);
       _accessToken = data['access_token'];
     });
+    return result;
   }
 
   Future<http.Response> fetchGet(String path, [List<int> successCodes = const [200]]) {
