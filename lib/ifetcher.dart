@@ -104,7 +104,7 @@ abstract class IFetcher {
 
   Future<http.Response> _handleError(Future<http.Response> response, List<int> successCodes,
       [void Function(http.Response) onSuccess]) {
-    return ResponseParser.handleResponse(response, successCodes).then(onSuccess, onError: (Object error) {
+    return handleResponse(response, successCodes).then(onSuccess, onError: (Object error) {
       _listeners.forEach((listener) {
         listener.onError(error);
       });
