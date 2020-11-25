@@ -5,8 +5,8 @@ import 'package:flutter_common/errors/error.dart';
 import 'package:flutter_common/errors/handler.dart';
 import 'package:flutter_common/errors/listener.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class IFetcher {
   String _accessToken;
@@ -115,7 +115,7 @@ abstract class IFetcher {
 
   Future<http.Response> _handleError(Future<http.Response> response, List<int> successCodes,
       [void Function(http.Response) onSuccess]) {
-    return ResponseParser.handleResponse(response, successCodes).then(onSuccess, onError: (ErrorExHttp error) {
+    return ResponseParser.handleResponse(response, successCodes).then(onSuccess, onError: (Object error) {
       _listeners.forEach((listener) {
         listener.onError(error);
       });
