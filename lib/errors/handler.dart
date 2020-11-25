@@ -61,10 +61,9 @@ class ResponseParser {
       bool _checkCode = _checkStatusCode(resp.statusCode, statusCodes);
       if (_checkCode) {
         return completer.complete(resp);
-      } else {
-        ErrorExHttp errorHttp = _makeError(resp);
-        return completer.completeError(errorHttp);
       }
+      ErrorExHttp errorHttp = _makeError(resp);
+      return completer.completeError(errorHttp);
     }, onError: (e) {
       ErrorEx error = ErrorEx(e.toString());
       return completer.completeError(error);
@@ -76,8 +75,7 @@ class ResponseParser {
   static ErrorExHttp _makeError(BaseResponse resp) {
     if (resp is StreamedResponse) {
       return _errorFromStreamedResponse(resp);
-    } else {
-      return _errorFromResponse(resp);
     }
+    return _errorFromResponse(resp);
   }
 }
