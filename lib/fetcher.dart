@@ -7,7 +7,7 @@ import 'package:flutter_common/errors/error.dart';
 import 'package:flutter_common/errors/handler.dart';
 import 'package:flutter_common/errors/listener.dart';
 
-abstract class Fetcher{
+abstract class IFetcher{
   String getBackendEndpoint();
   String _accessToken;
 
