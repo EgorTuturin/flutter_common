@@ -46,37 +46,47 @@ abstract class IFetcher {
     final Map<String, String> headers = _getJsonHeaders();
     final body = json.encode(data);
     final response = http.post(getBackendEndpoint(path), headers: headers, body: body);
-    final result = _handleError(response, [200], (value) {
+    final onSuccess = (value) {
       final data = json.decode(value.body);
       _accessToken = data['access_token'];
-    });
+      return Future<http.Response>.value(value);
+    };
+    final result = _handleError(response, [200], onSuccess);
     return result;
   }
 
   Future<http.Response> fetchGet(String path, [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getHeaders();
     final response = http.get(getBackendEndpoint(path), headers: headers);
-    return _handleError(response, successCodes);
+    return _handleError(response, successCodes, (value) {
+      return Future<http.Response>.value(value);
+    });
   }
 
   Future<http.Response> fetchPost(String path, Map<String, dynamic> data, [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getJsonHeaders();
     final body = json.encode(data);
     final response = http.post(getBackendEndpoint(path), headers: headers, body: body);
-    return _handleError(response, successCodes);
+    return _handleError(response, successCodes, (value) {
+      return Future<http.Response>.value(value);
+    });
   }
 
   Future<http.Response> fetchPatch(String path, Map<String, dynamic> data, [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getJsonHeaders();
     final body = json.encode(data);
     final response = http.patch(getBackendEndpoint(path), headers: headers, body: body);
-    return _handleError(response, successCodes);
+    return _handleError(response, successCodes, (value) {
+      return Future<http.Response>.value(value);
+    });
   }
 
   Future<http.Response> fetchDelete(String path, [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getJsonHeaders();
     final response = http.delete(getBackendEndpoint(path), headers: headers);
-    return _handleError(response, successCodes);
+    return _handleError(response, successCodes, (value) {
+      return Future<http.Response>.value(value);
+    });
   }
 
   Future<bool> launchUrl(String path) {
@@ -105,9 +115,12 @@ abstract class IFetcher {
     return headers;
   }
 
-  Future<http.Response> _handleError(Future<http.Response> response, List<int> successCodes,
-      [void Function(http.Response) onSuccess]) {
-    return handleResponse(response, successCodes).then(onSuccess, onError: (Object error) {
+  Future<http.Response> _handleError(
+      Future<http.Response> response, List<int> successCodes, Future<http.Response> Function(http.Response) onSuccess) {
+    final Future<http.Response> result = handleResponse(response, successCodes);
+    return result.then((http.Response value) {
+      return onSuccess(value);
+    }, onError: (Object error) {
       _listeners.forEach((listener) {
         listener.onError(error);
       });
