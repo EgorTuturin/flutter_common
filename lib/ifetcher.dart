@@ -1,24 +1,46 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_common/errors/error.dart';
 import 'package:flutter_common/errors/handler.dart';
 import 'package:flutter_common/errors/listener.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:http_parser/http_parser.dart';
 
-abstract class IFetcher{
+abstract class IFetcher {
   String _accessToken;
   List<IErrorListener> _listeners = [];
 
   String getBackendEndpoint();
-  
+
   void addListener(IErrorListener listener) {
     _listeners.add(listener);
   }
 
   void removeListener(IErrorListener listener) {
     _listeners.remove(listener);
+  }
+
+  Future<http.StreamedResponse> sendFiles(String path, Map<String, List<int>> data, Map<String, dynamic> fields) {
+    if (data == null) {
+      return Future<http.StreamedResponse>(null);
+    }
+
+    final url = Uri.parse(_generateBackendApiEndpoint(path));
+    http.MultipartRequest request = http.MultipartRequest('POST', url);
+    if (_accessToken != null) {
+      request.headers[HttpHeaders.authorizationHeader] = 'Bearer $_accessToken';
+    }
+    data.forEach((key, data) {
+      final mf = http.MultipartFile.fromBytes('file', data,
+          contentType: MediaType('application', 'octet-stream'), filename: key);
+      request.files.add(mf);
+    });
+
+    final body = json.encode(fields);
+    request.fields.addAll({'params': body});
+    return request.send();
   }
 
   Future<http.Response> login(String path, Map<String, dynamic> data) {
@@ -91,9 +113,9 @@ abstract class IFetcher{
     return '$base$path';
   }
 
-  Future<http.Response> _handleError(Future<http.Response> response, List<int> successCodes, [void Function(http.Response) onSuccess]) {
-    return ResponseParser.handleResponse(response, successCodes).then(onSuccess,
-        onError: (ErrorExHttp error) {
+  Future<http.Response> _handleError(Future<http.Response> response, List<int> successCodes,
+      [void Function(http.Response) onSuccess]) {
+    return ResponseParser.handleResponse(response, successCodes).then(onSuccess, onError: (ErrorExHttp error) {
       _listeners.forEach((listener) {
         listener.onError.call(error);
       });
