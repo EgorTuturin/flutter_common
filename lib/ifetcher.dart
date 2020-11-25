@@ -115,15 +115,16 @@ abstract class IFetcher {
     return headers;
   }
 
-  Future<http.Response> _handleError(
-      Future<http.Response> response, List<int> successCodes, Future<http.Response> Function(http.Response) onSuccess) {
+  Future<http.Response> _handleError(Future<http.Response> response, List<int> successCodes,
+      Future<http.Response> Function(http.Response) onSuccess) {
     final Future<http.Response> result = handleResponse(response, successCodes);
     return result.then((http.Response value) {
       return onSuccess(value);
-    }, onError: (Object error) {
+    }, onError: (error) {
       _listeners.forEach((listener) {
         listener.onError(error);
       });
+      throw error;
     });
   }
 }
