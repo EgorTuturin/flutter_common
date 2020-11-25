@@ -8,13 +8,11 @@ import 'package:flutter_common/errors/handler.dart';
 import 'package:flutter_common/errors/listener.dart';
 
 abstract class IFetcher{
-  String getBackendEndpoint();
   String _accessToken;
-
-  Fetcher();
-
   List<IErrorListener> _listeners = [];
 
+  String getBackendEndpoint();
+  
   void addListener(IErrorListener listener) {
     _listeners.add(listener);
   }
