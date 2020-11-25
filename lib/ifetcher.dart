@@ -11,7 +11,7 @@ abstract class IFetcher {
   String _accessToken;
   List<IErrorListener> _listeners = [];
 
-  String getBackendEndpoint();
+  String getBackendEndpoint(String path);
 
   void addListener(IErrorListener listener) {
     _listeners.add(listener);
@@ -26,7 +26,7 @@ abstract class IFetcher {
       return Future<http.StreamedResponse>(null);
     }
 
-    final url = Uri.parse(_generateBackendApiEndpoint(path));
+    final url = Uri.parse(getBackendEndpoint(path));
     http.MultipartRequest request = http.MultipartRequest('POST', url);
     if (_accessToken != null) {
       request.headers[HttpHeaders.authorizationHeader] = 'Bearer $_accessToken';
@@ -52,27 +52,27 @@ abstract class IFetcher {
 
   Future<http.Response> fetchGet(String path, [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getHeaders();
-    final response = http.get(_generateBackendApiEndpoint(path), headers: headers);
+    final response = http.get(getBackendEndpoint(path), headers: headers);
     return _handleError(response, successCodes);
   }
 
   Future<http.Response> fetchPost(String path, Map<String, dynamic> data, [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getJsonHeaders();
     final body = json.encode(data);
-    final response = http.post(_generateBackendApiEndpoint(path), headers: headers, body: body);
+    final response = http.post(getBackendEndpoint(path), headers: headers, body: body);
     return _handleError(response, successCodes);
   }
 
   Future<http.Response> fetchPatch(String path, Map<String, dynamic> data, [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getJsonHeaders();
     final body = json.encode(data);
-    final response = http.patch(_generateBackendApiEndpoint(path), headers: headers, body: body);
+    final response = http.patch(getBackendEndpoint(path), headers: headers, body: body);
     return _handleError(response, successCodes);
   }
 
   Future<http.Response> fetchDelete(String path, [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getJsonHeaders();
-    final response = http.delete(_generateBackendApiEndpoint(path), headers: headers);
+    final response = http.delete(getBackendEndpoint(path), headers: headers);
     return _handleError(response, successCodes);
   }
 
@@ -82,7 +82,7 @@ abstract class IFetcher {
       headers['authorization'] = 'Bearer $_accessToken';
     }
 
-    return launch(_generateBackendApiEndpoint(path), headers: headers);
+    return launch(getBackendEndpoint(path), headers: headers);
   }
 
   // private:
@@ -100,11 +100,6 @@ abstract class IFetcher {
       headers[HttpHeaders.authorizationHeader] = 'Bearer $_accessToken';
     }
     return headers;
-  }
-
-  String _generateBackendApiEndpoint(String path) {
-    final base = getBackendEndpoint();
-    return '$base$path';
   }
 
   Future<http.Response> _handleError(Future<http.Response> response, List<int> successCodes,
