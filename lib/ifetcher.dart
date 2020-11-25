@@ -117,7 +117,7 @@ abstract class IFetcher {
       [void Function(http.Response) onSuccess]) {
     return ResponseParser.handleResponse(response, successCodes).then(onSuccess, onError: (ErrorExHttp error) {
       _listeners.forEach((listener) {
-        listener.onError.call(error);
+        listener.onError(error);
       });
     });
   }
