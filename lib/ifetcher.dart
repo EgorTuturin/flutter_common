@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_common/errors/error.dart';
 import 'package:flutter_common/errors/handler.dart';
 import 'package:flutter_common/errors/listener.dart';
 import 'package:http/http.dart' as http;
@@ -103,13 +102,8 @@ abstract class IFetcher {
     return headers;
   }
 
-  String _getBackendApiEndpoint() {
-    final base = getBackendEndpoint();
-    return '$base/api';
-  }
-
   String _generateBackendApiEndpoint(String path) {
-    final base = _getBackendApiEndpoint();
+    final base = getBackendEndpoint();
     return '$base$path';
   }
 
