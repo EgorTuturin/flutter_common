@@ -14,6 +14,7 @@ dependencies:
   flutter_material_color_picker: ^1.0.5
   responsive_builder: ^0.3.0
   device_info: ^1.0.0
+  url_launcher: ^5.7.2
   package_info_plus: ^0.5.0
   fastotv_device_info:
     git:

@@ -5,12 +5,12 @@ import 'package:http/http.dart';
 import 'package:flutter_common/errors/error.dart';
 
 class ResponseParser {
-  static Future<Response> handleResponse(Future<Response> future, List<int> statusCodes, [void Function(ErrorExHttp) on401]) {
-    return handleBaseResponse<Response>(future, statusCodes, on401);
+  static Future<Response> handleResponse(Future<Response> future, List<int> statusCodes) {
+    return handleBaseResponse<Response>(future, statusCodes);
   }
 
-  static Future<StreamedResponse> handleStreamedResponse(Future<StreamedResponse> future, List<int> statusCodes, [void Function(ErrorExHttp) on401]) {
-    return handleBaseResponse<StreamedResponse>(future, statusCodes, on401);
+  static Future<StreamedResponse> handleStreamedResponse(Future<StreamedResponse> future, List<int> statusCodes) {
+    return handleBaseResponse<StreamedResponse>(future, statusCodes);
   }
 
   static Future<bool> launchUrl(Future<bool> future) {
@@ -55,7 +55,7 @@ class ResponseParser {
     return false;
   }
 
-  static Future<T> handleBaseResponse<T extends BaseResponse>(Future<T> future, List<int> statusCodes, [void Function(ErrorExHttp) on401]) {
+  static Future<T> handleBaseResponse<T extends BaseResponse>(Future<T> future, List<int> statusCodes) {
     final completer = Completer<T>();
     future.then((resp) {
       bool _checkCode = _checkStatusCode(resp.statusCode, statusCodes);
@@ -63,9 +63,6 @@ class ResponseParser {
         return completer.complete(resp);
       } else {
         ErrorExHttp errorHttp = _makeError(resp);
-        if (resp.statusCode == 401) {
-          on401?.call(errorHttp);
-        }
         return completer.completeError(errorHttp);
       }
     }, onError: (e) {
