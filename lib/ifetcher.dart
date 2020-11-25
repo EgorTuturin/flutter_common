@@ -124,7 +124,7 @@ abstract class IFetcher {
       _listeners.forEach((listener) {
         listener.onError(error);
       });
-      throw error;
+      return Future<http.Response>.error(error);
     });
   }
 }
