@@ -12,22 +12,6 @@ Future<StreamedResponse> handleStreamedResponse(Future<StreamedResponse> future,
   return handleBaseResponse<StreamedResponse>(future, statusCodes);
 }
 
-Future<bool> launchUrl(Future<bool> future) {
-  final completer = Completer<bool>();
-  future.then((resp) {
-    if (resp) {
-      return completer.complete(resp);
-    }
-    ErrorEx error = ErrorEx('Unable to launch given link');
-    return completer.completeError(error);
-  }, onError: (e) {
-    ErrorEx error = ErrorEx(e.toString());
-    return completer.completeError(error);
-  });
-
-  return completer.future;
-}
-
 Future<T> handleBaseResponse<T extends BaseResponse>(Future<T> future, List<int> statusCodes) {
   final completer = Completer<T>();
   future.then((resp) {

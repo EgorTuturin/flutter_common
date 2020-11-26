@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+Future<bool> launchExternalUrl(String url) => launch(url);
+
 abstract class IFetcher {
   String _accessToken;
   List<IErrorListener> _listeners = [];
