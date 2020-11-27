@@ -11,6 +11,7 @@ class TextFieldEx extends StatefulWidget {
   final TextInputType keyboardType;
   final String errorText;
   final bool autofocus;
+  final bool readOnly;
   final List<TextInputFormatter> formatters;
   final int minSymbols;
   final int maxSymbols;
@@ -32,11 +33,13 @@ class TextFieldEx extends StatefulWidget {
       this.formatters,
       this.minSymbols,
       this.maxSymbols,
+      bool readOnly,
       EdgeInsets padding,
       this.decoration,
       bool autofocus})
       : this.clearable = clearable ?? false,
         this.autofocus = autofocus ?? false,
+        this.readOnly = readOnly ?? false,
         this.padding = padding ?? const EdgeInsets.all(8.0);
 
   TextFieldEx copyWith(
@@ -109,6 +112,7 @@ class _TextFieldExState extends State<TextFieldEx> {
             controller: _controller,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             autofocus: widget.autofocus,
+            readOnly: widget.readOnly,
             obscureText: _hidePassword,
             keyboardType: widget.keyboardType,
             onFieldSubmitted: widget.onFieldSubmit?.call,
