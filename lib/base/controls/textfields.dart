@@ -107,7 +107,7 @@ class _TextFieldExState extends State<TextFieldEx> {
   @override
   void didUpdateWidget(TextFieldEx oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.hintText != oldWidget.hintText) {
+    if (widget.init != oldWidget.init) {
       _controller = widget.controller ?? TextEditingController(text: widget.init ?? '');
     }
   }
