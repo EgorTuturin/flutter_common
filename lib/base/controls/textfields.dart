@@ -36,11 +36,13 @@ class TextFieldEx extends StatefulWidget {
       bool readOnly,
       EdgeInsets padding,
       this.decoration,
-      bool autofocus})
+      bool autofocus,
+      Key key})
       : this.clearable = clearable ?? false,
         this.autofocus = autofocus ?? false,
         this.readOnly = readOnly ?? false,
-        this.padding = padding ?? const EdgeInsets.all(8.0);
+        this.padding = padding ?? const EdgeInsets.all(8.0),
+        super(key: key);
 
   TextFieldEx copyWith(
       {Function(String term) onFieldChanged,
@@ -100,6 +102,14 @@ class _TextFieldExState extends State<TextFieldEx> {
       labelText: widget.hintText,
       suffixIcon: widget.clearable ? makeSuffix(_clearButton()) : null
     );
+  }
+
+  @override
+  void didUpdateWidget(TextFieldEx oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.hintText != oldWidget.hintText) {
+      _controller = widget.controller ?? TextEditingController(text: widget.init ?? '');
+    }
   }
 
   @override
