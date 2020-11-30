@@ -1,10 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_common/data_table/data_source.dart';
 import 'package:flutter_common/data_table/table.dart';
-import 'package:flutter_common/scroll/scrollview.dart';
-import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
+import 'package:flutter_common/scrollable.dart';
 
-class DataLayout<T> extends StatefulWidget {
+class DataLayout<T> extends StatelessWidget {
   final DataSource<T> dataSource;
   final Widget header;
   final List<Widget> Function(T) singleItemActions;
@@ -31,22 +30,20 @@ class DataLayout<T> extends StatefulWidget {
       : canScrollTable = canScrollTable ?? false;
 
   @override
-  _DataLayoutState<T> createState() => _DataLayoutState<T>();
-}
-
-class _DataLayoutState<T> extends State<DataLayout<T>> {
-  @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(builder: (context, sizingInformation) {
-      if (widget.canScrollTable) {
-        return CustomSingleChildScrollView(child: widget.title == null ? _table() : _withTitle());
-      } else {
-        return widget.title == null ? _table() : _withTitle();
-      }
-    });
+    if (canScrollTable) {
+      return ScrollableEx.withBar(builder: (controller) {
+        return SingleChildScrollView(controller: controller, child: _content());
+      });
+    } else {
+      return _content();
+    }
   }
 
-  // private:
+  Widget _content() {
+    return title == null ? _table() : _withTitle();
+  }
+
   Widget _withTitle() {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,20 +52,20 @@ class _DataLayoutState<T> extends State<DataLayout<T>> {
   }
 
   Widget _table() {
-    return DataTableEx(widget.dataSource, widget.header, _actions);
+    return DataTableEx(dataSource, header, _actions);
   }
 
   Widget _title() {
     return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(widget.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)));
+        child: Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)));
   }
 
   List<Widget> _actions() {
-    if (widget.dataSource.selectedRowCount == 1) {
-      return widget.singleItemActions(widget.dataSource.selectedItems().first);
-    } else if (widget.dataSource.selectedRowCount > 1) {
-      return widget.multipleItemActions(widget.dataSource.selectedItems());
+    if (dataSource.selectedRowCount == 1) {
+      return singleItemActions(dataSource.selectedItems().first);
+    } else if (dataSource.selectedRowCount > 1) {
+      return multipleItemActions(dataSource.selectedItems());
     }
     return [];
   }
