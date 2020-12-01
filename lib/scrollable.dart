@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_common/colors.dart';
 
 typedef ScrollableBuilder = Widget Function(ScrollController);
 
@@ -140,6 +141,7 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
   double _scrollExtent;
   ScrollBarConfig get _config => widget.config ?? ScrollBarConfig();
   double get maxOffset => MediaQuery.of(context).size.height - _calcThumbHeight();
+  Color get background => _config.scrollbarBackgroundColor ?? Theme.of(context).colorScheme.background;
 
   @override
   void initState() {
@@ -153,7 +155,7 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
   void didChangeDependencies() {
     super.didChangeDependencies();
     _decoration = widget.config.decoration ?? BoxDecoration(
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.26),
+            color: backgroundColorBrightness(background, onLight: Colors.black26, onDark: Colors.white24),
             borderRadius: BorderRadius.all(Radius.circular(_config.scrollbarWidth / 4)));
   }
 
@@ -176,7 +178,7 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
         alignment: Alignment.centerRight,
         height: MediaQuery.of(context).size.height,
         width: _config.scrollbarWidth,
-        color: _config.scrollbarBackgroundColor ?? Theme.of(context).backgroundColor,
+        color: background,
         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width - _config.scrollbarWidth),
         child: Container(
             alignment: Alignment.topCenter,

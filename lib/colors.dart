@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-class CustomColor {
-  CustomColor();
-
-  Color themeBrightnessColor(BuildContext context, {Color dark, Color light}) {
-    return Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black;
+Color themeBrightnessColor(BuildContext context, {Color dark, Color light}) {
+  if (Theme.of(context).brightness == Brightness.light) {
+    return light ?? Colors.black;
   }
+  return dark ?? Colors.white;
+}
 
-  Color backGroundColorBrightness(Color color, {Color dark, Color light}) {
-    if (ThemeData.estimateBrightnessForColor(color) == Brightness.light) {
-      return light ?? Colors.black;
-    }
-    return dark ?? Colors.white;
+Color backgroundColorBrightness(Color color, {Color onDark, Color onLight}) {
+  if (ThemeData.estimateBrightnessForColor(color) == Brightness.light) {
+    return onLight ?? Colors.black;
   }
+  return onDark ?? Colors.white;
 }

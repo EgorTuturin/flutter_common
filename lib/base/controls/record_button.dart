@@ -60,7 +60,7 @@ class _RecordButtonState extends State<RecordButton> {
   @override
   Widget build(BuildContext context) {
     final accentColor = widget.selectedColor ?? Theme.of(context).accentColor;
-    final textColor = widget.textColor ?? CustomColor().themeBrightnessColor(context);
+    final textColor = widget.textColor ?? themeBrightnessColor(context);
 
     Widget _iconButton() {
       return IconButton(
@@ -80,7 +80,7 @@ class _RecordButtonState extends State<RecordButton> {
     }
 
     Widget _flatButton() {
-      final textStyle = TextStyle(color: CustomColor().backGroundColorBrightness(accentColor));
+      final textStyle = TextStyle(color: backgroundColorBrightness(accentColor));
       return FlatButton(
           color: accentColor,
           child: Text(widget.queuedText ?? "Queued", style: textStyle),

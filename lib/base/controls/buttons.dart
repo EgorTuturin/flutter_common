@@ -18,9 +18,9 @@ class FlatButtonEx extends StatelessWidget {
     return FlatButton(
         onPressed: onPressed == null ? null : () => onPressed(),
         child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
-        textColor: filled ? CustomColor().backGroundColorBrightness(activeColor) : activeColor,
+        textColor: filled ? backgroundColorBrightness(activeColor) : activeColor,
         disabledColor: disabledColor,
-        disabledTextColor: CustomColor().backGroundColorBrightness(disabledColor),
+        disabledTextColor: backgroundColorBrightness(disabledColor),
         color: filled ? activeColor : null);
   }
 }

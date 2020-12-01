@@ -20,7 +20,7 @@ class PlayerButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _color = color ?? CustomColor().backGroundColorBrightness(Theme.of(context).primaryColor);
+    final _color = color ?? backgroundColorBrightness(Theme.of(context).primaryColor);
     return IconButton(
         icon: Icon(icon),
         color: _color,
