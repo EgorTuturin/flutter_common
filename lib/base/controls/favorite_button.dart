@@ -10,7 +10,8 @@ class FavoriteStarButton extends StatefulWidget {
   final bool initFavorite;
   final FocusNode focusNode;
 
-  FavoriteStarButton(this.initFavorite, {this.selectedColor, this.unselectedColor, this.onFavoriteChanged, this.focusNode});
+  FavoriteStarButton(this.initFavorite,
+      {this.selectedColor, this.unselectedColor, this.onFavoriteChanged, this.focusNode});
 
   @override
   _FavoriteStarButtonState createState() {

@@ -98,10 +98,9 @@ class _TextFieldExState extends State<TextFieldEx> {
     _controller = widget.controller ?? TextEditingController(text: widget.init ?? '');
     _decoration = widget.decoration ?? InputDecoration();
     _decoration = _decoration.copyWith(
-      hintText: widget.hintText,
-      labelText: widget.hintText,
-      suffixIcon: widget.clearable ? makeSuffix(_clearButton()) : null
-    );
+        hintText: widget.hintText,
+        labelText: widget.hintText,
+        suffixIcon: widget.clearable ? makeSuffix(_clearButton()) : null);
   }
 
   @override

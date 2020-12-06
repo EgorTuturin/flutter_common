@@ -1,6 +1,6 @@
-import 'package:flutter_common/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_common/colors.dart';
 
 class FlatButtonEx extends StatelessWidget {
   final bool filled;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_common/table.dart';
 import 'package:flutter_common/data_table/data_source.dart';
+import 'package:flutter_common/table.dart';
 
 class DataTableEx extends StatefulWidget {
   final DataSource source;

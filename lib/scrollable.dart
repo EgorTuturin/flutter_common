@@ -31,10 +31,7 @@ class ScrollableEx extends StatefulWidget {
         this.overlayContent = false;
 
   ScrollableEx.withBar(
-      {@required this.builder,
-      this.controller,
-      this.overlayContent = false,
-      ScrollBarConfig scrollBarConfig})
+      {@required this.builder, this.controller, this.overlayContent = false, ScrollBarConfig scrollBarConfig})
       : this.scrollBarConfig = ScrollBarConfig();
 
   @override
@@ -139,8 +136,11 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
   double _offset = 0;
   double _fixCursorPosition = 0;
   double _scrollExtent;
+
   ScrollBarConfig get _config => widget.config ?? ScrollBarConfig();
+
   double get maxOffset => MediaQuery.of(context).size.height - _calcThumbHeight();
+
   Color get background => _config.scrollbarBackgroundColor ?? Theme.of(context).colorScheme.background;
 
   @override
@@ -154,7 +154,8 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _decoration = widget.config.decoration ?? BoxDecoration(
+    _decoration = widget.config.decoration ??
+        BoxDecoration(
             color: backgroundColorBrightness(background, onLight: Colors.black26, onDark: Colors.white24),
             borderRadius: BorderRadius.all(Radius.circular(_config.scrollbarWidth / 4)));
   }
@@ -183,18 +184,14 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
         child: Container(
             alignment: Alignment.topCenter,
             child: GestureDetector(
-                child: _thumbBuilder(),
-                onVerticalDragStart: _onDragStart,
-                onVerticalDragUpdate: _onDrag)));
+                child: _thumbBuilder(), onVerticalDragStart: _onDragStart, onVerticalDragUpdate: _onDrag)));
   }
 
   Widget _thumbBuilder() {
     return Container(
         height: _calcThumbHeight(),
-        margin: EdgeInsets.only(
-            left: _config.thumbHorizontalPadding,
-            right: _config.thumbHorizontalPadding,
-            top: _offset),
+        margin:
+            EdgeInsets.only(left: _config.thumbHorizontalPadding, right: _config.thumbHorizontalPadding, top: _offset),
         decoration: _decoration);
   }
 
@@ -227,7 +224,7 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
     }
     double numberOfPages = 1 + _scrollExtent / MediaQuery.of(context).size.height;
     double thumbHeight = MediaQuery.of(context).size.height / numberOfPages;
-    
+
     if (thumbHeight < _config.scrollbarWidth) {
       thumbHeight = _config.scrollbarWidth;
     }

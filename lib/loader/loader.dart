@@ -10,7 +10,8 @@ class LoaderWidget<S extends ItemDataState> extends StatelessWidget {
   final Widget Function(BuildContext) loadingBuilder;
   final Widget Function(BuildContext) errorBuilder;
 
-  const LoaderWidget({Key key, @required this.loader, @required this.builder, this.loadingBuilder, this.errorBuilder}) : super(key: key);
+  const LoaderWidget({Key key, @required this.loader, @required this.builder, this.loadingBuilder, this.errorBuilder})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

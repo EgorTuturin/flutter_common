@@ -9,8 +9,7 @@ class CircleAssetLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-        borderRadius: BorderRadius.circular(double.maxFinite),
-        child: Image.asset(logoPath, width: size, height: size));
+        borderRadius: BorderRadius.circular(double.maxFinite), child: Image.asset(logoPath, width: size, height: size));
   }
 }
 
