@@ -41,14 +41,7 @@ class _DataTableSearchHeaderState extends State<DataTableSearchHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(builder: (context, sizingInformation) {
-      if (sizingInformation.deviceScreenType == DeviceScreenType.mobile) {
-        return _mobile();
-      } else if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
-        return _tablet();
-      }
-      return _desktop();
-    });
+    return ScreenTypeLayout(mobile: _mobile(), tablet: _tablet(), desktop: _desktop());
   }
 
   Widget _mobile() {
