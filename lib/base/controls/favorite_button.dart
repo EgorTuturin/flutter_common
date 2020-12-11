@@ -48,11 +48,7 @@ class _FavoriteStarButtonState extends State<FavoriteStarButton> with BaseTVCont
     final selectedColor = widget.selectedColor ?? Theme.of(context).accentColor;
     final unselectedColor = widget.unselectedColor ?? Theme.of(context).primaryIconTheme.color;
     return IconButton(
-        focusNode: FocusNode(onKey: (node, event) {
-          return nodeAction(FocusScope.of(context), node, event, () {
-            setFavorite(!_isFavorite);
-          });
-        }),
+        focusNode: widget.focusNode,
         padding: EdgeInsets.all(0.0),
         onPressed: () {
           setFavorite(!_isFavorite);

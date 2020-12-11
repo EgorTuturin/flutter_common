@@ -4,9 +4,9 @@ import 'package:flutter_common/tv/key_code.dart';
 
 mixin BaseTVControls {
   bool nodeAction(FocusScopeNode scope, FocusNode node, RawKeyEvent event, [void Function() onEnter]) {
-    if (event is RawKeyUpEvent && event.data is RawKeyEventDataAndroid) {
-      RawKeyUpEvent rawKeyUpEvent = event;
-      RawKeyEventDataAndroid rawKeyEventDataAndroid = rawKeyUpEvent.data;
+    if (event is RawKeyDownEvent && event.data is RawKeyEventDataAndroid) {
+      RawKeyDownEvent rawKeyDownEvent = event;
+      RawKeyEventDataAndroid rawKeyEventDataAndroid = rawKeyDownEvent.data;
       switch (rawKeyEventDataAndroid.keyCode) {
         case ENTER:
         case KEY_CENTER:

@@ -140,7 +140,7 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
   ScrollBarConfig get _config => widget.config ?? ScrollBarConfig();
 
   double get maxOffset => MediaQuery.of(context).size.height - _calcThumbHeight();
-
+  
   Color get background => _config.scrollbarBackgroundColor ?? Theme.of(context).colorScheme.background;
 
   @override
