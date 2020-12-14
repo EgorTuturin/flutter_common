@@ -16,7 +16,7 @@ class FlatButtonEx extends StatelessWidget {
     Color activeColor = Theme.of(context).accentColor;
     Color disabledColor = Theme.of(context).disabledColor;
     return FlatButton(
-        onPressed: onPressed == null ? null : () => onPressed(),
+        onPressed: onPressed?.call,
         child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
         textColor: filled ? backgroundColorBrightness(activeColor) : activeColor,
         disabledColor: disabledColor,
