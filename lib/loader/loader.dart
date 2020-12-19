@@ -10,7 +10,12 @@ class LoaderWidget<S extends ItemDataState> extends StatelessWidget {
   final Widget Function(BuildContext) loadingBuilder;
   final Widget Function(BuildContext) errorBuilder;
 
-  const LoaderWidget({Key key, @required this.loader, @required this.builder, this.loadingBuilder, this.errorBuilder})
+  const LoaderWidget(
+      {Key key,
+      @required this.loader,
+      @required this.builder,
+      this.loadingBuilder,
+      this.errorBuilder})
       : super(key: key);
 
   @override
@@ -29,11 +34,14 @@ class LoaderWidget<S extends ItemDataState> extends StatelessWidget {
             });
             return errorBuilder != null ? errorBuilder(context) : _reload();
           }
-          return loadingBuilder != null ? loadingBuilder(context) : Center(child: CircularProgressIndicator());
+          return loadingBuilder != null
+              ? loadingBuilder(context)
+              : Center(child: CircularProgressIndicator());
         });
   }
 
   Widget _reload() {
-    return Center(child: IconButton(tooltip: 'Reload', icon: Icon(Icons.sync), onPressed: loader.load));
+    return Center(
+        child: IconButton(tooltip: 'Reload', icon: Icon(Icons.sync), onPressed: loader.load));
   }
 }

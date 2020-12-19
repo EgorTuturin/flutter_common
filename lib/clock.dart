@@ -12,11 +12,14 @@ class Clock extends StatefulWidget {
   final Color textColor;
   final bool hour24;
 
-  Clock.date({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true}) : type = 1;
+  Clock.date({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
+      : type = 1;
 
-  Clock.time({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true}) : type = 2;
+  Clock.time({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
+      : type = 2;
 
-  Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true}) : type = 3;
+  Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
+      : type = 3;
 
   @override
   _ClockState createState() {
@@ -47,13 +50,18 @@ class _ClockState extends State<Clock> {
 
   @override
   Widget build(BuildContext context) {
-    final child =
-        Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: <Widget>[
-      Text(_timeString, style: TextStyle(fontSize: widget.timeFontSize ?? 24, color: widget.textColor)),
-      Text(_dateString, style: TextStyle(fontSize: widget.dateFontSize ?? 18, color: widget.textColor))
-    ]);
+    final child = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(_timeString,
+              style: TextStyle(fontSize: widget.timeFontSize ?? 24, color: widget.textColor)),
+          Text(_dateString,
+              style: TextStyle(fontSize: widget.dateFontSize ?? 18, color: widget.textColor))
+        ]);
     return Padding(
-        padding: EdgeInsets.only(left: 8.0, right: 16), child: Container(width: widget.width ?? 100, child: child));
+        padding: EdgeInsets.only(left: 8.0, right: 16),
+        child: Container(width: widget.width ?? 100, child: child));
   }
 
   @override

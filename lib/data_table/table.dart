@@ -121,7 +121,8 @@ class _PaginatedDataTableEx extends StatefulWidget {
         assert(columns != null),
         assert(dragStartBehavior != null),
         assert(columns.isNotEmpty),
-        assert(sortColumnIndex == null || (sortColumnIndex >= 0 && sortColumnIndex < columns.length)),
+        assert(
+            sortColumnIndex == null || (sortColumnIndex >= 0 && sortColumnIndex < columns.length)),
         assert(sortAscending != null),
         assert(dataRowHeight != null),
         assert(actions == null || actionsHeader == null),
@@ -175,7 +176,8 @@ class _PaginatedDataTableExState extends State<_PaginatedDataTableEx> {
   @override
   void initState() {
     super.initState();
-    _firstRowIndex = PageStorage.of(context)?.readState(context) as int ?? widget.initialFirstRowIndex ?? 0;
+    _firstRowIndex =
+        PageStorage.of(context)?.readState(context) as int ?? widget.initialFirstRowIndex ?? 0;
     widget.source.addListener(_handleDataSourceChanged);
     _handleDataSourceChanged();
   }
@@ -212,12 +214,14 @@ class _PaginatedDataTableExState extends State<_PaginatedDataTableEx> {
       final int rowsPerPage = widget.rowsPerPage;
       _firstRowIndex = (rowIndex ~/ rowsPerPage) * rowsPerPage;
     });
-    if ((widget.onPageChanged != null) && (oldFirstRowIndex != _firstRowIndex)) widget.onPageChanged(_firstRowIndex);
+    if ((widget.onPageChanged != null) && (oldFirstRowIndex != _firstRowIndex))
+      widget.onPageChanged(_firstRowIndex);
   }
 
   DataRow _getBlankRowFor(int index) {
     return DataRow.byIndex(
-        index: index, cells: widget.columns.map<DataCell>((DataColumn column) => DataCell.empty).toList());
+        index: index,
+        cells: widget.columns.map<DataCell>((DataColumn column) => DataCell.empty).toList());
   }
 
   DataRow _getProgressIndicatorRowFor(int index) {
@@ -298,7 +302,9 @@ class _PaginatedDataTableExState extends State<_PaginatedDataTableEx> {
                     color: _selectedRowCount > 0 ? themeData.secondaryHeaderColor : null,
                     child: Padding(
                         padding: EdgeInsetsDirectional.only(start: startPadding, end: 14.0),
-                        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: _headerWidgets()))))));
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: _headerWidgets()))))));
   }
 
   List<Widget> _headerWidgets() {
@@ -307,7 +313,8 @@ class _PaginatedDataTableExState extends State<_PaginatedDataTableEx> {
     if (_selectedRowCount == 0) {
       headerWidgets.add(Expanded(child: widget.header));
     } else {
-      headerWidgets.add(Expanded(child: Text(localizations.selectedRowCountTitle(_selectedRowCount))));
+      headerWidgets
+          .add(Expanded(child: Text(localizations.selectedRowCountTitle(_selectedRowCount))));
     }
     if (widget.actionsHeader != null) {
       headerWidgets.add(widget.actionsHeader);
@@ -387,8 +394,8 @@ class _PaginatedDataTableExState extends State<_PaginatedDataTableEx> {
     }
     footerWidgets.addAll(<Widget>[
       Container(width: 32.0),
-      Text(localizations.pageRowsInfoTitle(
-          _firstRowIndex + 1, _firstRowIndex + widget.rowsPerPage, _rowCount, _rowCountApproximate)),
+      Text(localizations.pageRowsInfoTitle(_firstRowIndex + 1, _firstRowIndex + widget.rowsPerPage,
+          _rowCount, _rowCountApproximate)),
       Container(width: 32.0),
       IconButton(
           icon: const Icon(Icons.chevron_left),
@@ -400,8 +407,9 @@ class _PaginatedDataTableExState extends State<_PaginatedDataTableEx> {
           icon: const Icon(Icons.chevron_right),
           padding: EdgeInsets.zero,
           tooltip: localizations.nextPageTooltip,
-          onPressed:
-              (!_rowCountApproximate && (_firstRowIndex + widget.rowsPerPage >= _rowCount)) ? null : _handleNext),
+          onPressed: (!_rowCountApproximate && (_firstRowIndex + widget.rowsPerPage >= _rowCount))
+              ? null
+              : _handleNext),
       Container(width: 14.0)
     ]);
     return footerWidgets;
@@ -415,6 +423,7 @@ class TableActionIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0), child: action);
+    return Padding(
+        padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0), child: action);
   }
 }

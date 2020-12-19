@@ -9,10 +9,13 @@ class LanguagePicker extends StatefulWidget {
   final String languageNameKey;
   final int type;
 
-  const LanguagePicker.settings(this.onChanged, {this.languageKey, this.languageNameKey, this.chooseLangKey})
+  const LanguagePicker.settings(this.onChanged,
+      {this.languageKey, this.languageNameKey, this.chooseLangKey})
       : type = 0;
 
-  const LanguagePicker.login(this.onChanged, {this.languageKey, this.languageNameKey, this.chooseLangKey}) : type = 1;
+  const LanguagePicker.login(this.onChanged,
+      {this.languageKey, this.languageNameKey, this.chooseLangKey})
+      : type = 1;
 
   @override
   _LanguagePickerState createState() {
@@ -46,7 +49,8 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
                     SingleChildScrollView(
                         child: new Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: new List<Widget>.generate(supportedLocales.length, _dialogItem)))
+                            children:
+                                new List<Widget>.generate(supportedLocales.length, _dialogItem)))
                   ]));
         });
   }
@@ -78,7 +82,10 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
 
   Widget _settings() {
     return ListTile(
-        leading: Icon(Icons.language), title: Text(_language), subtitle: Text(_languageName), onTap: _showAlertDialog);
+        leading: Icon(Icons.language),
+        title: Text(_language),
+        subtitle: Text(_languageName),
+        onTap: _showAlertDialog);
   }
 
   Widget _login() {
@@ -92,7 +99,11 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
             child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[Icon(Icons.language), SizedBox(width: 16), Text(_languageName)])));
+                children: <Widget>[
+                  Icon(Icons.language),
+                  SizedBox(width: 16),
+                  Text(_languageName)
+                ])));
   }
 
   void _setLocale(Locale locale) {

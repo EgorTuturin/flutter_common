@@ -84,7 +84,8 @@ abstract class DataSource<S> extends DataTableSource {
   // table widgets
   List<DataColumn> columns() {
     final _index = [DataColumn(label: Text('№'))];
-    final _headers = List<DataColumn>.generate(headers().length, (index) => DataColumn(label: headers()[index]));
+    final _headers =
+        List<DataColumn>.generate(headers().length, (index) => DataColumn(label: headers()[index]));
     return _index + _headers;
   }
 

@@ -11,7 +11,11 @@ class AppLocalizations extends StatefulWidget {
   final String pathToAssets;
 
   const AppLocalizations(
-      {Key key, @required this.child, @required this.locales, this.pathToAssets = "install/lang/", this.init})
+      {Key key,
+      @required this.child,
+      @required this.locales,
+      this.pathToAssets = "install/lang/",
+      this.init})
       : super(key: key);
 
   @override
@@ -41,7 +45,9 @@ class _AppLocalizationsState extends State<AppLocalizations> {
   @override
   Widget build(BuildContext context) {
     return _InheritedLocaleProvider(
-        data: this, child: _localizations.currentDictionary == null ? CircularProgressIndicator() : widget.child);
+        data: this,
+        child:
+            _localizations.currentDictionary == null ? CircularProgressIndicator() : widget.child);
   }
 
   void load(Locale locale) async {

@@ -39,8 +39,10 @@ class DataListExState extends State<DataListEx> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: <Widget>[_source.selectedRowCount != 0 ? _actions() : _header(), Expanded(child: _columnChild())]);
+    return Column(children: <Widget>[
+      _source.selectedRowCount != 0 ? _actions() : _header(),
+      Expanded(child: _columnChild())
+    ]);
   }
 
   // private:
@@ -78,7 +80,9 @@ class DataListExState extends State<DataListEx> {
 
   Widget _actions() {
     return ListTile(
-        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [_selectAll()] + widget.actions()));
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [_selectAll()] + widget.actions()));
   }
 
   Widget _selectAll() {

@@ -31,7 +31,10 @@ class ScrollableEx extends StatefulWidget {
         this.overlayContent = false;
 
   ScrollableEx.withBar(
-      {@required this.builder, this.controller, this.overlayContent = false, ScrollBarConfig scrollBarConfig})
+      {@required this.builder,
+      this.controller,
+      this.overlayContent = false,
+      ScrollBarConfig scrollBarConfig})
       : this.scrollBarConfig = ScrollBarConfig();
 
   @override
@@ -140,8 +143,9 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
   ScrollBarConfig get _config => widget.config ?? ScrollBarConfig();
 
   double get maxOffset => MediaQuery.of(context).size.height - _calcThumbHeight();
-  
-  Color get background => _config.scrollbarBackgroundColor ?? Theme.of(context).colorScheme.background;
+
+  Color get background =>
+      _config.scrollbarBackgroundColor ?? Theme.of(context).colorScheme.background;
 
   @override
   void initState() {
@@ -156,7 +160,8 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
     super.didChangeDependencies();
     _decoration = widget.config.decoration ??
         BoxDecoration(
-            color: backgroundColorBrightness(background, onLight: Colors.black26, onDark: Colors.white24),
+            color: backgroundColorBrightness(background,
+                onLight: Colors.black26, onDark: Colors.white24),
             borderRadius: BorderRadius.all(Radius.circular(_config.scrollbarWidth / 4)));
   }
 
@@ -184,14 +189,18 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
         child: Container(
             alignment: Alignment.topCenter,
             child: GestureDetector(
-                child: _thumbBuilder(), onVerticalDragStart: _onDragStart, onVerticalDragUpdate: _onDrag)));
+                child: _thumbBuilder(),
+                onVerticalDragStart: _onDragStart,
+                onVerticalDragUpdate: _onDrag)));
   }
 
   Widget _thumbBuilder() {
     return Container(
         height: _calcThumbHeight(),
-        margin:
-            EdgeInsets.only(left: _config.thumbHorizontalPadding, right: _config.thumbHorizontalPadding, top: _offset),
+        margin: EdgeInsets.only(
+            left: _config.thumbHorizontalPadding,
+            right: _config.thumbHorizontalPadding,
+            top: _offset),
         decoration: _decoration);
   }
 

@@ -23,7 +23,8 @@ abstract class IFetcher {
     _listeners.remove(listener);
   }
 
-  Future<http.StreamedResponse> sendFiles(String path, Map<String, List<int>> data, Map<String, dynamic> fields) {
+  Future<http.StreamedResponse> sendFiles(
+      String path, Map<String, List<int>> data, Map<String, dynamic> fields) {
     if (data == null) {
       return Future<http.StreamedResponse>(null);
     }
@@ -65,7 +66,8 @@ abstract class IFetcher {
     });
   }
 
-  Future<http.Response> fetchPost(String path, Map<String, dynamic> data, [List<int> successCodes = const [200]]) {
+  Future<http.Response> fetchPost(String path, Map<String, dynamic> data,
+      [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getJsonHeaders();
     final body = json.encode(data);
     final response = http.post(getBackendEndpoint(path), headers: headers, body: body);
@@ -74,7 +76,8 @@ abstract class IFetcher {
     });
   }
 
-  Future<http.Response> fetchPatch(String path, Map<String, dynamic> data, [List<int> successCodes = const [200]]) {
+  Future<http.Response> fetchPatch(String path, Map<String, dynamic> data,
+      [List<int> successCodes = const [200]]) {
     final Map<String, String> headers = _getJsonHeaders();
     final body = json.encode(data);
     final response = http.patch(getBackendEndpoint(path), headers: headers, body: body);
@@ -102,7 +105,10 @@ abstract class IFetcher {
 
   // private:
   Map<String, String> _getJsonHeaders() {
-    Map<String, String> headers = {'content-type': 'application/json', 'accept': 'application/json'};
+    Map<String, String> headers = {
+      'content-type': 'application/json',
+      'accept': 'application/json'
+    };
     if (_accessToken != null) {
       headers[HttpHeaders.authorizationHeader] = 'Bearer $_accessToken';
     }
@@ -117,8 +123,8 @@ abstract class IFetcher {
     return headers;
   }
 
-  Future<http.Response> _handleError(
-      Future<http.Response> response, List<int> successCodes, Future<http.Response> Function(http.Response) onSuccess) {
+  Future<http.Response> _handleError(Future<http.Response> response, List<int> successCodes,
+      Future<http.Response> Function(http.Response) onSuccess) {
     final Future<http.Response> result = handleResponse(response, successCodes);
     return result.then((http.Response value) {
       return onSuccess(value);

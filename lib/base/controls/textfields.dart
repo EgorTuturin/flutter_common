@@ -314,14 +314,17 @@ class NumberTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldEx(
         decoration: decoration,
-        formatters: <TextInputFormatter>[decimal ? TextFieldFilter.digitsDecimal : TextFieldFilter.digits],
+        formatters: <TextInputFormatter>[
+          decimal ? TextFieldFilter.digitsDecimal : TextFieldFilter.digits
+        ],
         validator: (term) => _validate(term),
         hintText: hintText,
         keyboardType: TextInputType.numberWithOptions(signed: _signed()),
         errorText: canBeEmpty ? null : 'Input $hintText',
         init: _init(),
-        onFieldChanged: (term) =>
-            decimal ? onFieldChangedDouble(double.tryParse(term)) : onFieldChangedInt(int.tryParse(term)));
+        onFieldChanged: (term) => decimal
+            ? onFieldChangedDouble(double.tryParse(term))
+            : onFieldChangedInt(int.tryParse(term)));
   }
 
   String _init() {
@@ -377,9 +380,11 @@ class TextFieldFilter {
 
   static TextInputFormatter get digits => FilteringTextInputFormatter.allow(RegExp(r'\d+'));
 
-  static TextInputFormatter get digitsDecimal => FilteringTextInputFormatter.allow(RegExp("[0-9.]"));
+  static TextInputFormatter get digitsDecimal =>
+      FilteringTextInputFormatter.allow(RegExp("[0-9.]"));
 
   static TextInputFormatter get license => FilteringTextInputFormatter.allow(RegExp("[a-f0-9]"));
 
-  static TextInputFormatter get root => FilteringTextInputFormatter.allow(RegExp("[A-Za-z/~._0-9]"));
+  static TextInputFormatter get root =>
+      FilteringTextInputFormatter.allow(RegExp("[A-Za-z/~._0-9]"));
 }

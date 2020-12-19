@@ -17,7 +17,8 @@ class ListHeader extends StatelessWidget {
           SizedBox(height: 32),
           Align(
               alignment: Alignment.bottomRight,
-              child: Text(text, style: TextStyle(fontSize: 14, color: Theme.of(context).accentColor)))
+              child:
+                  Text(text, style: TextStyle(fontSize: 14, color: Theme.of(context).accentColor)))
         ]));
   }
 }
@@ -66,7 +67,8 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   Widget _cancel() {
     return Opacity(
         opacity: BUTTON_OPACITY,
-        child: FlatButton(child: Text(widget.cancel ?? 'Cancel'), onPressed: () => Navigator.of(context).pop()));
+        child: FlatButton(
+            child: Text(widget.cancel ?? 'Cancel'), onPressed: () => Navigator.of(context).pop()));
   }
 
   Widget _submit() {

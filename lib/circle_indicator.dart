@@ -20,7 +20,8 @@ class CircleIndicator extends StatelessWidget {
                 height: size,
                 child: Center(
                     child: Text(circleText ?? '$score %',
-                        textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))))));
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))))));
   }
 }
 
@@ -64,7 +65,8 @@ class _CircleProgress extends CustomPainter {
 
     double angle = 2 * pi * (currentProgress / 100);
 
-    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2, angle, false, completeArc);
+    canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius), -pi / 2, angle, false, completeArc);
   }
 
   @override

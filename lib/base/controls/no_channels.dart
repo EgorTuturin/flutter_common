@@ -8,14 +8,17 @@ class NonAvailableBuffer extends StatelessWidget {
   final double opacity;
   final Color color;
 
-  NonAvailableBuffer({this.icon, this.iconSize, this.message, this.textSize, this.opacity, this.color});
+  NonAvailableBuffer(
+      {this.icon, this.iconSize, this.message, this.textSize, this.opacity, this.color});
 
   @override
   Widget build(BuildContext context) {
     final content = message == null
         ? SizedBox()
         : Text(message,
-            style: TextStyle(fontSize: textSize ?? 20, color: color), textAlign: TextAlign.center, softWrap: true);
+            style: TextStyle(fontSize: textSize ?? 20, color: color),
+            textAlign: TextAlign.center,
+            softWrap: true);
     return Opacity(
         opacity: opacity ?? 0.5,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[

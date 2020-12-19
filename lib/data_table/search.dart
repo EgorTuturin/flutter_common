@@ -7,7 +7,8 @@ class DataTableSearchHeader extends StatefulWidget {
   final DataSource source;
   final List<Widget> rightSearchActions;
 
-  DataTableSearchHeader({@required this.source, List<Widget> actions}) : this.rightSearchActions = actions ?? [];
+  DataTableSearchHeader({@required this.source, List<Widget> actions})
+      : this.rightSearchActions = actions ?? [];
 
   @override
   _DataTableSearchHeaderState createState() => _DataTableSearchHeaderState();

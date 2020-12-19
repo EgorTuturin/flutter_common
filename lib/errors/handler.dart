@@ -8,7 +8,8 @@ Future<Response> handleResponse(Future<Response> future, List<int> statusCodes) 
   return handleBaseResponse<Response>(future, statusCodes);
 }
 
-Future<StreamedResponse> handleStreamedResponse(Future<StreamedResponse> future, List<int> statusCodes) {
+Future<StreamedResponse> handleStreamedResponse(
+    Future<StreamedResponse> future, List<int> statusCodes) {
   return handleBaseResponse<StreamedResponse>(future, statusCodes);
 }
 

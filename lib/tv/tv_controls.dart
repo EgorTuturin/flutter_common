@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_common/tv/key_code.dart';
 
 mixin BaseTVControls {
-  bool nodeAction(FocusScopeNode scope, FocusNode node, RawKeyEvent event, [void Function() onEnter]) {
+  bool nodeAction(FocusScopeNode scope, FocusNode node, RawKeyEvent event,
+      [void Function() onEnter]) {
     if (event is RawKeyDownEvent && event.data is RawKeyEventDataAndroid) {
       RawKeyDownEvent rawKeyDownEvent = event;
       RawKeyEventDataAndroid rawKeyEventDataAndroid = rawKeyDownEvent.data;
