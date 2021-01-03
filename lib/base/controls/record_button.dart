@@ -13,13 +13,13 @@ class RecordButton extends StatefulWidget {
   final String queuedText;
   final String recordText;
 
-  RecordButton.icon(this.initRecorded,
+  const RecordButton.icon(this.initRecorded,
       {this.onRecordedChanged, this.selectedColor, this.unselectedColor, this.textColor})
       : type = 0,
         queuedText = '',
         recordText = '';
 
-  RecordButton.button(this.initRecorded,
+  const RecordButton.button(this.initRecorded,
       {this.onRecordedChanged,
       this.selectedColor,
       this.unselectedColor,

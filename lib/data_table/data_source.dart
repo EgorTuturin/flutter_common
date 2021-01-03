@@ -6,10 +6,7 @@ class DataEntry<S> {
   bool isVisible;
   S entry;
 
-  DataEntry({@required S entry, bool selected = false, bool isVisible = true})
-      : entry = entry,
-        selected = selected,
-        isVisible = isVisible;
+  DataEntry({@required this.entry, this.selected = false, this.isVisible = true});
 }
 
 abstract class DataSource<S> extends DataTableSource {
@@ -17,7 +14,7 @@ abstract class DataSource<S> extends DataTableSource {
 
   bool _isSearch = false;
 
-  bool _selectable = true;
+  final bool _selectable;
 
   String get itemsName;
 
@@ -26,7 +23,7 @@ abstract class DataSource<S> extends DataTableSource {
         _selectable = selectable ?? true;
 
   List<DataEntry<S>> get currentList {
-    List<DataEntry<S>> result = [];
+    final List<DataEntry<S>> result = [];
     for (int i = 0; i < _items.length; i++) {
       final value = _items[i];
       if (value.isVisible) {
@@ -36,22 +33,17 @@ abstract class DataSource<S> extends DataTableSource {
     return result;
   }
 
+  @override
   bool get isRowCountApproximate {
     return false;
   }
 
+  @override
   int get rowCount {
     return currentList.length;
   }
 
-  int get sortColumn {
-    return 0;
-  }
-
-  bool get sortAscending {
-    return false;
-  }
-
+  @override
   int get selectedRowCount {
     int count = 0;
     for (int i = 0; i < currentList.length; i++) {
@@ -60,6 +52,14 @@ abstract class DataSource<S> extends DataTableSource {
       }
     }
     return count;
+  }
+
+  int get sortColumnIndex {
+    return 0;
+  }
+
+  bool get sortAscending {
+    return false;
   }
 
   Widget get noItems;
@@ -71,7 +71,7 @@ abstract class DataSource<S> extends DataTableSource {
   List<Widget> tiles(S item);
 
   List<S> selectedItems() {
-    List<S> result = [];
+    final List<S> result = [];
     for (int i = 0; i < currentList.length; i++) {
       final stream = currentList[i];
       if (stream.selected) {
@@ -83,12 +83,14 @@ abstract class DataSource<S> extends DataTableSource {
 
   // table widgets
   List<DataColumn> columns() {
-    final _index = [DataColumn(label: Text('№'))];
-    final _headers =
-        List<DataColumn>.generate(headers().length, (index) => DataColumn(label: headers()[index]));
+    const _index = [DataColumn(label: Text('№'))];
+    final _headers = List<DataColumn>.generate(headers().length, (index) {
+      return DataColumn(label: headers()[index]);
+    });
     return _index + _headers;
   }
 
+  @override
   DataRow getRow(int index) {
     final s = currentList[index];
     final _infoTiles = tiles(s.entry);
@@ -118,7 +120,7 @@ abstract class DataSource<S> extends DataTableSource {
   }
 
   void addItems(List<S> toAdd) {
-    for (S item in toAdd) {
+    for (final S item in toAdd) {
       if (item != null) {
         _items.add(DataEntry<S>(entry: item));
       }
@@ -221,11 +223,71 @@ abstract class DataSource<S> extends DataTableSource {
   }
 }
 
+abstract class SortableDataSource<S> extends DataSource<S> {
+  int _sortColumn = 0;
+
+  bool _sortAccending = false;
+
+  SortableDataSource({@required List<DataEntry<S>> items, bool selectable})
+      : super(items: items, selectable: selectable);
+
+  @override
+  int get sortColumnIndex {
+    return _sortColumn;
+  }
+
+  @override
+  bool get sortAscending {
+    return _sortAccending;
+  }
+
+  @override
+  List<DataColumn> columns() {
+    const _index = [DataColumn(label: Text('№'))];
+    final _headers = List<DataColumn>.generate(headers().length, (index) {
+      return DataColumn(label: headers()[index], onSort: _onSort);
+    });
+    return _index + _headers;
+  }
+
+  // sort
+  
+  /// [index] represents nubmer of the column from [columns()]
+  /// * a negative integer if [a] is smaller than [b],
+  /// * zero if [a] is equal to [b], and
+  /// * a positive integer if [a] is greater than [b].
+  int compareItems(S a, S b, int index);
+
+  void _onSort(int index, bool ascending) {
+    if (_sortColumn != index || _sortAccending != ascending) {
+      _sortColumn = index;
+      _sortAccending = ascending;
+      _sort(_sortColumn, _sortAccending);
+      notifyListeners();
+    }
+  }
+
+  int compareStrings(String a, String b) {
+    return a.compareTo(b);
+  }
+
+  // private
+  void _sort(int index, bool ascending) {
+    _items.sort((a, b) {
+      if (ascending) {
+        return compareItems(a.entry, b.entry, index);
+      } else {
+        return compareItems(b.entry, a.entry, index);
+      }
+    });
+  }
+}
+
 class _InfoDialog<S> extends StatelessWidget {
   final S item;
   final DataSource<S> source;
 
-  _InfoDialog(this.source, this.item);
+  const _InfoDialog(this.source, this.item);
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +295,7 @@ class _InfoDialog<S> extends StatelessWidget {
     final _tiles = source.tiles(item);
     return SimpleDialog(
         title: _tiles.first,
-        contentPadding: EdgeInsets.symmetric(vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(vertical: 12),
         children: List<Widget>.generate(_tiles.length - 1, (index) {
           return ListTile(title: _headers[index + 1], trailing: _tiles[index + 1]);
         }));

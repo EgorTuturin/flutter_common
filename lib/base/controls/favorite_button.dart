@@ -10,7 +10,7 @@ class FavoriteStarButton extends StatefulWidget {
   final bool initFavorite;
   final FocusNode focusNode;
 
-  FavoriteStarButton(this.initFavorite,
+  const FavoriteStarButton(this.initFavorite,
       {this.selectedColor, this.unselectedColor, this.onFavoriteChanged, this.focusNode});
 
   @override
@@ -49,7 +49,7 @@ class _FavoriteStarButtonState extends State<FavoriteStarButton> with BaseTVCont
     final unselectedColor = widget.unselectedColor ?? Theme.of(context).primaryIconTheme.color;
     return IconButton(
         focusNode: widget.focusNode,
-        padding: EdgeInsets.all(0.0),
+        padding: const EdgeInsets.all(0.0),
         onPressed: () {
           setFavorite(!_isFavorite);
         },

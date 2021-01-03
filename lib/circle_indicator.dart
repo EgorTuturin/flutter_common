@@ -8,20 +8,20 @@ class CircleIndicator extends StatelessWidget {
   final String circleText;
   final Color color;
 
-  CircleIndicator(this.score, this.size, {this.circleText, this.color});
+  const CircleIndicator(this.score, this.size, {this.circleText, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Center(
         child: CustomPaint(
             foregroundPainter: _CircleProgress(score, context, color),
-            child: Container(
+            child: SizedBox(
                 width: size,
                 height: size,
                 child: Center(
                     child: Text(circleText ?? '$score %',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))))));
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))))));
   }
 }
 
@@ -45,25 +45,25 @@ class _CircleProgress extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint outerCircle = Paint()
+    final Paint outerCircle = Paint()
       ..strokeWidth = WIDTH_CONTROL
       ..color = Theme.of(context).brightness == Brightness.dark
-          ? Color.fromRGBO(255, 255, 255, 0.1)
-          : Color.fromRGBO(0, 0, 0, 0.1)
+          ? const Color.fromRGBO(255, 255, 255, 0.1)
+          : const Color.fromRGBO(0, 0, 0, 0.1)
       ..style = PaintingStyle.stroke;
 
-    Paint completeArc = Paint()
+    final Paint completeArc = Paint()
       ..strokeWidth = WIDTH_CONTROL
       ..color = customColor ?? _color()
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
-    Offset center = Offset(size.width / 2, size.height / 2);
-    double radius = min(size.width / 2, size.height / 2) - WIDTH_CONTROL;
+    final Offset center = Offset(size.width / 2, size.height / 2);
+    final double radius = min(size.width / 2, size.height / 2) - WIDTH_CONTROL;
 
     canvas.drawCircle(center, radius, outerCircle);
 
-    double angle = 2 * pi * (currentProgress / 100);
+    final double angle = 2 * pi * (currentProgress / 100);
 
     canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius), -pi / 2, angle, false, completeArc);

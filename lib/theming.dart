@@ -10,11 +10,12 @@ class ListHeader extends StatelessWidget {
 
   final String text;
 
+  @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 16.0, right: 16.0),
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           Align(
               alignment: Alignment.bottomRight,
               child:
@@ -29,8 +30,9 @@ class ColorPickerDialog extends StatefulWidget {
   final String submit;
   final String cancel;
 
-  ColorPickerDialog({this.title, @required this.initColor, this.submit, this.cancel});
+  const ColorPickerDialog({this.title, @required this.initColor, this.submit, this.cancel});
 
+  @override
   _ColorPickerDialogState createState() {
     return _ColorPickerDialogState();
   }
@@ -59,7 +61,6 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   Widget _content() {
     return MaterialColorPicker(
         shrinkWrap: true,
-        iconSelected: Icons.check,
         selectedColor: tempShadeColor,
         onColorChange: (color) => tempShadeColor = color);
   }

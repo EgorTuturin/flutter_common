@@ -26,19 +26,21 @@ class ScrollableEx extends StatefulWidget {
   final bool overlayContent;
   final ScrollBarConfig scrollBarConfig;
 
-  ScrollableEx({@required this.builder, this.controller})
-      : this.scrollBarConfig = null,
-        this.overlayContent = false;
+  const ScrollableEx({@required this.builder, this.controller})
+      : scrollBarConfig = null,
+        overlayContent = false;
 
   ScrollableEx.withBar(
       {@required this.builder,
       this.controller,
       this.overlayContent = false,
       ScrollBarConfig scrollBarConfig})
-      : this.scrollBarConfig = ScrollBarConfig();
+      : scrollBarConfig = scrollBarConfig ?? ScrollBarConfig();
 
   @override
-  _ScrollableExState createState() => _ScrollableExState();
+  _ScrollableExState createState() {
+    return _ScrollableExState();
+  }
 }
 
 class _ScrollableExState extends State<ScrollableEx> {
@@ -126,7 +128,7 @@ class _FlutterWebScroller extends StatefulWidget {
   final ScrollController controller;
   final ScrollBarConfig config;
 
-  _FlutterWebScroller(this.controller, {this.config});
+  const _FlutterWebScroller(this.controller, {this.config});
 
   @override
   State<StatefulWidget> createState() {
@@ -209,8 +211,8 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
   }
 
   void _onDrag(DragUpdateDetails dragUpdate) {
-    double dy = dragUpdate.globalPosition.dy - _fixCursorPosition;
-    double scrollTo = dy * _scrollExtent / maxOffset;
+    final double dy = dragUpdate.globalPosition.dy - _fixCursorPosition;
+    final double scrollTo = dy * _scrollExtent / maxOffset;
     widget.controller.position.moveTo(scrollTo);
   }
 
@@ -231,7 +233,7 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
     } else if (_scrollExtent == 0) {
       return double.maxFinite;
     }
-    double numberOfPages = 1 + _scrollExtent / MediaQuery.of(context).size.height;
+    final double numberOfPages = 1 + _scrollExtent / MediaQuery.of(context).size.height;
     double thumbHeight = MediaQuery.of(context).size.height / numberOfPages;
 
     if (thumbHeight < _config.scrollbarWidth) {

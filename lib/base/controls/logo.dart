@@ -4,7 +4,7 @@ class CircleAssetLogo extends StatelessWidget {
   final String logoPath;
   final double size;
 
-  CircleAssetLogo(this.logoPath, {this.size});
+  const CircleAssetLogo(this.logoPath, {this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class CustomAssetLogo extends StatelessWidget {
   final double width;
   final double height;
 
-  CustomAssetLogo(this.logoPath, {this.width, this.height});
+  const CustomAssetLogo(this.logoPath, {this.width, this.height});
 
   @override
   Widget build(BuildContext context) {

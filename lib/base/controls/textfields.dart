@@ -20,7 +20,7 @@ class TextFieldEx extends StatefulWidget {
   final EdgeInsets padding;
   final InputDecoration decoration;
 
-  TextFieldEx(
+  const TextFieldEx(
       {this.onFieldChanged,
       this.onFieldSubmit,
       this.init,
@@ -38,10 +38,10 @@ class TextFieldEx extends StatefulWidget {
       this.decoration,
       bool autofocus,
       Key key})
-      : this.clearable = clearable ?? false,
-        this.autofocus = autofocus ?? false,
-        this.readOnly = readOnly ?? false,
-        this.padding = padding ?? const EdgeInsets.all(8.0),
+      : clearable = clearable ?? false,
+        autofocus = autofocus ?? false,
+        readOnly = readOnly ?? false,
+        padding = padding ?? const EdgeInsets.all(8.0),
         super(key: key);
 
   TextFieldEx copyWith(
@@ -96,7 +96,7 @@ class _TextFieldExState extends State<TextFieldEx> {
   void initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController(text: widget.init ?? '');
-    _decoration = widget.decoration ?? InputDecoration();
+    _decoration = widget.decoration ?? const InputDecoration();
     _decoration = _decoration.copyWith(
         hintText: widget.hintText,
         labelText: widget.hintText,
@@ -130,7 +130,7 @@ class _TextFieldExState extends State<TextFieldEx> {
   }
 
   List<TextInputFormatter> _formatters() {
-    List<TextInputFormatter> _list = widget.formatters ?? [];
+    final List<TextInputFormatter> _list = widget.formatters ?? [];
     if (widget.maxSymbols != null) {
       _list.add(LengthLimitingTextInputFormatter(widget.maxSymbols));
     }
@@ -148,7 +148,7 @@ class _TextFieldExState extends State<TextFieldEx> {
   }
 
   Widget _clearButton() {
-    return IconButton(tooltip: 'Clear', icon: Icon(Icons.clear), onPressed: _clear);
+    return IconButton(tooltip: 'Clear', icon: const Icon(Icons.clear), onPressed: _clear);
   }
 
   void _clear() {
@@ -195,7 +195,7 @@ class _TextFieldExState extends State<TextFieldEx> {
 }
 
 class PassWordTextField extends TextFieldEx {
-  PassWordTextField(
+  const PassWordTextField(
       {Function(String term) onFieldChanged,
       Function(String term) onFieldSubmit,
       String init,
@@ -235,7 +235,10 @@ class PassWordTextField extends TextFieldEx {
 
 class _PassWordTextFieldState extends _TextFieldExState {
   @override
-  bool _hidePassword = true;
+  void initState() {
+    super.initState();
+    _hidePassword = true;
+  }
 
   Widget _setObscureButton() {
     return IconButton(
@@ -270,11 +273,11 @@ class NumberTextField extends StatelessWidget {
 
   final bool decimal;
 
-  NumberTextField.integer(
+  const NumberTextField.integer(
       {this.onFieldChangedInt,
       this.initInt,
       int minInt,
-      int maxInt,
+      this.maxInt,
       this.hintText,
       this.validator,
       this.textEditingController,
@@ -283,18 +286,17 @@ class NumberTextField extends StatelessWidget {
       this.autofocus = false,
       this.decoration})
       : decimal = false,
-        this.minInt = minInt ?? 0,
-        this.maxInt = maxInt,
-        this.initDouble = null,
-        this.minDouble = null,
-        this.maxDouble = null,
+        minInt = minInt ?? 0,
+        initDouble = null,
+        minDouble = null,
+        maxDouble = null,
         onFieldChangedDouble = null;
 
-  NumberTextField.decimal(
+  const NumberTextField.decimal(
       {this.onFieldChangedDouble,
       this.initDouble,
       double minDouble,
-      double maxDouble,
+      this.maxDouble,
       this.hintText,
       this.validator,
       this.textEditingController,
@@ -303,11 +305,10 @@ class NumberTextField extends StatelessWidget {
       this.autofocus = false,
       this.decoration})
       : decimal = true,
-        this.minDouble = minDouble ?? 0.0,
-        this.maxDouble = maxDouble,
-        this.initInt = null,
-        this.minInt = null,
-        this.maxInt = null,
+        minDouble = minDouble ?? 0.0,
+        initInt = null,
+        minInt = null,
+        maxInt = null,
         onFieldChangedInt = null;
 
   @override

@@ -5,7 +5,7 @@ class StateCheckBox extends StatefulWidget {
   final bool _init;
   final void Function(bool) onChanged;
 
-  StateCheckBox({@required this.title, bool init, this.onChanged}) : _init = init;
+  const StateCheckBox({@required this.title, bool init, this.onChanged}) : _init = init;
 
   @override
   _CheckBoxState createState() {
@@ -19,7 +19,7 @@ class _CheckBoxState extends State<StateCheckBox> {
   @override
   void initState() {
     super.initState();
-    _value = widget._init != null ? widget._init : false;
+    _value = widget._init ?? false;
   }
 
   @override

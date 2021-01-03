@@ -12,12 +12,14 @@ class DataTableEx extends StatefulWidget {
   final Widget Function() actionsWidget;
   final List<Widget> Function() actions;
 
-  DataTableEx(this.source, this.header, this.actions) : actionsWidget = null;
+  const DataTableEx(this.source, this.header, this.actions) : actionsWidget = null;
 
-  DataTableEx.customActions(this.source, this.header, this.actionsWidget) : actions = null;
+  const DataTableEx.customActions(this.source, this.header, this.actionsWidget) : actions = null;
 
   @override
-  DataTableExState createState() => DataTableExState();
+  DataTableExState createState() {
+    return DataTableExState();
+  }
 }
 
 class DataTableExState extends State<DataTableEx> {
@@ -51,26 +53,24 @@ class DataTableExState extends State<DataTableEx> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: HEADER_AND_FOOTER + _rowsPerPage * ROW_HEIGHT,
-      child: _PaginatedDataTableEx(
-          emptyList: _source.searching ? _source.noItemsFound : _source.noItems,
-          header: widget.header,
-          showCheckboxColumn: true,
-          columnSpacing: 16,
-          source: _source,
-          sortColumnIndex: _source.sortColumn,
-          sortAscending: _source.sortAscending,
-          onPageChanged: (index) {},
-          rowsPerPage: _rowsPerPage,
-          onRowsPerPageChanged: (rows) => _setHeight(rows),
-          onSelectAll: (value) {
-            value ? _source.selectAllItems() : _source.unSelectAllItems();
-          },
-          columns: _source.columns(),
-          actionsHeader: widget.actionsWidget == null ? null : widget.actionsWidget(),
-          actions: widget.actions == null ? null : widget.actions()),
-    );
+    return SizedBox(
+        height: HEADER_AND_FOOTER + _rowsPerPage * ROW_HEIGHT,
+        child: _PaginatedDataTableEx(
+            emptyList: _source.searching ? _source.noItemsFound : _source.noItems,
+            header: widget.header,
+            columnSpacing: 16,
+            source: _source,
+            sortColumnIndex: _source.sortColumnIndex,
+            sortAscending: _source.sortAscending,
+            onPageChanged: (index) {},
+            rowsPerPage: _rowsPerPage,
+            onRowsPerPageChanged: _setHeight,
+            onSelectAll: (value) {
+              value ? _source.selectAllItems() : _source.unSelectAllItems();
+            },
+            columns: _source.columns(),
+            actionsHeader: widget.actionsWidget == null ? null : widget.actionsWidget(),
+            actions: widget.actions == null ? null : widget.actions()));
   }
 
   void _setHeight(int rows) {
@@ -357,7 +357,7 @@ class _PaginatedDataTableExState extends State<_PaginatedDataTableEx> {
         style: Theme.of(context).textTheme.caption,
         child: IconTheme.merge(
             data: const IconThemeData(opacity: 0.54),
-            child: Container(
+            child: SizedBox(
                 // TODO(bkonyi): this won't handle text zoom correctly, https://github.com/flutter/flutter/issues/48522
                 height: 56.0,
                 child: SingleChildScrollView(
@@ -388,8 +388,7 @@ class _PaginatedDataTableExState extends State<_PaginatedDataTableEx> {
                         items: availableRowsPerPage.cast<DropdownMenuItem<int>>(),
                         value: widget.rowsPerPage,
                         onChanged: widget.onRowsPerPageChanged,
-                        style: Theme.of(context).textTheme.caption,
-                        iconSize: 24.0))))
+                        style: Theme.of(context).textTheme.caption))))
       ]);
     }
     footerWidgets.addAll(<Widget>[
@@ -419,7 +418,7 @@ class _PaginatedDataTableExState extends State<_PaginatedDataTableEx> {
 class TableActionIcon extends StatelessWidget {
   final Widget action;
 
-  TableActionIcon(this.action);
+  const TableActionIcon(this.action);
 
   @override
   Widget build(BuildContext context) {

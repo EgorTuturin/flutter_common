@@ -47,7 +47,7 @@ class _AppLocalizationsState extends State<AppLocalizations> {
     return _InheritedLocaleProvider(
         data: this,
         child:
-            _localizations.currentDictionary == null ? CircularProgressIndicator() : widget.child);
+            _localizations.currentDictionary == null ? const CircularProgressIndicator() : widget.child);
   }
 
   void load(Locale locale) async {
@@ -84,7 +84,7 @@ class _AppLocalizationsState extends State<AppLocalizations> {
 class _InheritedLocaleProvider extends InheritedWidget {
   final _AppLocalizationsState data;
 
-  _InheritedLocaleProvider({
+  const _InheritedLocaleProvider({
     this.data,
     Key key,
     @required Widget child,

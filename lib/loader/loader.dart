@@ -30,18 +30,18 @@ class LoaderWidget<S extends ItemDataState> extends StatelessWidget {
           } else if (snapshot.data is ItemErrorState) {
             final ItemErrorState state = snapshot.data;
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              return showError(context, state.error);
+              showError(context, state.error);
             });
             return errorBuilder != null ? errorBuilder(context) : _reload();
           }
           return loadingBuilder != null
               ? loadingBuilder(context)
-              : Center(child: CircularProgressIndicator());
+              : const Center(child: CircularProgressIndicator());
         });
   }
 
   Widget _reload() {
     return Center(
-        child: IconButton(tooltip: 'Reload', icon: Icon(Icons.sync), onPressed: loader.load));
+        child: IconButton(tooltip: 'Reload', icon: const Icon(Icons.sync), onPressed: loader.load));
   }
 }

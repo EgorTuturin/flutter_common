@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:ntp/ntp.dart';
 
@@ -8,9 +9,7 @@ class TimeManager {
   int _difference;
 
   static Future<TimeManager> getInstance() async {
-    if (_instance == null) {
-      _instance = TimeManager();
-    }
+      _instance ??= TimeManager();
     _instance._setNTP();
     return _instance;
   }
@@ -43,7 +42,7 @@ class TimeManager {
         _difference = _ntp.millisecondsSinceEpoch - now.millisecondsSinceEpoch;
       }
     } catch (e) {
-      print('$e');
+      log('$e');
     }
   }
 }

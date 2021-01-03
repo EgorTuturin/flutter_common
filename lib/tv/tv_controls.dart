@@ -6,8 +6,8 @@ mixin BaseTVControls {
   bool nodeAction(FocusScopeNode scope, FocusNode node, RawKeyEvent event,
       [void Function() onEnter]) {
     if (event is RawKeyDownEvent && event.data is RawKeyEventDataAndroid) {
-      RawKeyDownEvent rawKeyDownEvent = event;
-      RawKeyEventDataAndroid rawKeyEventDataAndroid = rawKeyDownEvent.data;
+      final RawKeyDownEvent rawKeyDownEvent = event;
+      final RawKeyEventDataAndroid rawKeyEventDataAndroid = rawKeyDownEvent.data;
       switch (rawKeyEventDataAndroid.keyCode) {
         case ENTER:
         case KEY_CENTER:

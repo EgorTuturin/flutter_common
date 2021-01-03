@@ -6,7 +6,7 @@ class LocalePicker extends StatefulWidget {
   final String title;
   final void Function(String value) onChanged;
 
-  LocalePicker({this.current, this.values, this.title, this.onChanged});
+  const LocalePicker({this.current, this.values, this.title, this.onChanged});
 
   @override
   _LocalePickerState createState() {
@@ -16,7 +16,7 @@ class LocalePicker extends StatefulWidget {
 
 class _LocalePickerState extends State<LocalePicker> {
   String _current = '';
-  Map<String, String> _locales = {};
+  final Map<String, String> _locales = {};
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _LocalePickerState extends State<LocalePicker> {
   @override
   Widget build(BuildContext context) {
     if (widget.values.isNotEmpty) {
-      List<DropdownMenuItem<String>> items = [];
+      final List<DropdownMenuItem<String>> items = [];
       _locales.forEach((key, value) {
         final item = DropdownMenuItem(child: Text(value), value: key);
         items.add(item);
@@ -51,7 +51,7 @@ class _LocalePickerState extends State<LocalePicker> {
               onChanged: (c) => _onChanged(c),
               items: items));
     }
-    return SizedBox();
+    return const SizedBox();
   }
 
   void _parseLocales() {

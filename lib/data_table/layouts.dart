@@ -11,7 +11,7 @@ class DataLayout<T> extends StatelessWidget {
   final bool canScrollTable;
   final String title;
 
-  DataLayout(
+  const DataLayout(
       {@required this.dataSource,
       @required this.header,
       @required this.singleItemActions,
@@ -20,7 +20,7 @@ class DataLayout<T> extends StatelessWidget {
       : canScrollTable = canScrollTable ?? false,
         title = null;
 
-  DataLayout.withHeader(
+  const DataLayout.withHeader(
       {@required this.dataSource,
       @required this.header,
       @required this.title,
@@ -58,7 +58,7 @@ class DataLayout<T> extends StatelessWidget {
   Widget _title() {
     return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)));
+        child: Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)));
   }
 
   List<Widget> _actions() {

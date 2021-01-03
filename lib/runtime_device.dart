@@ -73,7 +73,7 @@ class RuntimeDevice {
     }
     if (Devices.all.containsKey(cpuBrand)) {
       final devices = Devices.all[cpuBrand];
-      for (Device device in devices) {
+      for (final Device device in devices) {
         if (device.model == arch) {
           _currentDevice = device;
           _registeredInOurDB = true;

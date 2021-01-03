@@ -9,9 +9,8 @@ class ErrorEx extends Object {
 class ErrorExHttp extends ErrorEx {
   final int statusCode;
   final String reason;
-  final String errorDescription;
 
-  ErrorExHttp(this.statusCode, this.reason, this.errorDescription) : super(errorDescription);
+  ErrorExHttp(this.statusCode, this.reason, String errorDescription) : super(errorDescription);
 }
 
 Future showError(BuildContext context, ErrorEx error) {

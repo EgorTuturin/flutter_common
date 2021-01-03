@@ -12,13 +12,13 @@ class Clock extends StatefulWidget {
   final Color textColor;
   final bool hour24;
 
-  Clock.date({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
+  const Clock.date({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
       : type = 1;
 
-  Clock.time({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
+  const Clock.time({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
       : type = 2;
 
-  Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
+  const Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
       : type = 3;
 
   @override
@@ -37,7 +37,7 @@ class _ClockState extends State<Clock> {
     super.initState();
     initializeDateFormatting();
     _updateDate();
-    _timer = Timer.periodic(Duration(minutes: 1), (Timer t) => _getCurrentTime());
+    _timer = Timer.periodic(const Duration(minutes: 1), (Timer t) => _getCurrentTime());
   }
 
   @override
@@ -60,8 +60,8 @@ class _ClockState extends State<Clock> {
               style: TextStyle(fontSize: widget.dateFontSize ?? 18, color: widget.textColor))
         ]);
     return Padding(
-        padding: EdgeInsets.only(left: 8.0, right: 16),
-        child: Container(width: widget.width ?? 100, child: child));
+        padding: const EdgeInsets.only(left: 8.0, right: 16),
+        child: SizedBox(width: widget.width ?? 100, child: child));
   }
 
   @override

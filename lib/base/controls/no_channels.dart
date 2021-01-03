@@ -8,13 +8,13 @@ class NonAvailableBuffer extends StatelessWidget {
   final double opacity;
   final Color color;
 
-  NonAvailableBuffer(
+  const NonAvailableBuffer(
       {this.icon, this.iconSize, this.message, this.textSize, this.opacity, this.color});
 
   @override
   Widget build(BuildContext context) {
     final content = message == null
-        ? SizedBox()
+        ? const SizedBox()
         : Text(message,
             style: TextStyle(fontSize: textSize ?? 20, color: color),
             textAlign: TextAlign.center,

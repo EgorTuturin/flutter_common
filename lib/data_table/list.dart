@@ -6,10 +6,12 @@ class DataListEx extends StatefulWidget {
   final Widget header;
   final List<Widget> Function() actions;
 
-  DataListEx(this.source, this.header, this.actions);
+  const DataListEx(this.source, this.header, this.actions);
 
   @override
-  DataListExState createState() => DataListExState();
+  DataListExState createState() {
+    return DataListExState();
+  }
 }
 
 class DataListExState extends State<DataListEx> {
@@ -86,7 +88,7 @@ class DataListExState extends State<DataListEx> {
   }
 
   Widget _selectAll() {
-    bool _allSelected = _source.selectedRowCount == _source.rowCount;
+    final bool _allSelected = _source.selectedRowCount == _source.rowCount;
     return IconButton(
       icon: Icon(_allSelected ? Icons.clear_all : Icons.select_all),
       onPressed: () {
@@ -104,6 +106,6 @@ class DataListExState extends State<DataListEx> {
     if (_selected) {
       return IgnorePointer(child: Checkbox(value: true, onChanged: (_) {}));
     }
-    return SizedBox();
+    return const SizedBox();
   }
 }

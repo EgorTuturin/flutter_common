@@ -11,7 +11,7 @@ class LocalizationDelegate extends LocalizationsDelegate<Localization> {
 
   @override
   bool isSupported(Locale locale) {
-    for (var sup in locales) {
+    for (final sup in locales) {
       if (sup.languageCode == locale.languageCode) {
         return true;
       }
@@ -21,10 +21,8 @@ class LocalizationDelegate extends LocalizationsDelegate<Localization> {
 
   @override
   Future<Localization> load(Locale locale) async {
-    if (locale == null) {
-      locale = locales[0];
-    }
-    Localization localizations = Localization(locales, path);
+      locale ??= locales[0];
+    final Localization localizations = Localization(locales, path);
     await localizations.load(locale);
     return localizations;
   }

@@ -8,7 +8,7 @@ class DataTableSearchHeader extends StatefulWidget {
   final List<Widget> rightSearchActions;
 
   DataTableSearchHeader({@required this.source, List<Widget> actions})
-      : this.rightSearchActions = actions ?? [];
+      : rightSearchActions = actions ?? [];
 
   @override
   _DataTableSearchHeaderState createState() => _DataTableSearchHeaderState();
@@ -16,7 +16,7 @@ class DataTableSearchHeader extends StatefulWidget {
 
 class _DataTableSearchHeaderState extends State<DataTableSearchHeader> {
   DataSource get _dataSource => widget.source;
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -52,25 +52,25 @@ class _DataTableSearchHeaderState extends State<DataTableSearchHeader> {
   }
 
   Widget _tablet() {
-    return Row(children: [_searchTextField(), Spacer()] + widget.rightSearchActions);
+    return Row(children: [_searchTextField(), const Spacer()] + widget.rightSearchActions);
   }
 
   Widget _desktop() {
-    return Row(children: [_searchTextField(), Spacer(flex: 2)] + widget.rightSearchActions);
+    return Row(children: [_searchTextField(), const Spacer(flex: 2)] + widget.rightSearchActions);
   }
 
   Widget _searchTextField() {
     return Expanded(
         child: ListTile(
-            leading: Icon(Icons.search),
+            leading: const Icon(Icons.search),
             title: TextField(
               controller: _controller,
-              decoration: InputDecoration(hintText: 'Search', border: InputBorder.none),
+              decoration: const InputDecoration(hintText: 'Search', border: InputBorder.none),
               onChanged: onSearchTextChanged,
             ),
             trailing: _dataSource.searching
                 ? IconButton(
-                    icon: Icon(Icons.cancel),
+                    icon: const Icon(Icons.cancel),
                     color: Theme.of(context).accentColor,
                     onPressed: () {
                       _controller.clear();
@@ -91,7 +91,7 @@ class _DataTableSearchHeaderState extends State<DataTableSearchHeader> {
 class NoItemsFound extends StatelessWidget {
   final String itemName;
 
-  NoItemsFound(this.itemName);
+  const NoItemsFound(this.itemName);
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ Future<bool> launchExternalUrl(String url) => launch(url);
 
 abstract class IFetcher {
   String _accessToken;
-  List<IErrorListener> _listeners = [];
+  final List<IErrorListener> _listeners = [];
 
   String getBackendEndpoint(String path);
 
@@ -30,7 +30,7 @@ abstract class IFetcher {
     }
 
     final url = Uri.parse(getBackendEndpoint(path));
-    http.MultipartRequest request = http.MultipartRequest('POST', url);
+    final http.MultipartRequest request = http.MultipartRequest('POST', url);
     if (_accessToken != null) {
       request.headers[HttpHeaders.authorizationHeader] = 'Bearer $_accessToken';
     }
@@ -49,12 +49,11 @@ abstract class IFetcher {
     final Map<String, String> headers = _getJsonHeaders();
     final body = json.encode(data);
     final response = http.post(getBackendEndpoint(path), headers: headers, body: body);
-    final onSuccess = (value) {
+    final result = _handleError(response, [200], (value) {
       final data = json.decode(value.body);
       _accessToken = data['access_token'];
       return Future<http.Response>.value(value);
-    };
-    final result = _handleError(response, [200], onSuccess);
+    });
     return result;
   }
 
@@ -95,7 +94,7 @@ abstract class IFetcher {
   }
 
   Future<bool> launchUrl(String path) {
-    Map<String, String> headers = {};
+    final Map<String, String> headers = {};
     if (_accessToken != null) {
       headers['authorization'] = 'Bearer $_accessToken';
     }
@@ -105,7 +104,7 @@ abstract class IFetcher {
 
   // private:
   Map<String, String> _getJsonHeaders() {
-    Map<String, String> headers = {
+    final Map<String, String> headers = {
       'content-type': 'application/json',
       'accept': 'application/json'
     };
@@ -116,7 +115,7 @@ abstract class IFetcher {
   }
 
   Map<String, String> _getHeaders() {
-    Map<String, String> headers = {};
+    final Map<String, String> headers = {};
     if (_accessToken != null) {
       headers[HttpHeaders.authorizationHeader] = 'Bearer $_accessToken';
     }

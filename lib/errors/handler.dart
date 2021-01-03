@@ -16,14 +16,14 @@ Future<StreamedResponse> handleStreamedResponse(
 Future<T> handleBaseResponse<T extends BaseResponse>(Future<T> future, List<int> statusCodes) {
   final completer = Completer<T>();
   future.then((resp) {
-    bool _checkCode = _checkStatusCode(resp.statusCode, statusCodes);
+    final bool _checkCode = _checkStatusCode(resp.statusCode, statusCodes);
     if (_checkCode) {
       return completer.complete(resp);
     }
-    ErrorExHttp errorHttp = _makeError(resp);
+    final ErrorExHttp errorHttp = _makeError(resp);
     return completer.completeError(errorHttp);
   }, onError: (e) {
-    ErrorEx error = ErrorEx(e.toString());
+    final ErrorEx error = ErrorEx(e.toString());
     return completer.completeError(error);
   });
 
@@ -38,17 +38,17 @@ ErrorExHttp _errorFromResponse(Response resp) {
   } catch (e) {
     data['error'] = resp.body;
   }
-  ErrorExHttp errorHttp = ErrorExHttp(resp.statusCode, resp.reasonPhrase, data['error']);
+  final ErrorExHttp errorHttp = ErrorExHttp(resp.statusCode, resp.reasonPhrase, data['error']);
   return errorHttp;
 }
 
 ErrorExHttp _errorFromStreamedResponse(StreamedResponse resp) {
-  ErrorExHttp errorHttp = ErrorExHttp(resp.statusCode, resp.reasonPhrase, '');
+  final ErrorExHttp errorHttp = ErrorExHttp(resp.statusCode, resp.reasonPhrase, '');
   return errorHttp;
 }
 
 bool _checkStatusCode(int current, List<int> allowed) {
-  for (int code in allowed) {
+  for (final int code in allowed) {
     if (code == current) {
       return true;
     }

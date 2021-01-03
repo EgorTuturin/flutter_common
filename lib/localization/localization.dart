@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,7 @@ class Localization {
   final List<Locale> locales;
   final String path;
   Locale _locale;
-  LocalizationsDelegate<Localization> _delegate;
+  final LocalizationsDelegate<Localization> _delegate;
   Map<String, String> _localizedStrings;
 
   Localization(this.locales, this.path) : _delegate = LocalizationDelegate(locales, path) {
@@ -25,7 +26,7 @@ class Localization {
     try {
       _output = utf8.decode(data.codeUnits);
     } on FormatException catch (e) {
-      print('error caught: $e');
+      log('error caught: $e');
       _output = data;
     }
     return _output;
@@ -44,9 +45,9 @@ class Localization {
       return false;
     }
     // Load the language JSON file from the "lang" folder
-    String path = '${this.path}${locale.languageCode}.json';
-    String jsonString = await rootBundle.loadString(path);
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    final String path = '${this.path}${locale.languageCode}.json';
+    final String jsonString = await rootBundle.loadString(path);
+    final Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());

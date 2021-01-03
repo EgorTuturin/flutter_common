@@ -7,17 +7,17 @@ class FlatButtonEx extends StatelessWidget {
   final String text;
   final void Function() onPressed;
 
-  FlatButtonEx.filled({@required this.text, this.onPressed}) : filled = true;
+  const FlatButtonEx.filled({@required this.text, this.onPressed}) : filled = true;
 
-  FlatButtonEx.notFilled({@required this.text, this.onPressed}) : filled = false;
+  const FlatButtonEx.notFilled({@required this.text, this.onPressed}) : filled = false;
 
   @override
   Widget build(BuildContext context) {
-    Color activeColor = Theme.of(context).accentColor;
-    Color disabledColor = Theme.of(context).disabledColor;
+    final Color activeColor = Theme.of(context).accentColor;
+    final Color disabledColor = Theme.of(context).disabledColor;
     return FlatButton(
         onPressed: onPressed?.call,
-        child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
+        child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
         textColor: filled ? backgroundColorBrightness(activeColor) : activeColor,
         disabledColor: disabledColor,
         disabledTextColor: backgroundColorBrightness(disabledColor),

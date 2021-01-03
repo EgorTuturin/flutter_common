@@ -24,7 +24,7 @@ class LanguagePicker extends StatefulWidget {
 }
 
 class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
-  FocusScopeNode _dialogScope = FocusScopeNode();
+  final FocusScopeNode _dialogScope = FocusScopeNode();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
     } else if (widget.type == 1) {
       return _login();
     }
-    return SizedBox();
+    return const SizedBox();
   }
 
   void _showAlertDialog() async {
@@ -43,21 +43,21 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
           return FocusScope(
               node: _dialogScope,
               child: SimpleDialog(
-                  contentPadding: EdgeInsets.fromLTRB(0.0, 24.0, 0.0, 0.0),
+                  contentPadding: const EdgeInsets.fromLTRB(0.0, 24.0, 0.0, 0.0),
                   title: Text(_chooseLanguage),
                   children: <Widget>[
                     SingleChildScrollView(
-                        child: new Column(
+                        child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children:
-                                new List<Widget>.generate(supportedLocales.length, _dialogItem)))
+                                List<Widget>.generate(supportedLocales.length, _dialogItem)))
                   ]));
         });
   }
 
   Widget _dialogItem(int index) {
-    String text = supportedLanguages[index];
-    Locale locale = supportedLocales[index];
+    final String text = supportedLanguages[index];
+    final Locale locale = supportedLocales[index];
     return ListTile(
         autofocus: index == 0,
         focusNode: FocusNode(onKey: (node, event) {
@@ -73,16 +73,16 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
   }
 
   Widget _radio(int index) {
-    Color _color = Theme.of(context).accentColor;
+    final Color _color = Theme.of(context).accentColor;
     if (index == currentLanguageIndex()) {
       return Icon(Icons.radio_button_checked, color: _color);
     }
-    return Icon(Icons.radio_button_unchecked);
+    return const Icon(Icons.radio_button_unchecked);
   }
 
   Widget _settings() {
     return ListTile(
-        leading: Icon(Icons.language),
+        leading: const Icon(Icons.language),
         title: Text(_language),
         subtitle: Text(_languageName),
         onTap: _showAlertDialog);
@@ -100,8 +100,8 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(Icons.language),
-                  SizedBox(width: 16),
+                  const Icon(Icons.language),
+                  const SizedBox(width: 16),
                   Text(_languageName)
                 ])));
   }
