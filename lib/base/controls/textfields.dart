@@ -78,6 +78,20 @@ class TextFieldEx extends StatefulWidget {
         autofocus: autofocus ?? this.autofocus);
   }
 
+  factory TextFieldEx.readOnly({@required String hint, @required String init}) {
+    return TextFieldEx(
+        init: init,
+        readOnly: true,
+        hintText: hint,
+        decoration: const InputDecoration().copyWith(
+            suffixIcon: IconButton(
+                icon: const Icon(Icons.copy),
+                tooltip: 'Copy',
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: init));
+                })));
+  }
+
   @override
   _TextFieldExState createState() {
     return _TextFieldExState();
