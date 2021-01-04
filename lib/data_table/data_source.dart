@@ -251,7 +251,7 @@ abstract class SortableDataSource<S> extends DataSource<S> {
   }
 
   // sort
-  
+
   /// [index] represents nubmer of the column from [columns()]
   /// * a negative integer if [a] is smaller than [b],
   /// * zero if [a] is equal to [b], and

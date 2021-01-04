@@ -9,7 +9,7 @@ class TimeManager {
   int _difference;
 
   static Future<TimeManager> getInstance() async {
-      _instance ??= TimeManager();
+    _instance ??= TimeManager();
     _instance._setNTP();
     return _instance;
   }

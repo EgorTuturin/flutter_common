@@ -49,8 +49,7 @@ class _LanguagePickerState extends State<LanguagePicker> with BaseTVControls {
                     SingleChildScrollView(
                         child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children:
-                                List<Widget>.generate(supportedLocales.length, _dialogItem)))
+                            children: List<Widget>.generate(supportedLocales.length, _dialogItem)))
                   ]));
         });
   }

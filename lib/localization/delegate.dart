@@ -21,7 +21,7 @@ class LocalizationDelegate extends LocalizationsDelegate<Localization> {
 
   @override
   Future<Localization> load(Locale locale) async {
-      locale ??= locales[0];
+    locale ??= locales[0];
     final Localization localizations = Localization(locales, path);
     await localizations.load(locale);
     return localizations;

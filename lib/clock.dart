@@ -12,13 +12,16 @@ class Clock extends StatefulWidget {
   final Color textColor;
   final bool hour24;
 
-  const Clock.date({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
+  const Clock.date(
+      {this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
       : type = 1;
 
-  const Clock.time({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
+  const Clock.time(
+      {this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
       : type = 2;
 
-  const Clock.full({this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
+  const Clock.full(
+      {this.dateFontSize, this.timeFontSize, this.width, this.textColor, this.hour24 = true})
       : type = 3;
 
   @override
