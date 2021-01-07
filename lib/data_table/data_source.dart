@@ -104,7 +104,11 @@ abstract class DataSource<S> extends DataTableSource {
   }
 
   void showTilesDialog(BuildContext context, S item) {
-    showDialog(context: context, child: _InfoDialog(this, item));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return _InfoDialog(this, item);
+        });
   }
 
   // list manipulations

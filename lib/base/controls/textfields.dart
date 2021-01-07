@@ -368,11 +368,11 @@ class NumberTextField extends StatelessWidget {
       final _value = double.tryParse(term) ?? 0;
       if (maxDouble != null) {
         if (_value > maxDouble) {
-          return 'Maximum value is ' + maxDouble.toStringAsFixed(1);
+          return 'Maximum value is ${maxDouble.toStringAsFixed(1)}';
         }
       }
       if (_value < minDouble && term.isNotEmpty) {
-        return 'Minimum value is ' + minDouble.toStringAsFixed(1);
+        return 'Minimum value is ${minDouble.toStringAsFixed(1)}';
       }
     } else {
       final _value = int.tryParse(term) ?? 0;

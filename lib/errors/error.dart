@@ -23,6 +23,8 @@ Future showError(BuildContext context, ErrorEx error) {
 
   return showDialog(
       context: context,
-      child:
-          AlertDialog(title: Text(title), content: Text(error.errorDescription, softWrap: true)));
+      builder: (BuildContext context) {
+        return AlertDialog(
+            title: Text(title), content: Text(error.errorDescription, softWrap: true));
+      });
 }

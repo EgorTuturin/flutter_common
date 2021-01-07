@@ -26,7 +26,7 @@ abstract class IFetcher {
   Future<http.StreamedResponse> sendFiles(
       String path, Map<String, List<int>> data, Map<String, dynamic> fields) {
     if (data == null) {
-      return Future<http.StreamedResponse>(null);
+      return Future<http.StreamedResponse>(() => null);
     }
 
     final url = Uri.parse(getBackendEndpoint(path));
