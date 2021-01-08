@@ -6,6 +6,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_common/data_table/data_source.dart';
 
+class TableChangedHeight extends Notification {
+  final int rows;
+
+  const TableChangedHeight(this.rows);
+}
+
 class DataTableEx extends StatefulWidget {
   final DataSource source;
   final Widget header;
@@ -77,6 +83,7 @@ class DataTableExState extends State<DataTableEx> {
     setState(() {
       _rowsPerPage = rows;
     });
+    TableChangedHeight(_rowsPerPage).dispatch(context);
   }
 
   void _handleDataSourceChanged() {

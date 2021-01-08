@@ -3,6 +3,9 @@ import 'package:flutter_common/data_table/data_source.dart';
 import 'package:flutter_common/data_table/table.dart';
 import 'package:flutter_common/scrollable.dart';
 
+import 'data_source.dart';
+import 'table.dart';
+
 class DataLayout<T> extends StatelessWidget {
   final DataSource<T> dataSource;
   final Widget header;
@@ -32,9 +35,7 @@ class DataLayout<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (canScrollTable) {
-      return ScrollableEx.withBar(builder: (controller) {
-        return SingleChildScrollView(controller: controller, child: _content());
-      });
+      return _TableUpdates(source: dataSource, child: _content());
     } else {
       return _content();
     }
@@ -68,5 +69,29 @@ class DataLayout<T> extends StatelessWidget {
       return multipleItemActions(dataSource.selectedItems());
     }
     return [];
+  }
+}
+
+class _TableUpdates extends StatefulWidget {
+  final DataSource source;
+  final Widget child;
+
+  const _TableUpdates({@required this.source, @required this.child});
+
+  @override
+  _TableUpdatesState createState() {
+    return _TableUpdatesState();
+  }
+}
+
+class _TableUpdatesState extends State<_TableUpdates> {
+  @override
+  Widget build(BuildContext context) {
+    return NotificationListener<TableChangedHeight>(onNotification: (n) {
+      setState(() {});
+      return true;
+    }, child: ScrollableEx.withBar(builder: (controller) {
+      return SingleChildScrollView(controller: controller, child: widget.child);
+    }));
   }
 }

@@ -26,16 +26,19 @@ class ScrollableEx extends StatefulWidget {
   final bool overlayContent;
   final ScrollBarConfig scrollBarConfig;
 
-  const ScrollableEx({@required this.builder, this.controller})
+  const ScrollableEx({@required this.builder, this.controller, Key key})
       : scrollBarConfig = null,
-        overlayContent = false;
+        overlayContent = false,
+        super(key: key);
 
   ScrollableEx.withBar(
       {@required this.builder,
       this.controller,
       this.overlayContent = false,
-      ScrollBarConfig scrollBarConfig})
-      : scrollBarConfig = scrollBarConfig ?? ScrollBarConfig();
+      ScrollBarConfig scrollBarConfig,
+      Key key})
+      : scrollBarConfig = scrollBarConfig ?? ScrollBarConfig(),
+        super(key: key);
 
   @override
   _ScrollableExState createState() {
@@ -165,6 +168,12 @@ class _FlutterWebScrollerState extends State<_FlutterWebScroller> with WidgetsBi
             color: backgroundColorBrightness(background,
                 onLight: Colors.black26, onDark: Colors.white24),
             borderRadius: BorderRadius.all(Radius.circular(_config.scrollbarWidth / 4)));
+  }
+
+  @override
+  void didUpdateWidget(_FlutterWebScroller oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateExtent();
   }
 
   @override
