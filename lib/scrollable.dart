@@ -4,6 +4,10 @@ import 'package:flutter_common/colors.dart';
 
 typedef ScrollableBuilder = Widget Function(ScrollController);
 
+class UpdateScrollBar extends Notification {
+  const UpdateScrollBar();
+}
+
 class ScrollBarConfig {
   double scrollbarWidth;
   Color scrollbarBackgroundColor;
@@ -50,6 +54,7 @@ class _ScrollableExState extends State<ScrollableEx> {
   final FocusNode _node = FocusNode();
   ScrollController _controller;
   final ScrollBarConfig _config = ScrollBarConfig();
+  final GlobalKey<_FlutterWebScrollerState> _scrollBarKey = GlobalKey<_FlutterWebScrollerState>();
 
   @override
   void initState() {
@@ -82,16 +87,19 @@ class _ScrollableExState extends State<ScrollableEx> {
       return widget.builder(_controller);
     }
 
-    return LayoutBuilder(builder: (context, constraints) {
+    return NotificationListener<UpdateScrollBar>(onNotification: (_) {
+      _scrollBarKey.currentState?._updateExtent();
+      return true;
+    }, child: LayoutBuilder(builder: (context, constraints) {
       return MediaQuery(
           data: MediaQuery.of(context).copyWith(size: constraints.biggest),
           child: Stack(children: [
             Container(
                 child: widget.builder(_controller),
                 margin: EdgeInsets.only(right: widget.overlayContent ? 0 : _config.scrollbarWidth)),
-            _FlutterWebScroller(_controller, config: _config)
+            _FlutterWebScroller(_controller, config: _config, key: _scrollBarKey)
           ]));
-    });
+    }));
   }
 
   void _handleEvent(BuildContext context, RawKeyEvent event) {
@@ -131,7 +139,7 @@ class _FlutterWebScroller extends StatefulWidget {
   final ScrollController controller;
   final ScrollBarConfig config;
 
-  const _FlutterWebScroller(this.controller, {this.config});
+  const _FlutterWebScroller(this.controller, {this.config, Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
