@@ -391,7 +391,7 @@ class NumberTextField extends StatelessWidget {
 }
 
 class TextFieldFilter {
-  static TextInputFormatter get url => FilteringTextInputFormatter.allow(RegExp("[!#-;=?-Za-z_~]"));
+  static TextInputFormatter get url => FilteringTextInputFormatter.allow(RegExp("[!#-;=?a-zа-я~]"));
 
   static TextInputFormatter get digits => FilteringTextInputFormatter.allow(RegExp(r'\d+'));
 
